@@ -1,0 +1,346 @@
+<html>
+    <script type="text/javascript">
+    var canvas, ctx,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+		ctx2,
+		canvas2,
+		topCanvOffsetX = 0, 
+		topCanvOffsetY = 0, 
+		t,
+		action = 0,   // 0 - nothing, 1 - mouse down, 2 - draw, 3 - move circle, 4 - resize circle
+		radiusBlack = 0, radiusGrey = 0, centerX = 200, centerY = 200,
+		blackLineWidth = 12, greyLineWidth = 11,
+		minCircleRadius, maxCircleRadius,
+		lineWid = 2,
+		historyUndo = new Array(), historyRedo = new Array(), maxHistory = 50;
+
+    var x = "black",
+        y = 2;
+    
+    function init() {
+        canvas = document.getElementById('layer2');
+        ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
+		
+		canvas2 = document.getElementById('layer1');
+		ctx2 = canvas2.getContext("2d");
+		
+		minCircleRadius = 30 / 2;
+		maxCircleRadius = canvas2.height / 2 - blackLineWidth / 2;
+		
+		radiusBlack = canvas.width / 2 - blackLineWidth / 2;
+		radiusGrey = radiusBlack - blackLineWidth / 2 - greyLineWidth / 2 + 1;
+		canvas.width = (radiusBlack + blackLineWidth / 2) * 2 + 200;
+		canvas.height = canvas.width;
+		initCircles();	
+        					
+		canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+		 canvas.addEventListener("touchstart", function (e) {
+            findxy('down', e)
+        }, false);
+		canvas.addEventListener("touchend", function (e) {
+            findxy('up', e)
+        }, false);
+		canvas.addEventListener("touchcancel", function (e) {
+            findxy('out', e)
+        }, false);
+		canvas.addEventListener("touchmove", function (e) {
+            findxy('move', e)
+        }, false);
+    }
+    
+    function color(obj) {
+        switch (obj.id) {
+            case "green":
+                x = "green";
+                break;
+            case "blue":
+                x = "blue";
+                break;
+            case "red":
+                x = "red";
+                break;
+            case "yellow":
+                x = "yellow";
+                break;
+            case "orange":
+                x = "orange";
+                break;
+            case "black":
+                x = "black";
+                break;
+            case "white":
+                x = "white";
+                break;
+        }
+        if (x == "white") y = 14;
+        else y = 2;
+    
+    }
+	
+	function initCircles()
+	{
+		//init center
+		centerX = canvas.width / 2;
+		centerY = canvas.height / 2;
+		
+		//drawing black circle
+		ctx.beginPath();
+        ctx.arc(centerX, centerY, radiusBlack, 0, 2 * Math.PI, false);
+		ctx.lineWidth = blackLineWidth;
+		ctx.strokeStyle = '#000000';
+        ctx.stroke();
+        ctx.closePath();
+		
+		//drawing grey circle
+		ctx.beginPath();
+        ctx.arc(centerX, centerY, radiusGrey, 0, 2 * Math.PI, false);
+		ctx.lineWidth = greyLineWidth;
+		ctx.strokeStyle = '#454545';
+        ctx.stroke();
+        ctx.closePath();
+	}
+	
+	function resizeCircle()
+	{
+		//saving current center 
+		var oldCenterX = centerX;
+		var oldCenterY = centerY;
+		
+		//clearing the canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		
+		//resizing canvas
+		var prevDistance = Math.sqrt((prevX- centerX - canvas.offsetLeft + canvas2.offsetLeft)*(prevX - centerX - canvas.offsetLeft + canvas2.offsetLeft) +
+									 (prevY - centerY - canvas.offsetTop + canvas2.offsetTop)*(prevY - centerY - canvas.offsetTop + canvas2.offsetTop));
+		var currDistance = Math.sqrt((currX- centerX - canvas.offsetLeft + canvas2.offsetLeft)*(currX - centerX - canvas.offsetLeft + canvas2.offsetLeft) +
+									 (currY - centerY - canvas.offsetTop + canvas2.offsetTop)*(currY - centerY - canvas.offsetTop + canvas2.offsetTop));
+		var diffDistance;
+		
+		diffDistance = prevDistance - currDistance;
+		
+		radiusBlack -= diffDistance;
+		radiusGrey =  radiusBlack - blackLineWidth / 2 - greyLineWidth / 2 + 1;
+		
+		canvas.width = (radiusBlack + blackLineWidth / 2) * 2 + 200;
+		canvas.height = canvas.width;
+		
+		var newOffsetLeft = canvas.offsetLeft + diffDistance;
+		var newOffsetTop = canvas.offsetTop   + diffDistance;
+
+		canvas.style.left = newOffsetLeft + "px";
+		canvas.style.top = newOffsetTop + "px";
+		
+		//draw circle
+		initCircles();
+	}
+	
+	function drawInCircle()
+	{
+		//checking if in the circle
+		if ((((currX - canvas.offsetLeft + canvas2.offsetLeft) - centerX) * ((currX - canvas.offsetLeft + canvas2.offsetLeft) - centerX)) +
+			(((currY - canvas.offsetTop + canvas2.offsetTop) - centerY) * ((currY - canvas.offsetTop + canvas2.offsetTop) - centerY)) <=
+			   (radiusGrey - greyLineWidth / 2) * (radiusGrey - greyLineWidth / 2))
+		{
+			drawLayer2();
+		}
+	}
+	
+	function moveCircle()
+	{
+		var newX = canvas.offsetLeft - prevX + currX;
+		var newY = canvas.offsetTop -  prevY + currY;
+		canvas.style.left = newX + "px";
+		canvas.style.top = newY + "px";
+	}
+    
+	//draw
+	function drawLayer2() {
+        ctx2.beginPath();
+        ctx2.moveTo(prevX, prevY - 0.5);
+        ctx2.lineTo(currX, currY - 0.5);
+        ctx2.strokeStyle = x;
+		ctx2.lineCap = 'round';
+        ctx2.lineWidth = lineWid;
+        ctx2.stroke();
+        ctx2.closePath();
+    }
+    function erase() {
+        var m = confirm("Want to clear");
+        if (m) {
+            ctx2.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
+        }
+    }
+    
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas2.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        document.getElementById("canvasimg").style.display = "inline";
+    }
+    
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - 9 - canvas2.offsetLeft;
+            currY = e.clientY - 9 - canvas2.offsetTop;
+			
+			//init flag to down 
+			action = 1;
+        }
+        if (res == 'up' || res == "out") {
+            //init flag to nothing
+			action = 0;
+        }
+        if (res == 'move') {
+		//var tmp = ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - canvas.offsetTop, 1 ,1)
+		//console.log(tmp.data[0] + ", " +
+		//			tmp.data[1] + ", " +
+		//			tmp.data[2] + ", " +
+		//			tmp.data[3]);			
+			console.log(e.clientX - 9 + " " + e.clientY - 9);
+			
+			//updating the prev and curr positions
+			prevX = currX;
+			prevY = currY;
+			currX = e.clientX - 9 - canvas2.offsetLeft;
+			currY = e.clientY - 9 - canvas2.offsetTop;
+			
+			
+			if (action == 1) //if mouse down 
+			{
+				if (ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[0] == 0 &&
+				    ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[1] == 0 &&
+					ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[2] == 0 &&
+					ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[3] != 0) //if visiable and black(circle)
+				{	
+					action = 3;
+				}
+				else if (ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[0] <= 70 &&
+						 ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[1] <= 70 &&
+						 ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[2] <= 70 &&
+						 ctx.getImageData(e.clientX - 9 - canvas.offsetLeft, e.clientY - 9 - canvas.offsetTop, 1 ,1).data[3] != 0) //if visiable and black(circle)
+				{	
+					action = 4;
+				}
+				else if ((((e.clientX - 9 - canvas.offsetLeft) - centerX) * ((e.clientX - 9 - canvas.offsetLeft) - centerX)) +
+						 (((e.clientY - 9 - canvas.offsetTop ) - centerY) * ((e.clientY - 9 - canvas.offsetTop ) - centerY)) <
+						 (radiusGrey - greyLineWidth / 2) * (radiusGrey - greyLineWidth / 2)){                               												//if in circle
+					action = 2;
+					
+					//saving to undo array
+					if (historyUndo.length == maxHistory)
+					{
+						historyUndo.shift();
+					}
+					
+					//clearing redo array
+					for (var i = 0; i < historyRedo.length; i++)
+					{
+						historyRedo.pop();
+					}
+					
+					historyUndo.push(ctx2.getImageData(0, 0, canvas2.width, canvas2.height));					
+				}
+            }
+			
+			//if in certain mode...
+			switch (action)
+			{
+				case 2:					
+					drawInCircle();					
+					break;
+				case 3:
+					moveCircle();
+					break;
+				case 4:
+					resizeCircle();
+					break;
+					
+			}
+        }
+    }
+	
+	function fontUp()
+	{
+		if (lineWid < 200)
+		{
+			lineWid++;
+		}
+		//var font = getElementById("FontDisplay");
+		//font.value = lineWid;
+	}
+	function fontDown()
+	{
+		if (lineWid > 0)
+		{
+			lineWid = lineWid - 1;
+		}
+		//var font = getElementById("FontDisplay");
+		//font.value = lineWid;
+	}
+	function Undo()
+	{
+		if (historyUndo.length > 0)
+		{
+			historyRedo.push(ctx2.getImageData(0, 0, canvas2.width, canvas2.height));
+		
+			ctx2.putImageData(historyUndo.pop(), 0, 0);			
+		}
+	}
+	function Redo()
+	{
+		if (historyRedo.length > 0)
+		{
+			historyUndo.push(ctx2.getImageData(0, 0, canvas2.width, canvas2.height));
+			
+			ctx2.putImageData(historyRedo.pop(), 0,0);			
+		}
+	}
+	
+    </script>
+    <body onload="init()">
+		<div style="position: relative;">
+		<canvas id="layer1" width="1200" height="600" style="position:absolute;left:10%;border:2px solid;z-index: 0;"></canvas>
+		<canvas id="layer2" width="400" height="400" style="position:absolute;top:10%;left:10%;z-index: 1;"></canvas>
+		</div>
+       
+        <div style="position:absolute;top:12%;left:0%;">Choose Color</div>
+        <div style="position:absolute;top:15%;left:2%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
+        <div style="position:absolute;top:15%;left:3%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
+        <div style="position:absolute;top:15%;left:4%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:2%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:3%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:4%;width:10px;height:10px;background:black;" id="black" onclick="color(this)"></div>
+		
+        <div style="position:absolute;top:20%;left:2%;">Eraser</div>
+        <div style="position:absolute;top:23%;left:3%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+        <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+        <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:35%;left:1%;">
+        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:35%;left:4%;">
+		
+		<input type="button" value="+" id="FontUp" size="10" onclick="fontUp()" style="position:absolute;top:40%;left:4%;">
+		<input type="button" value="-" id="FontDown" size="10" onclick="fontDown()" style="position:absolute;top:40%;left:1%;">
+		<div type="number" value="2" id="FontDisplay" size="10" style="position:absolute;top:40%;left:2%;">
+		
+		<input type="button" value="Redo" id="redo" size="10" onclick="Redo()" style="position:absolute;top:100px;left:50px;">
+		<input type="button" value="Undo" id="undo" size="10" onclick="Undo()" style="position:absolute;top:100px;left:0px;">
+    </body>
+    </html>
