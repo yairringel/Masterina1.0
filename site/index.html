@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gyro Demo</title>
+
+</head>
+
+<body>
+alpha:<span id="alpha"></span><br>
+beta:<span id="beta"></span><br>
+gamma:<span id="gamma"></span><br>
+<script>
+
+
+//get orientation info, rolling back if gyro info not available
+if (window.DeviceOrientationEvent) {//
+    window.addEventListener("deviceorientation", function () {//gyro
+        processGyro(event.beta, event.gamma, event.alpha); 
+    }, true);
+} 
+
+
+
+function processGyro(alpha,beta,gamma)
+{
+	document.getElementById("alpha").innerHTML=alpha;
+	document.getElementById("beta").innerHTML=beta;
+	document.getElementById("gamma").innerHTML =gamma;
+}
+</script>
+</body>
+</html>
