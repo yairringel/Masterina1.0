@@ -60,7 +60,13 @@
     <canvas id="myCanvas"></canvas>
     <script>
 	
-	
+screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+
+if (screen.lockOrientationUniversal("landscape-primary")) {
+  // orientation was locked
+} else {
+  // orientation lock failed
+}	
 	
 
 var gyro=quatFromAxisAngle(0,0,0,0);
