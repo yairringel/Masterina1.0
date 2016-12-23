@@ -9,6 +9,7 @@
         margin: 0px;
         padding: 0px;
 		font-size:60px;
+		position: fixed;
       }
 	  canvas 
 	  { 
@@ -62,13 +63,18 @@
 	
 	
 	
+
 var gyro=quatFromAxisAngle(0,0,0,0);
+
 //get orientation info, rolling back if gyro info not available
 if (window.DeviceOrientationEvent) {//
     window.addEventListener("deviceorientation", function () {//gyro
         processGyro(event.alpha, event.beta, event.gamma); 
     }, true);
 } 
+
+
+
 function processGyro(alpha,beta,gamma)
 { 	
 	document.getElementById("alpha").innerHTML=alpha.toFixed(5);
@@ -83,16 +89,21 @@ function processGyro(alpha,beta,gamma)
 	 document.getElementById("w").innerHTML=gyro.w.toFixed(5);
 }
 	
+
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
 context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
 context.canvas.height = window.innerHeight;
 context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
+
+
+
 function computeQuaternionFromEulers(alpha,beta,gamma)//Alpha around Z axis, beta around X axis and gamma around Y axis intrinsic local space in that order(each axis moves depending on how the other moves so processing order is important)
 {
 	var x = degToRad(beta) ; // beta value
 	var y = degToRad(gamma) ; // gamma value
 	var z = degToRad(alpha) ; // alpha value
+
 	//precompute to save on processing time
 	var cX = Math.cos( x/2 );
 	var cY = Math.cos( y/2 );
@@ -100,12 +111,15 @@ function computeQuaternionFromEulers(alpha,beta,gamma)//Alpha around Z axis, bet
 	var sX = Math.sin( x/2 );
 	var sY = Math.sin( y/2 );
 	var sZ = Math.sin( z/2 );
+
 	var w = cX * cY * cZ - sX * sY * sZ;
 	var x = sX * cY * cZ - cX * sY * sZ;
 	var y = cX * sY * cZ + sX * cY * sZ;
 	var z = cX * cY * sZ + sX * sY * cZ;
+
 	return makeQuat(x,y,z,w);	  
 }
+
 function quaternionMultiply(quaternionArray)// multiplies 2 or more quatoernions together (remember order is important although the code goes from first to last the way to think about the rotations is last to first)
 {	
 	//var qSoFar = quaternionArray[quaternionArray.length-1];//javascript passes objects by reference so this is troublesome
@@ -129,14 +143,17 @@ function quaternionMultiply(quaternionArray)// multiplies 2 or more quatoernions
 	
 	return qSoFar;
 }
+
 function inverseQuaternion(q)
 {
 	return makeQuat(q.x,q.y,q.z,-q.w);
 }
+
 function degToRad(deg)// Degree-to-Radian conversion
 {
 	 return deg * Math.PI / 180; 
 }
+
 function makeRect(width,height,depth)//returns a 3D box like object centered around the origin. There are more than 8 points for this cube as it is being made by chaining together a strip of triangles so points are redundant at least 3x. Confusing for now (sorry) but this odd structure comes in handy later for transitioning into webgl
 {
 	var newObj={};
@@ -159,6 +176,7 @@ function makeRect(width,height,depth)//returns a 3D box like object centered aro
 	
 	return newObj;
 }
+
 var cube=makeRect(canvas.width/5,canvas.width/5,canvas.width/5);
 cube.color="purple";
 var xAxis=makeRect(440,10,10);
@@ -167,6 +185,9 @@ var yAxis=makeRect(10,440,10);
 yAxis.color="red";
 var zAxis=makeRect(10,10,440);
 zAxis.color="blue";
+
+
+
 function renderObj(obj,q)//renders an object as a series of triangles
 {
 	var rotatedObj=rotateObject(obj,q);
@@ -197,6 +218,7 @@ function renderObj(obj,q)//renders an object as a series of triangles
 		}
 	}
 }
+
 function rotateObject(obj,q) //object , quternion to rotate rotates obeject
 {
 	var newObj={};
@@ -208,10 +230,12 @@ function rotateObject(obj,q) //object , quternion to rotate rotates obeject
 	}
 	return newObj;
 }
+
 function rotatePointViaQuaternion(pointRa,q)
 {
 	var tempQuot = {'x':pointRa[0], 'y':pointRa[1], 'z':pointRa[2], 'w':0 };
 	var rotatedPoint=quaternionMultiply([ q , tempQuot, conjugateQuot(q)]);//inverseQuaternion(q) also works 
+
 	return [rotatedPoint.x,rotatedPoint.y,rotatedPoint.z];
 	
 	function conjugateQuot(qq)
@@ -225,15 +249,19 @@ function rotatePointViaQuaternion(pointRa,q)
 var userQuat=quatFromAxisAngle(0,0,0,0);//a quaternion to represent the users finger swipe movement - default is no rotation
 var prevTouchX = -1; // -1 is flag for no previous touch info
 var prevTouchY = -1;
+
 //touch
 document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 document.addEventListener("touchmove", touchmoveFunc, true);
 document.addEventListener("touchend", touchEndFunc, true);
+
+
 function touchStartFunc(e)
 {
 	prevTouchY=e.touches[0].clientY;
 	prevTouchX=e.touches[0].clientX;
 }
+
 function touchmoveFunc(e)
 {
 	if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
@@ -242,33 +270,41 @@ function touchmoveFunc(e)
 	}
 	userXYmove(e.touches[0].clientX,e.touches[0].clientY);
 }
+
 function touchEndFunc(e)
 {
   prevTouchX = -1;
   prevTouchY = -1;
 }
+
 //add minimal mouse support too
 document.addEventListener("mousedown", mouseDownFunc, true);
 document.addEventListener("mousemove", mouseMoveFunc, true);
 document.addEventListener("mouseup", mouseUpFunc, true);
+
 function mouseDownFunc(e)
 {
   prevTouchX = e.clientX;
   prevTouchY = e.clientY;
 }
+
 function mouseMoveFunc(e)
 {
 	if (prevTouchX!= -1)
 		userXYmove(e.clientX,e.clientY);
 }
+
 function mouseUpFunc(e)
 {
   prevTouchX = -1;
   prevTouchY = -1;
 }
+
+
 	
 function userXYmove(x,y)
 {
+
 	document.getElementById("userX").innerHTML=x;
 	document.getElementById("userY").innerHTML=y;
 	
@@ -284,14 +320,17 @@ function userXYmove(x,y)
 	 var xMovementQuat=quatFromAxisAngle(1,0,0,yMovement/200);//movement on y rotates x and vice versa
 	 var yMovementQuat=quatFromAxisAngle(0,1,0,xMovement/200);//200 is there to scale the movement way down to an intuitive amount	 
 	  userQuat=quaternionMultiply([gyro,yMovementQuat,xMovementQuat,inverseQuaternion(gyro),userQuat]);//use reverse order
+
 	}
 	prevTouchY=y;
 	prevTouchX=x;
 }
+
 function makeQuat(x,y,z,w)//simple utitlity to make quaternion object
 {
 	return  {"x":x,"y":y,"z":z,"w":w};
 }
+
 function quatFromAxisAngle(x,y,z,angle)
 {
 	var q={};
