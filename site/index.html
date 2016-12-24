@@ -42,7 +42,8 @@
 
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
-    var initialAlpha = -1,alpha=0;
+    var initialAlpha = -1;
+    var alpha=0;
     context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
 	context.canvas.height = window.innerHeight;
     var centerX = canvas.width / 2;
@@ -64,7 +65,7 @@
     	window.addEventListener("deviceorientation", function () {//gyro
     		if (initialAlpha == -1)
     	{
-    		initialAlpha=event.alfa;
+    		initialAlpha=event.alpha;
     		
     	}
     	Alpha=event.alpha-initialAlpha;
