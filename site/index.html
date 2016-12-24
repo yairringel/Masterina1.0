@@ -61,7 +61,7 @@
     var x=0;
     var y=0;
     var z=100;
-
+    var pointRA=[];
 
     if (window.DeviceOrientationEvent) 
     {//
@@ -99,15 +99,15 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.alpha=alpha;
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
-	x=rotatePointViaGyroEulars(x,y,z);
+	pointRA=rotatePointViaGyroEulars(x,y,z);
 	drawCir(x,y);
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=beta;
 	document.getElementById("gamma").innerHTML =gamma;
-	document.getElementById("X").innerHTML =x;
-	document.getElementById("Y").innerHTML =y;
+	document.getElementById("X").innerHTML =pointRA[0];
+	document.getElementById("Y").innerHTML =pointRA[1];
 
 	
 }
@@ -146,7 +146,7 @@ function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angle
 	newX = oldX * Math.cos(-degToRad(deviceOrientationData.gamma)) + oldZ * Math.sin(-degToRad(deviceOrientationData.gamma));
 	document.getElementById("alpha").innerHTML=oldZ;
 	
-	return (newX);
+	return [newX,newY,newZ];
 }
 
 //========================================================================================================================================================================
