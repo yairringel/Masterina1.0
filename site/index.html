@@ -32,7 +32,8 @@
 	beta:<span id="beta"></span><br>
 	gamma:<span id="gamma"></span><br>
 	Beta:<span id="Beta"></span><br>
-	initialAlpha:<span id="Alpha"></span><br>
+	Gamma:<span id="Gamma"></span><br>
+	initialBeta:<span id="Alpha"></span><br>
 	<canvas id="myCanvas" style="border:2px solid;z-index: 3; "></canvas> 
 	<img src="masterina.png" style="position:absolute;left:2px;z-index: 2;">
 	<img src="masterina2.png" style="position:absolute;left:2px;z-index: 1;">
@@ -44,6 +45,7 @@
     var context = canvas.getContext('2d');
     var initialBeta = 1000;
     var Beta=0;
+    var Gamma=0;
     context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
 	context.canvas.height = window.innerHeight;
     var centerX = canvas.width / 2;
@@ -66,9 +68,10 @@
     		if (initialBeta == 1000)
     	{
     		initialBeta=event.beta;
-    		
+    		initialGamma=event.gamma;
     	}
     	Beta=event.beta-initialBeta;
+    	Gamma=event.gamma-initialGamma;
         processGyro(event.alpha, event.beta, event.gamma); 
     	}, true);
     	
@@ -80,6 +83,7 @@
 		document.getElementById("beta").innerHTML=beta;
 		document.getElementById("gamma").innerHTML =gamma;
 		document.getElementById("Beta").innerHTML =Beta;
+		document.getElementById("Gamma").innerHTML =Gamma;
 
 		document.getElementById("initialBeta").innerHTML =initialBeta;
 	}  
