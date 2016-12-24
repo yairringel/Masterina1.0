@@ -31,7 +31,7 @@
 	alpha:<span id="alpha"></span><br>
 	beta:<span id="beta"></span><br>
 	gamma:<span id="gamma"></span><br>
-	Alpha:<span id="Alpha"></span><br>
+	Beta:<span id="Beta"></span><br>
 	initialAlpha:<span id="Alpha"></span><br>
 	<canvas id="myCanvas" style="border:2px solid;z-index: 3; "></canvas> 
 	<img src="masterina.png" style="position:absolute;left:2px;z-index: 2;">
@@ -42,8 +42,8 @@
 
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
-    var initialAlpha = -1;
-    var Alpha=0;
+    var initialBeta = 1000;
+    var Beta=0;
     context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
 	context.canvas.height = window.innerHeight;
     var centerX = canvas.width / 2;
@@ -63,12 +63,12 @@
     {//
     	
     	window.addEventListener("deviceorientation", function () {//gyro
-    		if (initialAlpha == -1)
+    		if (initialBeta == 1000)
     	{
-    		initialAlpha=event.alpha;
+    		initialBeta=event.beta;
     		
     	}
-    	Alpha=event.alpha-initialAlpha;
+    	Beta=event.beta-initialBeta;
         processGyro(event.alpha, event.beta, event.gamma); 
     	}, true);
     	
@@ -79,8 +79,9 @@
 		document.getElementById("alpha").innerHTML=alpha;
 		document.getElementById("beta").innerHTML=beta;
 		document.getElementById("gamma").innerHTML =gamma;
-		document.getElementById("Alpha").innerHTML =Alpha;
-		document.getElementById("initialAlpha").innerHTML =initialAlpha;
+		document.getElementById("Beta").innerHTML =Beta;
+
+		document.getElementById("initialBeta").innerHTML =initialBeta;
 	}  
 		
  </script>
