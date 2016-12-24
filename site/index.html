@@ -84,9 +84,20 @@
 		document.getElementById("gamma").innerHTML =gamma;
 		document.getElementById("Beta").innerHTML =Beta;
 		document.getElementById("Gamma").innerHTML =Gamma;
-
-		document.getElementById("initialBeta").innerHTML =initialBeta;
+		drawCir(Beta,Gamma);
+		
 	}  
+
+	function drawCir(beta,gamma)
+	{
+		context.beginPath();
+	    context.arc(centerX+beta, centerY+gamma, radius, 0, 2 * Math.PI, false);
+	    context.fillStyle = 'green';
+	    context.fill();
+	    context.lineWidth = 5;
+	    context.strokeStyle = '#003300';
+	    context.stroke();  
+	}
 		
  </script>
 </html>
