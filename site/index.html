@@ -31,8 +31,8 @@
 	alpha:<span id="alpha"></span><br>
 	beta:<span id="beta"></span><br>
 	gamma:<span id="gamma"></span><br>
-	Beta:<span id="Beta"></span><br>
-	Gamma:<span id="Gamma"></span><br>
+	X:<span id="X"></span><br>
+	Y:<span id="Y"></span><br>
 	
 	<canvas id="myCanvas" style="border:2px solid;z-index: 3; "></canvas> 
 	<img src="masterina.png" style="position:absolute;left:2px;z-index: 2;">
@@ -67,13 +67,7 @@
     {//
     	
     	window.addEventListener("deviceorientation", function () {//gyro
-    		if (initialBeta == 1000)
-    	{
-    		initialBeta=event.beta;
-    		initialGamma=event.gamma;
-    	}
-    	Beta=event.beta-initialBeta;
-    	Gamma=event.gamma-initialGamma;
+    	
         processGyro(event.alpha, event.beta, event.gamma); 
     	}, true);
     	
@@ -112,8 +106,8 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=beta;
 	document.getElementById("gamma").innerHTML =gamma;
-	document.getElementById("Beta").innerHTML =Beta;
-	document.getElementById("Gamma").innerHTML =Gamma;
+	document.getElementById("X").innerHTML =x;
+	document.getElementById("Y").innerHTML =y;
 
 	
 }
