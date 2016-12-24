@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<script type="text/javascript" src="paper-full.js"></script>
+
+   		 <script type="text/paperscript" canvas="layer2">
+       //var fs = require('fs');
+document.getElementById("layer1").style.cursor="crosshair";  
+ console.log("iiii");    
+//document.body.style.backgroundColor = "0000";
+//document.getElementById("layer1").style.backgroundColor = 'rgba(0, 0,0,1)';
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ VAR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+var oldX=0,oldY=0,X=0,Y=0
+bitMdown=false;
+var path,path1;
+var point;
+
+//==========================================================================================btns========================================================================
+var pie_array = ["grafix/pieType1.png", "grafix/pieType3.png", "grafix/pieType4.png", "grafix/pieType6.png", "grafix/pieType8.png", "grafix/pieType12.png"];
+iPie = 0;
+var mirror_array = ["grafix/mirror1.png", "grafix/mirror2.png"];
+iMirror = 0;
+
+
+init();
+ 
+    
+
+    // read the width and height of the canvas
+    width = element.width;
+    height = element.height;
+
+    // create a new batch of pixels with the same
+    // dimensions as the image:
+    imageData = c.createImageData(width, height);
+//==================================================================================== FUNCTIONS ===================================================================================
+
+function init() {
+        
+
+        console.log("init");
+        canvas1 = document.getElementById('layer1');
+        ctx1 = canvas1.getContext("2d");
+        
+        canvas2 = document.getElementById('layer2');
+        ctx2 = canvas1.getContext("2d");
+        
+
+       
+        width =canvas1.width;
+        height = canvas1.height;
+       
+
+        canvas1.addEventListener("mousedown", function (e) {
+            bitMdown=true;
+            
+            if (path)  path.selected = false; }
+               path = new Path({strokeWidth: 10, strokeCap : 'round', strokeColor: "red", }); 
+             if (path1)  path1.selected = false; }
+               path1 = new Path({strokeWidth: 10, strokeCap : 'round', strokeColor: "red", });    
+        }, false);
+                
+               
+               
+
+               
+           
+        canvas1.addEventListener("mousemove", function (e) {
+            if (bitMdown){
+                path1(e);}
+                }, false);
+          
+        canvas1.addEventListener("mouseup", function (e) {
+            bitMdown=false;
+            path.simplify(10);
+            }, false);
+        initCircles();  
+     }   
+     
+
+    function initCircles(){
+        console.log("CIRCL11111E");
+        //drawing black circle
+        
+
+        ctx2.beginPath();
+
+        ctx2.arc(150,100, 200, 0, 2 * Math.PI, false);
+        ctx2.lineWidth = 10;
+        ctx2.strokeStyle = 'rgba(0,0,0,0.5)';
+        ctx2.globalAlpha=250;
+        ctx2.stroke();
+        ctx2.closePath();
+        
+        //drawing grey circle
+        ctx2.beginPath();
+        ctx2.arc(100, 100, 210, 0, 2 * Math.PI, false);
+        ctx2.lineWidth = 12;
+        ctx2.strokeStyle = '#454545';
+        ctx2.stroke();
+        ctx2.closePath();
+
+    }
+    function funcPie(){
+        console.log("pie");
+        iPie++;
+         document.getElementById("pieType").src = pie_array[iPie];
+        if (iPie == pie_array.length - 1) {
+            iPie = -1;
+        }
+    }
+    function funcMirror(){
+        
+        console.log("mirror");
+        iMirror++;
+         document.getElementById("mirror").src = mirror_array[iMirror];
+        if (iMirror == mirror_array.length - 1) {
+            iMirror = -1;
+        }
+    }
+
+
+
+
+function path1(e){
+    
+    path.add(e.clientX-ctx2.offsetLeft,e.clientY-offsetTop);
+    // path1.add(e.clientX-158,e.clientY-90);
+    
+   
+}
+
+        
+
+function onMouseDown(event) {
+    // If we produced a path before, deselect it:
+    if (path) {
+        path.selected = false;
+        path1.selected = false;
+    }
+
+    // Create a new path and set its stroke color to black:
+    path = new Path({
+        segments: [event.point],
+        strokeColor: 'black',
+        // Select the path, so we can see its segment points:
+        //fullySelected: true
+    });
+    path1 = new Path({
+        segments: [event.point],
+        strokeColor: 'blue',
+        // Select the path, so we can see its segment points:
+        //fullySelected: true
+    });
+}
+
+// While the user drags the mouse, points are added to the path
+// at the position of the mouse:
+function onMouseDrag(event) {
+    path.add(event.point);
+    path1.add(event.point.x-10,event.point.y-10);
+    point=event.point;
+    //textItem.content = point;
+    
+    // Update the content of the text item to show how many
+    // segments it has:
+    //textItem.content = 'Segment count: ' + path.segments.length;
+}
+
+// When the mouse is released, we simplify the path:
+function onMouseUp(event) {
+    var segmentCount = path.segments.length;
+
+    // When the mouse is released, simplify it:
+    path.simplify(100);
+    //path1.simplify(20);
+
+    // Select the path, so we can see its segments:
+    //path.fullySelected = true;
+
+    var newSegmentCount = path.segments.length;
+    var difference = segmentCount - newSegmentCount;
+    var percentage = 100 - Math.round(newSegmentCount / segmentCount * 100);
+    var svg = project.exportSVG({ asString: true });
+
+    
+    //download('test.svg',svg)
+   //layer1.style.z-index=1;
+}
+function linkDownload(a, filename, content) {
+        contentType =  'data:application/octet-stream,';
+        uriContent = contentType + encodeURIComponent(content);
+        a.setAttribute('href', uriContent);
+        a.setAttribute('download', filename);
+}
+function download(filename, content) {
+        var a = document.createElement('a');
+        linkDownload(a, filename, content);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+}
+    </script>
+</head>
+
+
+
+ <body >
+		
+			
+		<!-img type="image" id="bg"  src="grafix/bg.jpg"  style="position:absolute;left:180px;top:90px;border:2px; solid;z-index: 0;"/>		
+		<img type="image" id="top"  src="grafix/top.png" />
+		<img type="image" id="left"  src="grafix/left.jpg" />
+		<img type="image" id="pieBG"  src="grafix/btnBG.png"  style="position:absolute;top:180px;left:20px" />
+	    <input type="image" id="pieType" src="grafix/pieType1.png" onclick="funcPie()" style="position:absolute;top:180px;left:25px ;z-index: 1;"/>
+	    <img type="image" id="mirrorBG"  src="grafix/btnBG.png" style="position:absolute;top:180px;left:100px" />
+	    <input type="image" id="mirror" src="grafix/mirror1.png" onclick="funcMirror()" style="position:absolute;top:185px;left:105px ;z-index: 0"/>
+        <canvas id="layer1" width="1400" height="1000" style="position:absolute;left:180px;top:90px;border:2px; solid;z-index: 1;"></canvas>
+		<canvas id="layer2" width="1400" height="1000" style="position:absolute;top:90px; z-index: 0;"></canvas>
+
+        <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+       
+		<div type="number" value="2" id="FontDisplay" size="10" style="position:absolute;top:40%;left:2%;">
+		
+		
+  </body>
+</html>
