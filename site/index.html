@@ -99,7 +99,7 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.alpha=alpha;
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
-	pointRA=rotatePointViaGyroEulars(x,y,z);
+	rotatePointViaGyroEulars(x,y,z);
 	drawCir(x,y);
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
@@ -149,7 +149,7 @@ function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angle
 	y=newY;
 	z=newZ;
 
-	return [newX,newY,newZ];
+	
 }
 
 //========================================================================================================================================================================
