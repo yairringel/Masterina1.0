@@ -41,7 +41,7 @@
 
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
-    var initialAlpaa = -1,alpha=0;
+    var initialAlpha = -1,alpha=0;
     context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
 	context.canvas.height = window.innerHeight;
     var centerX = canvas.width / 2;
@@ -59,13 +59,14 @@
 
     if (window.DeviceOrientationEvent) 
     {//
-    	if (initialAlpha == -1)
+    	
+    	window.addEventListener("deviceorientation", function () {//gyro
+    		if (initialAlpha == -1)
     	{
-    		initialAlpha=event.Alpha;
+    		initialAlpha=event.alfa;
     		
     	}
     	Alpha=event.Alpha-initialAlpha;
-    	window.addEventListener("deviceorientation", function () {//gyro
         processGyro(event.alfa, event.beta, event.gamma); 
     	}, true);
     	console.log(Alpha);
