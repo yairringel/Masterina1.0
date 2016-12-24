@@ -33,7 +33,7 @@
 	gamma:<span id="gamma"></span><br>
 	Beta:<span id="Beta"></span><br>
 	Gamma:<span id="Gamma"></span><br>
-	initialBeta:<span id="Alpha"></span><br>
+	
 	<canvas id="myCanvas" style="border:2px solid;z-index: 3; "></canvas> 
 	<img src="masterina.png" style="position:absolute;left:2px;z-index: 2;">
 	<img src="masterina2.png" style="position:absolute;left:2px;z-index: 1;">
@@ -91,7 +91,7 @@
 	function drawCir(beta,gamma)
 	{
 		context.beginPath();
-	    context.arc(centerX+beta, centerY+gamma, radius, 0, 2 * Math.PI, false);
+	    context.arc(centerX+gamma*3, centerY+beta*3, radius, 0, 2 * Math.PI, false);
 	    context.fillStyle = 'green';
 	    context.fill();
 	    context.lineWidth = 5;
