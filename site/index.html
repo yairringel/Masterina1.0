@@ -105,7 +105,7 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(x,y,z);
-	drawCir(-x,y);
+	drawCir(-x*1.3,y);
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
@@ -128,8 +128,8 @@ function degToRad(deg)// Degree-to-Radian conversion
 function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angles
 {
 	var oldX=0;
-	var oldY=-400;
-	var oldZ=400;
+	var oldY=-600;
+	var oldZ=600;
 	
 	//order here is important - it must match the processing order of the device
 	
