@@ -24,10 +24,15 @@
     top:0px;
 	
   } 
-  @media (orientation: portrait) {
-.playfield { display: block; }
-.overlay { display: none; }
+  .orientleft #shell {
+    -webkit-transform: rotate(-90deg);
+    -webkit-transform-origin:160px 160px;
 }
+
+.orientright #shell {
+    -webkit-transform: rotate(90deg);
+    -webkit-transform-origin:230px 230px;
+} 
 </style>
  
 
@@ -55,14 +60,8 @@
 	context.canvas.height = window.innerHeight;
     var radius = 70;
     context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
-    context.beginPath();
-    context.arc(0, 0, radius, 0, 2 * Math.PI, false);
-    context.fillStyle = 'green';
-    context.fill();
-    context.lineWidth = 5;
-    context.strokeStyle = '#003300';
-    context.stroke();  
-    var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
+     
+    //var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
     var x=400;
     var y=0;
     var z=400;
@@ -96,7 +95,17 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//===============================================================================================================================================================================
 
-
+window.addEventListener('orientationchange', function () {
+    if (window.orientation == -90) {
+        document.getElementById('orient').className = 'orientright';
+    }
+    if (window.orientation == 90) {
+        document.getElementById('orient').className = 'orientleft';
+    }
+    if (window.orientation == 0) {
+        document.getElementById('orient').className = '';
+    }
+}, true);
 
 
 function processGyro(alpha,beta,gamma)
