@@ -4,35 +4,23 @@
 <meta charset="UTF-8">
 <title>Gyro Demo</title>
     <style>
-      body 
-	  {
-        margin: 0px;
-        padding: 0px;
-		font-size:60px;
-      }
-	  canvas 
-	  { 
-		margin: 0px;
-		width: 100%; 
-		height: 100% ;
-		/*The following are not mandatory for canvas to work, but are there becuase we want the canvas to take up the whole screen while still being able to see the original text*/
-		position: fixed;
-		top:0px;
-		z-index: -10;
-	  }
-	  
-	  #qautInfo
-	  {
-		  position:fixed;
-		  bottom:0px;
-		  right:0px;
-	  }
-	  #mouseInfo
-	  {
-		position:fixed;
-		bottom:0px;
-		left:0px;
-	  }
+     body 
+  {
+	margin: 0px;
+	padding: 0px;
+	font-size:60px;
+	position: fixed;
+}
+  canvas
+  { 
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	left:0px;
+    top:0px;
+	
+  } 
+  
 	  
     </style>
 
@@ -61,6 +49,32 @@
     <script>
 	
 	
+var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+    context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
+	context.canvas.height = window.innerHeight;
+    context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
+    var initialBeta = 1000;
+    var Beta=0;
+    var Gamma=0;
+    
+    var radius = 70;
+    
+    context.beginPath();
+    context.arc(0, 0, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = 'green';
+    context.fill();
+    context.lineWidth = 5;
+    context.strokeStyle = '#003300';
+    context.stroke();  
+
+    var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
+    var X=0;
+    var Y=0;
+    var Z=100;
+    var pointRA=[];
+
+
 	
 
 var gyro=quatFromAxisAngle(0,0,0,0);
@@ -81,42 +95,17 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("gamma").innerHTML =gamma.toFixed(5);
 	
 	gyro=computeQuaternionFromEulers(alpha,beta,gamma);
-	 rotatePointViaQuaternion([0,0,500],gyro) 
+	 rotatePointViaQuaternion([0,0,500],gyro)
+	 drawCir(X,Y) 
 
-	 document.getElementById("X").innerHTML=X;
-	 document.getElementById("Y").innerHTML=Y;
+	 document.getElementById("x").innerHTML=X;
+	 document.getElementById("y").innerHTML=Y;
 	 document.getElementById("z").innerHTML=gyro.z.toFixed(5);
 	 document.getElementById("w").innerHTML=gyro.w.toFixed(5);
 }
 	
 
 
-var canvas = document.getElementById('myCanvas');
-    var context = canvas.getContext('2d');
-    var initialBeta = 1000;
-    var Beta=0;
-    var Gamma=0;
-    context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
-	context.canvas.height = window.innerHeight;
-    var radius = 70;
-    context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
-
-    context.beginPath();
-    context.arc(0, 0, radius, 0, 2 * Math.PI, false);
-    context.fillStyle = 'green';
-    context.fill();
-    context.lineWidth = 5;
-    context.strokeStyle = '#003300';
-    context.stroke();  
-
-    var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
-    var X=0;
-    var Y=0;
-    var Z=100;
-    var pointRA=[];
-context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
-context.canvas.height = window.innerHeight;
-context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
 
 function drawCir(xx,yy)
 	{
@@ -306,23 +295,6 @@ function quatFromAxisAngle(x,y,z,angle)
 </script>
 
 
-<!-- statcounter stuff is not necessary or part of the tutorial-->
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=10456246; 
-var sc_invisible=1; 
-var sc_security="5f76c7a5"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="web statistics"
-href="http://statcounter.com/" target="_blank"><img
-class="statcounter"
-src="http://c.statcounter.com/10456246/0/5f76c7a5/1/"
-alt="web statistics"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
+
 </body>
 </html>
