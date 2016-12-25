@@ -12,7 +12,7 @@
   {
 	margin: 0px;
 	padding: 0px;
-	font-size:60px;
+	font-size:30px;
 	position: fixed;
 }
   canvas
@@ -24,15 +24,16 @@
     top:0px;
 	
   } 
-  .orientleft #shell {
-    -webkit-transform: rotate(-90deg);
-    -webkit-transform-origin:160px 160px;
-}
-
-.orientright #shell {
-    -webkit-transform: rotate(90deg);
-    -webkit-transform-origin:230px 230px;
-} 
+  img
+  { 
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	left:-20px;
+    top:-10px;
+	
+  } 
+  
 </style>
  
 
@@ -44,9 +45,9 @@
 	Y:<span id="Y"></span><br>
 	7:<span id="Z"></span><br>
 	
-	<canvas id="myCanvas" style="border:2px solid;z-index: 3; "></canvas> 
-	<img src="masterina.png" style="position:absolute;left:2px;z-index: 2;">
-	<img src="masterina2.png" style="position:absolute;left:2px;z-index: 1;">
+	<canvas id="myCanvas" style="border:6px solid;z-index: 3; "></canvas> 
+	<img src="bg.jpg" style="border:2px solid;z-index: -2;">
+	
 </body>
 <script type="text/javascript">
 
