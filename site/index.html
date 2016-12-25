@@ -95,10 +95,10 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("gamma").innerHTML =gamma.toFixed(5);
 	
 	gyro=computeQuaternionFromEulers(alpha,beta,gamma);
-	// rotatePointViaQuaternion([0,0,500],gyro)
+	rotatePointViaQuaternion([0,0,500],gyro)
 	 drawCir(X,Y) 
 
-	 document.getElementById("x").innerHTML=gyro;
+	 document.getElementById("x").innerHTML=X;
 	 document.getElementById("y").innerHTML=Y;
 	 document.getElementById("z").innerHTML=gyro.z.toFixed(5);
 	 document.getElementById("w").innerHTML=gyro.w.toFixed(5);
@@ -187,6 +187,10 @@ function rotatePointViaQuaternion(pointRa,q)
 	X=rotatedPoint.x;
 	Y=rotatedPoint.y;
 	Z=rotatedPoint.z;
+	function conjugateQuot(qq)
+	{
+		return makeQuat(-qq.x,-qq.y,-qq.z,qq.w);//return {"x":-qq.x,"y":-qq.y,"z":-qq.z,"w": qq.w};
+	}
 	//function conjugateQuot(qq)
 	//{
 	//	return makeQuat(-qq.x,-qq.y,-qq.z,qq.w);//return {"x":-qq.x,"y":-qq.y,"z":-qq.z,"w": qq.w};
