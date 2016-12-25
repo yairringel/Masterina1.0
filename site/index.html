@@ -66,6 +66,8 @@
     var x=0;
     var y=0;
     var z=0;
+    var startY;
+    var startZ;
     var pointRA=[];
 
     if (window.DeviceOrientationEvent) 
@@ -74,8 +76,8 @@
     	window.addEventListener("deviceorientation", function () {//gyro
     	if (first==0)
     	{
-    		y=Math.sin(event.beta);
-    		z=Math.cos(event.beta);
+    		startY=Math.sin(event.beta);
+    		startZ=Math.cos(event.beta);
     		first=1;	
     	}	
     	
@@ -110,15 +112,15 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.alpha=alpha;
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
-	rotatePointViaGyroEulars(x,y,z);
+	rotatePointViaGyroEulars(x,startY,startZ);
 	drawCir(-x*1.3,y);
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=beta;
 	document.getElementById("gamma").innerHTML =first;
-	document.getElementById("X").innerHTML =y;
-	document.getElementById("Y").innerHTML =z;
+	document.getElementById("X").innerHTML =startY;
+	document.getElementById("Y").innerHTML =startZ;
 
 	
 }
