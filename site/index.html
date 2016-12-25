@@ -95,7 +95,7 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("gamma").innerHTML =gamma.toFixed(5);
 	
 	gyro=computeQuaternionFromEulers(alpha,beta,gamma);
-	rotatePointViaQuaternion([0,0,500],gyro)
+	rotatePointViaQuaternion([0,0,900],gyro)
 	 drawCir(-X,Y) 
 
 	 document.getElementById("x").innerHTML=X;
