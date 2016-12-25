@@ -74,8 +74,8 @@
     	window.addEventListener("deviceorientation", function () {//gyro
     	if (first==0)
     	{
-    		y=sin(event.beta);
-    		z=cos(event.beta);
+    		y=Math.sin(event.beta);
+    		z=Math.cos(event.beta);
     		first=1;	
     	}	
     	
