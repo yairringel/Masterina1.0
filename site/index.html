@@ -98,7 +98,7 @@ function processGyro(alpha,beta,gamma)
 	 rotatePointViaQuaternion([0,0,500],gyro)
 	 drawCir(X,Y) 
 
-	 document.getElementById("x").innerHTML=X;
+	 document.getElementById("x").innerHTML=gyro;
 	 document.getElementById("y").innerHTML=Y;
 	 document.getElementById("z").innerHTML=gyro.z.toFixed(5);
 	 document.getElementById("w").innerHTML=gyro.w.toFixed(5);
