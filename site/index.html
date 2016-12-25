@@ -96,7 +96,7 @@ function processGyro(alpha,beta,gamma)
 	
 	gyro=computeQuaternionFromEulers(alpha,beta,gamma);
 	rotatePointViaQuaternion([0,0,500],gyro)
-	 drawCir(X,Y) 
+	 drawCir(-X,Y) 
 
 	 document.getElementById("x").innerHTML=X;
 	 document.getElementById("y").innerHTML=Y;
@@ -273,7 +273,8 @@ function userXYmove(x,y)
 	 var xMovementQuat=quatFromAxisAngle(1,0,0,yMovement/200);//movement on y rotates x and vice versa
 	 var yMovementQuat=quatFromAxisAngle(0,1,0,xMovement/200);//200 is there to scale the movement way down to an intuitive amount	 
 	  userQuat=quaternionMultiply([gyro,yMovementQuat,xMovementQuat,inverseQuaternion(gyro),userQuat]);//use reverse order
-
+	  X=userQuat[0];
+	  Y=userQuat[1];
 	}
 	prevTouchY=y;
 	prevTouchX=x;
