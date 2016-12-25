@@ -61,17 +61,23 @@
 	context.canvas.height = window.innerHeight;
     var radius = 70;
     context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
-     
+    var first=0; 
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
-    var x=400;
+    var x=0;
     var y=0;
-    var z=400;
+    var z=0;
     var pointRA=[];
 
     if (window.DeviceOrientationEvent) 
     {//
     	
     	window.addEventListener("deviceorientation", function () {//gyro
+    	if (first==0)
+    	{
+    		y=sin(event.beta);
+    		z=cos(event.beta);
+    		first=1;	
+    	}	
     	
         processGyro(event.alpha, event.beta, event.gamma); 
     	}, true);
@@ -127,9 +133,9 @@ function degToRad(deg)// Degree-to-Radian conversion
 
 function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angles
 {
-	var oldX=0;
-	var oldY=-600;
-	var oldZ=600;
+	var oldX=a;
+	var oldY=b;
+	var oldZ=c;
 	
 	//order here is important - it must match the processing order of the device
 	
