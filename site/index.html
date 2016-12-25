@@ -61,7 +61,7 @@
     var radius = 70;
     context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
      
-    //var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
+    var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
     var x=400;
     var y=0;
     var z=400;
@@ -95,17 +95,7 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//===============================================================================================================================================================================
 
-window.addEventListener('orientationchange', function () {
-    if (window.orientation == -90) {
-        document.getElementById('orient').className = 'orientright';
-    }
-    if (window.orientation == 90) {
-        document.getElementById('orient').className = 'orientleft';
-    }
-    if (window.orientation == 0) {
-        document.getElementById('orient').className = '';
-    }
-}, true);
+
 
 
 function processGyro(alpha,beta,gamma)
@@ -188,7 +178,17 @@ function computeQuaternionFromEulers(alpha,beta,gamma)//Alpha around Z axis, bet
 	y=qy;
 	z=qz;	  
 }
-
+window.addEventListener('orientationchange', function () {
+    if (window.orientation == -90) {
+        document.getElementById('orient').className = 'orientright';
+    }
+    if (window.orientation == 90) {
+        document.getElementById('orient').className = 'orientleft';
+    }
+    if (window.orientation == 0) {
+        document.getElementById('orient').className = '';
+    }
+}, true);
 //========================================================================================================================================================================
 //========================================================================================================================================================================
 
