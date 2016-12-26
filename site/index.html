@@ -125,7 +125,19 @@
 	    context.strokeStyle = '#003300';
 	    context.stroke();  
 	}
+	function drawCir2(xx,yy)
+	{
+		context.beginPath();
+	    context.arc(xx, yy, radius-60, 0, 2 * Math.PI, false);
 
+	    // context.fillStyle = 'green';
+	    //context.fill();
+	    context.lineWidth = 2;
+	    context.strokeStyle = '#003300';
+	    context.stroke();  
+
+	    
+	}
 
 
 function processGyro(alpha,beta,gamma)
@@ -134,10 +146,14 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
-	drawCir(0,0);
+	
 	if (bitTouch)
 	{
-		drawCir(0+userX,0+userY);	
+		drawCir2(0+userX,0+userY);	
+	}
+	else
+	{
+		drawCir(0,0);
 	}
 
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
