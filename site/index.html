@@ -24,15 +24,14 @@
     top:0px;
 	
   } 
- /* img
+ img
   { 
 	margin: 0px;
 	padding: 0px;
 	position: absolute;
-	left:-120px;
-    top:-210px;
 	
-  }*/ 
+	
+  } 
   
 </style>
  
@@ -46,7 +45,7 @@
 	Z:<span id="Z"></span><br>
 	
 	<canvas id="myCanvas" style=" border:6px solid;z-index: 3; "></canvas> 
-	<img id="img1" src="bg.jpg" style ="position:absolute; left: 500; top: 100;">
+	<img id="img1" src="bg.jpg" style ="position:absolute;">
 	
 </body>
 <script type="text/javascript">
@@ -118,7 +117,7 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
 	drawCir(-x,y);
-	document.getElementById("img1").style.left  =x+"px";
+	document.getElementById("img1").style.left  =-x+"px";
 	document.getElementById("img1").style.top  = y+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
