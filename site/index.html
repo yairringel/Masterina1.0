@@ -242,6 +242,7 @@ function touchStartFunc(e)
 
 function touchmoveFunc(e)
 {
+	bitTouch=true;
 	if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
 	{   
 	  e.preventDefault();
