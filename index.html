@@ -8,8 +8,9 @@
 
 
 <style>
-  body 
+ /body 
   {
+  	overflow:hidden; 
 	margin: 0px;
 	padding: 0px;
 	font-size:60px;
@@ -19,18 +20,17 @@
   { 
 	margin: 0px;
 	padding: 0px;
-	position: absolute;
+	position:fixed;
 	left:0px;
     top:0px;
 	
   } 
-  img
+ img
   { 
 	margin: 0px;
 	padding: 0px;
-	position: absolute;
-	left:-120px;
-    top:-210px;
+	position:fixed;
+	
 	
   } 
   
@@ -45,8 +45,9 @@
 	Y:<span id="Y"></span><br>
 	Z:<span id="Z"></span><br>
 	
-	<canvas id="myCanvas" style="border:6px solid;z-index: 3; "></canvas> 
-	<img src="bg.jpg" style="border:2px solid;z-index: -2;">
+	<canvas id="myCanvas" style=" border:6px solid;z-index: 3; "></canvas> 
+	<img id="img1" src="frame.jpg" style ="z-index: 2;">
+	<img id="img2" src="space.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
 	
 </body>
 <script type="text/javascript">
@@ -55,9 +56,10 @@
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var initialBeta = 1000;
-    
-    context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
-	context.canvas.height = window.innerHeight;
+    var width=window.innerWidth;
+    var height=window.innerHeight;
+    context.canvas.width  = width;//resize canvas to whatever window dimensions are
+	context.canvas.height = height;
     var radius = 70;
     context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
     var first=0; 
@@ -68,7 +70,19 @@
     var startY;
     var startZ;
     var pointRA=[];
-    var L1=500;
+    var L1=600;
+    
+    document.getElementById("img2").width  =width*1.5;
+    document.getElementById("img1").width  =height*1.5;
+    document.getElementById("img1").style.top  =-300;
+    document.getElementById("img1").style.left  =-300;
+    document.getElementById("img1").width  =width-300;
+    document.getElementById("img1").height  =height-300;
+    var imgWidth=document.getElementById("img1").width;
+    var imgHeight=document.getElementById("img1").height;
+    console.log(imgWidth);
+    console.log(imgHeight);
+
     if (window.DeviceOrientationEvent) 
     {//
     	
@@ -91,8 +105,8 @@
 	{
 		context.beginPath();
 	    context.arc(xx, yy, radius, 0, 2 * Math.PI, false);
-	    context.fillStyle = 'green';
-	    context.fill();
+	    // context.fillStyle = 'green';
+	    //context.fill();
 	    context.lineWidth = 5;
 	    context.strokeStyle = '#003300';
 	    context.stroke();  
@@ -112,7 +126,9 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
-	drawCir(-x,y);
+	drawCir(0,0);
+	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
+	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
