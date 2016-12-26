@@ -13,7 +13,7 @@
 	margin: 0px;
 	padding: 0px;
 	font-size:60px;
-	
+	position: fixed;
 }
   canvas
   { 
@@ -22,7 +22,7 @@
 	position: absolute;
 	left:0px;
     top:0px;
-	position:fixed;
+	
   } 
  /* img
   { 
@@ -37,18 +37,7 @@
 </style>
  
 
-<body >
-	alpha:<span id="alpha"></span><br>
-	beta:<span id="beta"></span><br>
-	gamma:<span id="gamma"></span><br>
-	L1:<span id="X"></span><br>
-	Y:<span id="Y"></span><br>
-	Z:<span id="Z"></span><br>
-	
-	<canvas id="myCanvas" style" border:6px solid;z-index: 3; "></canvas> 
-	<img id="img1" src="bg.jpg">
-	
-</body>
+
 <script type="text/javascript">
 
     
@@ -204,4 +193,16 @@ window.addEventListener('orientationchange', function () {
 
 		
  </script>
+ <body >
+	alpha:<span id="alpha"></span><br>
+	beta:<span id="beta"></span><br>
+	gamma:<span id="gamma"></span><br>
+	L1:<span id="X"></span><br>
+	Y:<span id="Y"></span><br>
+	Z:<span id="Z"></span><br>
+	
+	<canvas id="myCanvas" style" border:6px solid;z-index: 3; "></canvas> 
+	<img id="img1" src="bg.jpg">
+	
+</body>
 </html>
