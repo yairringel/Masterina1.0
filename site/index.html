@@ -56,9 +56,10 @@
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var initialBeta = 1000;
-    
-    context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
-	context.canvas.height = window.innerHeight;
+    var width=window.innerWidth;
+    var height=window.innerHeight;
+    context.canvas.width  = width;//resize canvas to whatever window dimensions are
+	context.canvas.height = height;
     var radius = 70;
     context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
     var first=0; 
@@ -70,8 +71,10 @@
     var startZ;
     var pointRA=[];
     var L1=600;
-
     
+
+    document.getElementById("img1").width  =width-300;
+    imgWidth=width-200;
 
 
     if (window.DeviceOrientationEvent) 
@@ -118,8 +121,8 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
 	drawCir(0,0);
-	document.getElementById("img1").style.left  =-x+ window.innerWidth/2-200+"px";
-	document.getElementById("img1").style.top  = y+ window.innerHeight/2-250+"px";
+	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
+	document.getElementById("img1").style.top  = y+height/2-250+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
