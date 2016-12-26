@@ -74,7 +74,8 @@
     
 
     document.getElementById("img1").width  =width-300;
-    imgWidth=width-200;
+    imgWidth=document.getElementById("img1").width;
+    imgHeight=document.getElementById("img1").height;
 
 
     if (window.DeviceOrientationEvent) 
@@ -122,7 +123,7 @@ function processGyro(alpha,beta,gamma)
 	rotatePointViaGyroEulars(0,startY,startZ);
 	drawCir(0,0);
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
-	document.getElementById("img1").style.top  = y+height/2-250+"px";
+	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
