@@ -46,7 +46,7 @@
 	Z:<span id="Z"></span><br>
 	
 	<canvas id="myCanvas" style="border:6px solid;z-index: 3; "></canvas> 
-	<img src="bg.jpg" style="border:2px solid;z-index: -2;">
+	<img id="img" src="bg.jpg" style="border:2px solid;z-index: -2;">
 	
 </body>
 <script type="text/javascript">
@@ -113,6 +113,8 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
 	drawCir(-x,y);
+	document.getElementById("img").style.left  = x;
+	document.getElementById("img").style.top  = y;
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
