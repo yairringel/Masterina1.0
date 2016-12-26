@@ -118,8 +118,8 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
 	drawCir(-x,y);
-	document.getElementById("img1").style.left  =x;
-	document.getElementById("img1").style.top  = y;
+	document.getElementById("img1").style.left  =x+"px";
+	document.getElementById("img1").style.top  = y+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
