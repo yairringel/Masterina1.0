@@ -37,7 +37,18 @@
 </style>
  
 
-
+<body >
+	alpha:<span id="alpha"></span><br>
+	beta:<span id="beta"></span><br>
+	gamma:<span id="gamma"></span><br>
+	L1:<span id="X"></span><br>
+	Y:<span id="Y"></span><br>
+	Z:<span id="Z"></span><br>
+	
+	<canvas id="myCanvas" style" border:6px solid;z-index: 3; "></canvas> 
+	<img id="img1" src="bg.jpg">
+	
+</body>
 <script type="text/javascript">
 
     
@@ -102,8 +113,8 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
 	drawCir(-x,y);
-	document.getElementById("img1").style.left  = x;
-	document.getElementById("img1").style.top  = y;
+	document.getElementById("img1").style.left  =100;
+	document.getElementById("img1").style.top  = 200;
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
@@ -193,16 +204,4 @@ window.addEventListener('orientationchange', function () {
 
 		
  </script>
- <body >
-	alpha:<span id="alpha"></span><br>
-	beta:<span id="beta"></span><br>
-	gamma:<span id="gamma"></span><br>
-	L1:<span id="X"></span><br>
-	Y:<span id="Y"></span><br>
-	Z:<span id="Z"></span><br>
-	
-	<canvas id="myCanvas" style" border:6px solid;z-index: 3; "></canvas> 
-	<img id="img1" src="bg.jpg">
-	
-</body>
 </html>
