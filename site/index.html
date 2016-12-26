@@ -112,7 +112,7 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
-	drawCir(-x,y);
+	drawCir(-x*1.3,y);
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
