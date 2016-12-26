@@ -105,9 +105,19 @@
 	{
 		context.beginPath();
 	    context.arc(xx, yy, radius, 0, 2 * Math.PI, false);
+
 	    // context.fillStyle = 'green';
 	    //context.fill();
 	    context.lineWidth = 5;
+	    context.strokeStyle = '#003300';
+	    context.stroke();  
+
+	    context.beginPath();
+	    context.lineWidth = 1;
+	    context.moveTo(-radius,0);
+		context.lineTo(radius, 0);
+		context.moveTo(0,radius);
+		context.lineTo(0,-radius);
 	    context.strokeStyle = '#003300';
 	    context.stroke();  
 	}
