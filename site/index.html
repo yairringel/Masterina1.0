@@ -119,9 +119,9 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=beta;
 	document.getElementById("gamma").innerHTML =gamma;
-	document.getElementById("X").innerHTML =Math.sin(L1);;
-	document.getElementById("Y").innerHTML =Math.cos(L1);
-
+	document.getElementById("X").innerHTML =L1;
+	document.getElementById("Y").innerHTML =Math.sin(L1);
+	document.getElementById("Z").innerHTML =Math.cos(L1);
 	
 }
 
