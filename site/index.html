@@ -42,12 +42,12 @@
 	beta:<span id="beta"></span><br>
 	gamma:<span id="gamma"></span><br>
 	L1:<span id="X"></span><br>
-	Y:<span id="Y"></span><br>
-	Z:<span id="Z"></span><br>
+	Y:<span id="Y" style ="z-index: 4;"></span><br>
+	Z:<span id="Z" style ="z-index: 4;"></span><br>
 	
 	<canvas id="myCanvas" style=" border:6px solid;z-index: 3; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
+	<img id="img2" src="space1.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
 	
 </body>
 <script type="text/javascript">
@@ -148,8 +148,8 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =x;
-	document.getElementById("Y").innerHTML =y;
-	document.getElementById("Z").innerHTML =z;
+	document.getElementById("Y").innerHTML =bitTouch;
+	document.getElementById("Z").innerHTML =userX;
 	
 }
 
@@ -253,11 +253,12 @@ function touchmoveFunc(e)
 
 function touchEndFunc(e)
 {
-	bitTouch=false;
+	
   prevTouchX = -1;
   prevTouchY = -1;
   userX=0;
 	userY=0;
+	bitTouch=false;
 }
 function userXYmove(ux,uy)
 {
