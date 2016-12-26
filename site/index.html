@@ -248,8 +248,7 @@ function touchmoveFunc(e)
 	  e.preventDefault();
 	}
 	userXYmove(e.touches[0].clientX,e.touches[0].clientY);
-	userX=e.touches[0].clientX;
-	userY=e.touches[1].clientY;
+	
 }
 
 function touchEndFunc(e)
@@ -270,6 +269,8 @@ function userXYmove(ux,uy)
 	{
 	  var xMovement=ux-prevTouchX;
 	  var yMovement=uy-prevTouchY;
+	  userX=ux-prevTouchX;
+	userY=uy-prevTouchY;
 	  //var xMovementQuat=quatFromAxisAngle(1,0,0,y/200);//movement on y rotates x and vice versa
 	  //var yMovementQuat=quatFromAxisAngle(0,1,0,x/200);//200 is there to scale the movement way down to an intuitive amount
 	 //userQuot=quaternionMultiply([yMovementQuat,xMovementQuat]);//use reverse order
