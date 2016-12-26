@@ -8,7 +8,7 @@
 
 
 <style>
-  body 
+ /body 
   {
 	margin: 0px;
 	padding: 0px;
@@ -45,8 +45,8 @@
 	Y:<span id="Y"></span><br>
 	Z:<span id="Z"></span><br>
 	
-	<canvas id="myCanvas" style" border:6px solid;z-index: 3; "></canvas> 
-	<img id="img1" src="bg.jpg">
+	<canvas id="myCanvas" style=" border:6px solid;z-index: 3; "></canvas> 
+	<img id="img1" src="bg.jpg" style ="position:absolute; left: 500; top: 100;">
 	
 </body>
 <script type="text/javascript">
@@ -69,6 +69,11 @@
     var startZ;
     var pointRA=[];
     var L1=600;
+
+    document.getElementById("img1").style.left  =400+"px";
+	document.getElementById("img1").style.top  = 200+"px";
+
+
     if (window.DeviceOrientationEvent) 
     {//
     	
