@@ -72,11 +72,16 @@
     var pointRA=[];
     var L1=600;
     
-
+    document.getElementById("img2").width  =width*1.5;
+    document.getElementById("img1").width  =height*1.5;
+    document.getElementById("img1").style.top  =-300;
+    document.getElementById("img1").style.left  =-300;
     document.getElementById("img1").width  =width-300;
-    imgWidth=document.getElementById("img1").width;
-    imgHeight=document.getElementById("img1").height;
-
+    document.getElementById("img1").height  =height-300;
+    var imgWidth=document.getElementById("img1").width;
+    var imgHeight=document.getElementById("img1").height;
+    console.log(imgWidth);
+    console.log(imgHeight);
 
     if (window.DeviceOrientationEvent) 
     {//
