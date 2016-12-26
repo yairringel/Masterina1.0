@@ -69,15 +69,15 @@
     var startY;
     var startZ;
     var pointRA=[];
-    var L1=100;
+    var L1=300;
     if (window.DeviceOrientationEvent) 
     {//
     	
     	window.addEventListener("deviceorientation", function () {//gyro
     	if (first==0)
     	{
-    		startZ=Math.sin(-(event.beta))*300;
-    		startY=Math.cos(-(event.beta))*300;
+    		startZ=Math.sin(degToRad(event.beta))*300;
+    		startY=Math.cos(degToRad(event.beta))*300;
     		first=1;	
     	}	
     	
@@ -120,8 +120,8 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("beta").innerHTML=beta;
 	document.getElementById("gamma").innerHTML =gamma;
 	document.getElementById("X").innerHTML =L1;
-	document.getElementById("Y").innerHTML =Math.sin(L1);
-	document.getElementById("Z").innerHTML =Math.cos(L1);
+	document.getElementById("Y").innerHTML =Math.sin(degToRad(L1);
+	document.getElementById("Z").innerHTML =Math.cos(degToRad(L1);
 	
 }
 
