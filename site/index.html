@@ -68,7 +68,7 @@
     var startY;
     var startZ;
     var pointRA=[];
-    var L1=300;
+    var L1=500;
     if (window.DeviceOrientationEvent) 
     {//
     	
@@ -135,8 +135,8 @@ function degToRad(deg)// Degree-to-Radian conversion
 function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angles
 {
 	var oldX=0;
-	var oldY=-400;
-	var oldZ=400;
+	var oldY=-startY;
+	var oldZ=startZ;
 	
 	//order here is important - it must match the processing order of the device
 	
