@@ -52,7 +52,9 @@
 </body>
 <script type="text/javascript">
 
-    
+ //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//===============================================================================================================================================================================
+   
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var initialBeta = 1000;
@@ -71,7 +73,9 @@
     var startZ;
     var pointRA=[];
     var L1=600;
-    
+    var bitTouch=false;
+    var userX=0;
+	var userY=0;
     document.getElementById("img2").width  =width*1.5;
     document.getElementById("img1").height  =height*1.5;
     document.getElementById("img1").style.top  =-300;
@@ -124,12 +128,6 @@
 
 
 
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//===============================================================================================================================================================================
-
-
-
-
 function processGyro(alpha,beta,gamma)
 { 
 	deviceOrientationData.alpha=alpha;
@@ -137,6 +135,11 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
 	drawCir(0,0);
+	if (bitTouch)
+	{
+		drawCir(0+userX,0+userY);	
+	}
+
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
@@ -225,6 +228,54 @@ window.addEventListener('orientationchange', function () {
 }, true);
 //========================================================================================================================================================================
 //========================================================================================================================================================================
+document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
+document.addEventListener("touchmove", touchmoveFunc, true);
+document.addEventListener("touchend", touchEndFunc, true);
+
+
+function touchStartFunc(e)
+{
+	bitTouch=true;
+	prevTouchY=e.touches[0].clientY;
+	prevTouchX=e.touches[0].clientX;
+}
+
+function touchmoveFunc(e)
+{
+	if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
+	{   
+	  e.preventDefault();
+	}
+	userXYmove(e.touches[0].clientX,e.touches[0].clientY);
+	userX=e.touches[0].clientX;
+	userY=e.touches[1].clientY;
+}
+
+function touchEndFunc(e)
+{
+	bitTouch=false;
+  prevTouchX = -1;
+  prevTouchY = -1;
+  userX=0;
+	userY=0;
+}
+function userXYmove(ux,uy)
+{
+
+	
+	
+	if(prevTouchX != -1 ) //need valid prevTouch info to calculate swipe
+	{
+	  var xMovement=ux-prevTouchX;
+	  var yMovement=uy-prevTouchY;
+	  //var xMovementQuat=quatFromAxisAngle(1,0,0,y/200);//movement on y rotates x and vice versa
+	  //var yMovementQuat=quatFromAxisAngle(0,1,0,x/200);//200 is there to scale the movement way down to an intuitive amount
+	 //userQuot=quaternionMultiply([yMovementQuat,xMovementQuat]);//use reverse order
+	 
+	}
+	prevTouchY=uy;
+	prevTouchX=ux;
+}
 
 		
  </script>
