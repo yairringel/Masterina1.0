@@ -68,7 +68,7 @@
     var startY;
     var startZ;
     var pointRA=[];
-    var L1=500;
+    var L1=600;
     if (window.DeviceOrientationEvent) 
     {//
     	
@@ -112,7 +112,7 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
 	rotatePointViaGyroEulars(0,startY,startZ);
-	drawCir(-x,y*1.3);
+	drawCir(-x,y);
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
