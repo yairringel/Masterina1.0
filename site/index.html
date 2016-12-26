@@ -55,8 +55,7 @@
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var initialBeta = 1000;
-    var Beta=0;
-    var Gamma=0;
+    
     context.canvas.width  = window.innerWidth;//resize canvas to whatever window dimensions are
 	context.canvas.height = window.innerHeight;
     var radius = 70;
@@ -76,8 +75,8 @@
     	window.addEventListener("deviceorientation", function () {//gyro
     	if (first==0)
     	{
-    		startZ=Math.sin(degToRad(event.beta))*L1;
-    		startY=Math.cos(degToRad(event.beta))*L1;
+    		startZ=Math.cos(degToRad(event.beta))*L1;
+    		startY=Math.sin(degToRad(event.beta))*L1;
     		first=1;	
     	}	
     	
@@ -119,7 +118,7 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=beta;
 	document.getElementById("gamma").innerHTML =gamma;
-	document.getElementById("X").innerHTML =L1;
+	document.getElementById("X").innerHTML =x;
 	document.getElementById("Y").innerHTML =Math.sin(degToRad(beta))*L1;
 	document.getElementById("Z").innerHTML =Math.cos(degToRad(beta))*L1;
 	
