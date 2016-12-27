@@ -246,8 +246,8 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =bitTouch;
-	document.getElementById("Y").innerHTML =prevTouchX;
-	document.getElementById("Z").innerHTML =prevTouchY;
+	document.getElementById("Y").innerHTML =userX+x;
+	document.getElementById("Z").innerHTML =userX+prevTouchY;
 
 }
 
