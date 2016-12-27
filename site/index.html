@@ -31,8 +31,13 @@
 	padding: 0px;
 	position:fixed;
 	
-	
   } 
+  input
+  {
+    margin: 0px;
+	padding: 0px;
+	position:fixed;	
+  }
   
 </style>
  
@@ -44,7 +49,7 @@
 	L1:<span id="X"></span><br>
 	Y:<span id="Y" style ="z-index: 4;"></span><br>
 	Z:<span id="Z" style ="z-index: 4;"></span><br>
-	
+	<input type="image" id="lockScreen" src="screenLock.png" onclick="funcLock()" style= "z-index: 5"/>
 	<canvas id="myCanvas" style=" border:6px solid;z-index: 4; "></canvas> 
 	<canvas id="myCanvas2" style="  solid;z-index: 3; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
@@ -52,7 +57,10 @@
 	
 </body>
 <script type="text/javascript">
-
+	function funcLock()
+	{
+		document.getElementById("lockScreen").style.zIndex  =-1;
+	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//===============================================================================================================================================================================
     
@@ -68,6 +76,7 @@
     
     var width=window.innerWidth;
     var height=window.innerHeight;
+
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
    	context.translate(canvas.width / 2, canvas.height / 2); 
@@ -87,6 +96,8 @@
 	var userY=0;
 	var firstX=0;
 	var firstY=0;
+	document.getElementById("lockScreen").style.top  =width/2;
+	document.getElementById("lockScreen").style.left  =height/2;
     document.getElementById("img2").width  =width*1.5;
     document.getElementById("img2").height  =height*1.5;
     document.getElementById("img2").style.top  =-300;
