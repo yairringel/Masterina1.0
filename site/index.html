@@ -162,10 +162,9 @@ function processGyro(alpha,beta,gamma)
 	{
 		drawCir2(x+userX,y+userY);	
 	}
-	else
-	{
+	
 		drawCir(0+userX,0+userY);
-	}
+	
 
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
@@ -179,7 +178,7 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("X").innerHTML =bitTouch;
 	document.getElementById("Y").innerHTML =firstX;
 	document.getElementById("Z").innerHTML =userX;
-	
+
 }
 
 
