@@ -48,7 +48,7 @@
 	<canvas id="myCanvas" style=" border:6px solid;z-index: 4; "></canvas> 
 	<canvas id="myCanvas2" style="  solid;z-index: 3; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
+	<img id="img2" src="space1.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
 	
 </body>
 <script type="text/javascript">
@@ -82,6 +82,8 @@
     var bitTouch=false;
     var userX=0;
 	var userY=0;
+	var firstX=0;
+	var firstY=0;
     document.getElementById("img2").width  =width*1.5;
     document.getElementById("img2").height  =height*1.5;
     document.getElementById("img2").style.top  =-300;
@@ -174,8 +176,8 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
-	document.getElementById("X").innerHTML =x;
-	document.getElementById("Y").innerHTML =bitTouch;
+	document.getElementById("X").innerHTML =bitTouch;
+	document.getElementById("Y").innerHTML =firstX;
 	document.getElementById("Z").innerHTML =userX;
 	
 }
@@ -262,20 +264,28 @@ document.addEventListener("touchend", touchEndFunc, true);
 
 function touchStartFunc(e)
 {
-	bitTouch=true;
-	prevTouchY=e.touches[0].clientY;
-	prevTouchX=e.touches[0].clientX;
+	//bitTouch=true;
+	//prevTouchY=e.touches[0].clientY;
+	//prevTouchX=e.touches[0].clientX;
 }
 
 function touchmoveFunc(e)
 {
-	bitTouch=true;
+	
 	if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
 	{   
 	  e.preventDefault();
 	}
 	userXYmove(e.touches[0].clientX,e.touches[0].clientY);
-	
+	if (!(bitTouch))
+	{
+		
+		firstX=e.touches[0].clientX;
+		firstY=e.touches[0].clientY;
+	}
+	bitTouch=true;
+	 prevTouchX =e.touches[0].clientX;
+	 prevTouchY =e.touches[0].clientY;
 }
 
 function touchEndFunc(e)
@@ -296,8 +306,8 @@ function userXYmove(ux,uy)
 	{
 	  var xMovement=ux-prevTouchX;
 	  var yMovement=uy-prevTouchY;
-	  userX=ux;
-	userY=uy;
+	  userX=ux-firstX;
+	  userY=uy-firstY;
 	  //var xMovementQuat=quatFromAxisAngle(1,0,0,y/200);//movement on y rotates x and vice versa
 	  //var yMovementQuat=quatFromAxisAngle(0,1,0,x/200);//200 is there to scale the movement way down to an intuitive amount
 	 //userQuot=quaternionMultiply([yMovementQuat,xMovementQuat]);//use reverse order
