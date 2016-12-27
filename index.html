@@ -193,7 +193,7 @@
 	    context.strokeStyle = '#000000';
 	    context.stroke();  
 	}
-	function drawCir2(xx,yy)
+	function drawCir2(xx,yy,lastxx,lastyy)
 	{
 		context2.beginPath();
 	    context2.arc(xx, yy, lineWidth, 0, 2 * Math.PI, false);
@@ -206,7 +206,7 @@
 
 	    context.beginPath();
 	    context.lineWidth = lineWidth;
-	    context.moveTo(userX+prevTouchX,userY-prevTouchY);
+	    context.moveTo(lastxx,lastyy);
 		context.lineTo(xx,yy);
 		
 	    context.strokeStyle = '#000000';
@@ -224,7 +224,7 @@ function processGyro(alpha,beta,gamma)
 	
 	if (bitTouch)
 	{
-		drawCir2(userX+x,userY-y);	
+		drawCir2(userX+x,userY-y,prevTouchX+x,prevTouchY-y);	
 	}
 		context.save();
 		context.setTransform(1, 0, 0, 1, 0, 0);
