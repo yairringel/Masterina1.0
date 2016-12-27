@@ -55,7 +55,7 @@
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
 	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
-	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px;top:50px; left:-120px; z-index: 6" onclick="funcLineThik()"></input>
+	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
 	
 	
 </body>
@@ -231,7 +231,7 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-	document.getElementById("lineThik").style.left  =-x-120+"px";
+	document.getElementById("lineThik").style.left  =-x-180+"px";
 	document.getElementById("lineThik").style.top  = document.getElementById("img1").style.top ;	
 	
 	document.getElementById("alpha").innerHTML=alpha;
@@ -349,8 +349,8 @@ function touchEndFunc(e)
 	
   prevTouchX = -1;
   prevTouchY = -1;
-  userX=0;
-	userY=0;
+  //userX=0;
+	//userY=0;
 	bitTouch=false;
 }
 function userXYmove(ux,uy)
