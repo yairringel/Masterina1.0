@@ -203,6 +203,13 @@
 	    context2.strokeStyle = '#003300';
 	    context2.stroke();  
 
+	    context.beginPath();
+	    context.lineWidth = lineWidth;
+	    context.moveTo(prevTouchX,prevTouchY);
+		context.lineTo(x,y);
+		
+	    context.strokeStyle = '#000000';
+	    context.stroke();  
 	    
 	}
 
@@ -349,8 +356,8 @@ function touchEndFunc(e)
 	
   prevTouchX = -1;
   prevTouchY = -1;
-  //userX=0;
-	//userY=0;
+  userX=0;
+	userY=0;
 	bitTouch=false;
 }
 function userXYmove(ux,uy)
