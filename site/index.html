@@ -129,10 +129,10 @@
 
 	    context.beginPath();
 	    context.lineWidth = 1;
-	    context.moveTo(-radius,0);
-		context.lineTo(radius, 0);
-		context.moveTo(0,radius);
-		context.lineTo(0,-radius);
+	    context.moveTo(xx-radius,yy);
+		context.lineTo(xx+radius, yy);
+		context.moveTo(xx,radius+yy);
+		context.lineTo(xx,-radius+yy);
 	    context.strokeStyle = '#003300';
 	    context.stroke();  
 	}
@@ -266,9 +266,14 @@ document.addEventListener("touchend", touchEndFunc, true);
 
 function touchStartFunc(e)
 {
-	//bitTouch=true;
-	//prevTouchY=e.touches[0].clientY;
-	//prevTouchX=e.touches[0].clientX;
+	
+	if (!(bitTouch))
+	{
+		
+		firstX=e.touches[0].clientX;
+		firstY=e.touches[0].clientY;
+		bitTouch=true;
+	}
 }
 
 function touchmoveFunc(e)
