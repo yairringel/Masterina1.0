@@ -10,7 +10,7 @@
 <style>
  /body 
   {
-  	overflow:hidden; 
+  	
 	margin: 0px;
 	padding: 0px;
 	font-size:60px;
@@ -31,30 +31,43 @@
 	padding: 0px;
 	position:fixed;
 	
-	
   } 
+  input
+  {
+    margin: 0px;
+	padding: 0px;
+	position:fixed;
+  }
   
 </style>
  
 
 <body >
-	alpha:<span id="alpha"></span><br>
-	beta:<span id="beta"></span><br>
-	gamma:<span id="gamma"></span><br>
-	L1:<span id="X"></span><br>
-	Y:<span id="Y" style ="z-index: 4;"></span><br>
-	Z:<span id="Z" style ="z-index: 4;"></span><br>
 	
-	<canvas id="myCanvas" style=" border:6px solid;z-index: 4; "></canvas> 
-	<canvas id="myCanvas2" style="  solid;z-index: 3; "></canvas> 
+	alpha:<span id="alpha" style="position:fixed;"></span><br>
+	beta:<span id="beta"style="position:fixed;"></span><br>
+	gamma:<span id="gamma"style="position:fixed;"></span><br>
+	L1:<span id="X"></span><br>
+	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
+	Z:<span id="Z" style ="position:fixed; z-index: 0;"></span><br>
+	<canvas id="myCanvas" style=" border:6px solid;z-index: -10; "></canvas> 
+	<canvas id="myCanvas2" style="  solid;z-index: -11; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
+	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
+	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
+	
 	
 </body>
 <script type="text/javascript">
-
+	function funcLock()
+	{
+		document.getElementById("lockScreen").style.zIndex  =-1;
+		document.getElementById("myCanvas").style.zIndex  =4;
+		document.getElementById("myCanvas2").style.zIndex  =3;
+	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//===============================================================================================================================================================================
+    
     document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 	document.addEventListener("touchmove", touchmoveFunc, true);
 	document.addEventListener("touchend", touchEndFunc, true);
@@ -67,6 +80,7 @@
     
     var width=window.innerWidth;
     var height=window.innerHeight;
+
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
    	context.translate(canvas.width / 2, canvas.height / 2); 
@@ -78,28 +92,35 @@
     var z=0;
     var startY;
     var startZ;
-     var radius = 70;
-    
+    var radius = 70;
+    var frameBorder=150;
+    var imageBorder=200;
     var L1=600;
     var bitTouch=false;
     var userX=0;
 	var userY=0;
 	var firstX=0;
 	var firstY=0;
+
+	document.getElementById("lockScreen").style.top  =(height/2)+"px";
+	document.getElementById("lockScreen").style.left  = (width/2)+"px";
     document.getElementById("img2").width  =width*1.5;
     document.getElementById("img2").height  =height*1.5;
     document.getElementById("img2").style.top  =-300;
     document.getElementById("img2").style.left  =-300;
-    document.getElementById("img1").width  =width-300;
-    document.getElementById("img1").height  =height-300;
+    document.getElementById("img1").width  =width-imageBorder;
+    document.getElementById("img1").height  =height-imageBorder;
+
     var imgWidth=document.getElementById("img1").width;
     var imgHeight=document.getElementById("img1").height;
-    console.log(imgWidth);
-    console.log(imgHeight);
+
+    console.log(width);
+    console.log(height);
     
-	context2.canvas.width  = imgWidth;//resize canvas to whatever window dimensions are
-	context2.canvas.height = imgHeight;
+	context2.canvas.width  = imgWidth-frameBorder;//resize canvas to whatever window dimensions are
+	context2.canvas.height = imgHeight-frameBorder;
 	context2.translate(canvas2.width / 2, canvas2.height / 2);
+
     if (window.DeviceOrientationEvent) 
     {//
     	
@@ -126,7 +147,7 @@
 	    // context.fillStyle = 'green';
 	    //context.fill();
 	    context.lineWidth = 5;
-	    context.strokeStyle = '#003300';
+	    context.strokeStyle = '#000000';
 	    context.stroke();  
 
 	    context.beginPath();
@@ -135,7 +156,7 @@
 		context.lineTo(xx+radius, yy);
 		context.moveTo(xx,radius+yy);
 		context.lineTo(xx,-radius+yy);
-	    context.strokeStyle = '#003300';
+	    context.strokeStyle = '#000000';
 	    context.stroke();  
 	}
 	function drawCir2(xx,yy)
@@ -173,8 +194,8 @@ function processGyro(alpha,beta,gamma)
 
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
-	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+"px";
-	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+"px";
+	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+frameBorder/2+"px";
+	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+frameBorder/2+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
@@ -266,13 +287,6 @@ window.addEventListener('orientationchange', function () {
 function touchStartFunc(e)
 {
 	
-	if (!(bitTouch))
-	{
-		
-		firstX=e.touches[0].clientX;
-		firstY=e.touches[0].clientY;
-		bitTouch=true;
-	}
 }
 
 function touchmoveFunc(e)
