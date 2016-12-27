@@ -1,0 +1,176 @@
+<html>
+    <script type="text/javascript">
+    var canvas, ctx, MouseDownFlag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+		ctx2,
+		canvas2,
+		topCanvOffsetX = 0, 
+		topCanvOffsetY = 0, 
+		t,
+		Move = false,
+		Draw = false,
+		radius = 150, centerX = 200, centerY = 200;
+
+    var x = "black",
+        y = 2;
+    
+    function init() {
+        canvas = document.getElementById('layer2');
+        ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
+				ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+		ctx.lineWidth = 20;
+        ctx.stroke();
+        ctx.closePath();
+		
+		
+		canvas2 = document.getElementById('layer1');
+		ctx2 = canvas2.getContext("2d");
+        					
+		canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+    }
+    
+    function color(obj) {
+        switch (obj.id) {
+            case "green":
+                x = "green";
+                break;
+            case "blue":
+                x = "blue";
+                break;
+            case "red":
+                x = "red";
+                break;
+            case "yellow":
+                x = "yellow";
+                break;
+            case "orange":
+                x = "orange";
+                break;
+            case "black":
+                x = "black";
+                break;
+            case "white":
+                x = "white";
+                break;
+        }
+        if (x == "white") y = 14;
+        else y = 2;
+    
+    }
+    //static
+    function draw() {
+
+    }
+    //drawable
+	function drawLayer2() {
+        ctx2.beginPath();
+        ctx2.moveTo(prevX, prevY);
+        ctx2.lineTo(currX, currY);
+        ctx2.strokeStyle = x;
+        ctx2.lineWidth = y;
+        ctx2.stroke();
+        ctx2.closePath();
+    }
+    function erase() {
+        var m = confirm("Want to clear");
+        if (m) {
+            ctx2.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
+        }
+    }
+    
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas2.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        document.getElementById("canvasimg").style.display = "inline";
+    }
+    
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas2.offsetLeft;
+            currY = e.clientY - canvas2.offsetTop;
+			
+			//init 
+            MouseDownFlag = true;
+			
+			//init move small layer
+			Move = false;		
+			Draw = false;
+        }
+        if (res == 'up' || res == "out") {
+            MouseDownFlag = false;
+			Move = false;
+			Draw = false;
+        }
+        if (res == 'move') {
+			console.log("X: " + (e.clientX - canvas.offsetLeft) + "  Y: " + (e.clientY - canvas.offsetTop));
+            if (MouseDownFlag) {
+					prevX = currX;
+					prevY = currY;
+					currX = e.clientX - canvas2.offsetLeft;
+					currY = e.clientY - canvas2.offsetTop;
+					
+				console.log(Move);
+				if ((Draw == false) && (Move == true || ctx.getImageData(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop, 1 ,1).data[3] != 0))
+				{	
+					Draw = false;
+					Move = true;
+					var newX = canvas.offsetLeft - prevX + currX;
+					var newY = canvas.offsetTop -  prevY + currY;
+					canvas.style.left = newX + "px";
+					canvas.style.top = newY + "px";
+				}
+				else if ((((e.clientX - canvas.offsetLeft) - centerX) * ((e.clientX - canvas.offsetLeft) - centerX)) +
+						 (((e.clientY - canvas.offsetTop ) - centerY) * ((e.clientY - canvas.offsetTop ) - centerY)) <=
+						 radius * radius){ 
+					Move = false;
+					Draw = true;
+					draw();
+					drawLayer2();
+				}
+			
+				
+            }
+        }
+    }
+    </script>
+    <body onload="init()">
+		<div style="position: relative;">
+		<canvas id="layer1" width="1200" height="600" style="position:absolute;left:10%;border:2px solid;z-index: 0;"></canvas>
+		<canvas id="layer2" width="400" height="400" style="position:absolute;top:10%;left:10%;z-index: 1;"></canvas>
+		</div>
+       
+        <div style="position:absolute;top:12%;left:0%;">Choose Color</div>
+        <div style="position:absolute;top:15%;left:2%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
+        <div style="position:absolute;top:15%;left:3%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
+        <div style="position:absolute;top:15%;left:4%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:2%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:3%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:4%;width:10px;height:10px;background:black;" id="black" onclick="color(this)"></div>
+        <div style="position:absolute;top:20%;left:2%;">Eraser</div>
+        <div style="position:absolute;top:23%;left:3%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+        <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+        <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:35%;left:1%;">
+        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:35%;left:4%;">
+    </body>
+    </html>
