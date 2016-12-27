@@ -46,7 +46,7 @@
 	Z:<span id="Z" style ="z-index: 4;"></span><br>
 	
 	<canvas id="myCanvas" style=" border:6px solid;z-index: 4; "></canvas> 
-	<canvas id="myCanvas2" style=" border:6px solid;z-index: 3; "></canvas> 
+	<canvas id="myCanvas2" style="  solid;z-index: 3; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
 	<img id="img2" src="space.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
 	
@@ -64,7 +64,8 @@
     
     var width=window.innerWidth;
     var height=window.innerHeight;
-    
+    context.canvas.width  = width;//resize canvas to whatever window dimensions are
+	context.canvas.height = height;
    
     context.translate(canvas.width / 2, canvas.height / 2); 
     context2.translate(canvas2.width / 2, canvas2.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
@@ -91,8 +92,7 @@
     var imgHeight=document.getElementById("img1").height;
     console.log(imgWidth);
     console.log(imgHeight);
-    context.canvas.width  = width;//resize canvas to whatever window dimensions are
-	context.canvas.height = height;
+    
 	context2.canvas.width  = imgWidth;//resize canvas to whatever window dimensions are
 	context2.canvas.height = imgHeight;
 
@@ -162,7 +162,7 @@ function processGyro(alpha,beta,gamma)
 	}
 	else
 	{
-		drawCir(x,y);
+		drawCir(0,0);
 	}
 
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
