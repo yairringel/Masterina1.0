@@ -97,7 +97,7 @@
     var z=0;
     var startY;
     var startZ;
-    var frameBorder=120;
+    var frameBorder=15;
     var imageBorder=40;
     var L1=1200;
     var bitTouch=false;
@@ -120,8 +120,8 @@
 
     console.log(width);
     console.log(height);
-    c2Width=imgWidth-frameBorder*2;
-    c2Height=imgHeight-frameBorder*2;
+    c2Width=imgWidth-(imgWidth*frameBorder*2/100);
+    c2Height=imgHeight-(imgHeight*frameBorder*2/100);
 	context2.canvas.width  = c2Width;//resize canvas to whatever window dimensions are
 	context2.canvas.height = c2Height;
 	context2.translate(canvas2.width / 2, canvas2.height / 2);
@@ -200,8 +200,8 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("img2").style.top  = y/10-300+"px";	
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
-	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+frameBorder+"px";
-	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+frameBorder+"px";
+	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorder/100)+"px";
+	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorder/100)+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
