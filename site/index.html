@@ -160,9 +160,9 @@ function processGyro(alpha,beta,gamma)
 	
 	if (bitTouch)
 	{
-		drawCir2(x+userX,y+userY);	
+		drawCir2(x+userX+width/2-imgWidth/2,y+userY);	
 	}
-	
+		context.clearRect(0, 0, canvas.width, canvas.height);
 		drawCir(0+userX,0+userY);
 	
 
