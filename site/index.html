@@ -194,8 +194,8 @@ function processGyro(alpha,beta,gamma)
 
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
-	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2-frameBorder/2+"px";
-	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2-frameBorder/2+"px";
+	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+frameBorder/2+"px";
+	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+frameBorder/2+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
