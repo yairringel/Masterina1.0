@@ -55,13 +55,13 @@
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
 	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
-	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px;top:50px; left:-90px; z-index: 6" onclick="funcLineThik()"></input>
+	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px;top:50px; left:-120px; z-index: 6" onclick="funcLineThik()"></input>
 	
 	
 </body>
 <script type="text/javascript">
 //============================================================================ btn func============================================================================
-	iLineThik=1;
+	iLineThik=0;
 	function funcLock()
 	{
 		document.getElementById("lockScreen").style.zIndex  =-1;
@@ -70,26 +70,29 @@
 	}
 	function funcLineThik()
 	{
-		
-		document.getElementById("lineThik").src  =lineWidthArray[iLineThik].src;
 		iLineThik+=1;
-		lineWidth=iLineThik*2;
-		if (iLineThik>5)
+		lineWidth=thikRa[iLineThik];
+		document.getElementById("lineThik").src  =lineWidthArray[iLineThik].src;
+		
+		
+		if (iLineThik==5)
 		{
-			iLineThik=0;
-			lineWidth=1;
+			iLineThik=-1;
+			
 		}
 
 		console.log(lineWidth);
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
-    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineWidth=2;
+    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineWidth=1;
     var crossLine=50;
     var c1Width
     var lineWidthArray = new Array();
     lineWidthArray[0] = new Image();lineWidthArray[1] = new Image();lineWidthArray[2] = new Image();lineWidthArray[3] = new Image();lineWidthArray[4] = new Image();lineWidthArray[5] = new Image();
 	lineWidthArray[0].src = 'thik1.png';lineWidthArray[1].src = 'thik2.png';lineWidthArray[2].src = 'thik3.png';lineWidthArray[3].src = 'thik4.png';lineWidthArray[4].src = 'thik5.png';lineWidthArray[5].src = 'thik6.png';
+	var thikRa=[];
+	thikRa[0]=1;thikRa[1]=2;thikRa[2]=4;thikRa[3]=10;thikRa[4]=17;thikRa[5]=25;
 	
 	lineWidthArray[1].src = 'thik2.png';
 
@@ -220,7 +223,7 @@ function processGyro(alpha,beta,gamma)
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.restore();
 		drawCir(0+userX,0+userY);
-	document.getElementById("lineThik").style.left  =-x-90+"px";
+	document.getElementById("lineThik").style.left  =-x-120+"px";
 	document.getElementById("lineThik").style.top  = y+10+"px";	
 	document.getElementById("img2").style.left  =-x/10-300+"px";
 	document.getElementById("img2").style.top  = y/10-300+"px";	
