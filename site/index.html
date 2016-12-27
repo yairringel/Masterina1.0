@@ -64,9 +64,7 @@
     
     var width=window.innerWidth;
     var height=window.innerHeight;
-    context.canvas.width  = width;//resize canvas to whatever window dimensions are
-	context.canvas.height = height;
-
+    
    
     context.translate(canvas.width / 2, canvas.height / 2); 
     context2.translate(canvas2.width / 2, canvas2.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
@@ -93,6 +91,10 @@
     var imgHeight=document.getElementById("img1").height;
     console.log(imgWidth);
     console.log(imgHeight);
+    context.canvas.width  = width;//resize canvas to whatever window dimensions are
+	context.canvas.height = height;
+	context2.canvas.width  = imgWidth;//resize canvas to whatever window dimensions are
+	context2.canvas.height = imgHeight;
 
     if (window.DeviceOrientationEvent) 
     {//
@@ -134,14 +136,14 @@
 	}
 	function drawCir2(xx,yy)
 	{
-		context.beginPath();
-	    context.arc(xx, yy, radius-60, 0, 2 * Math.PI, false);
+		context2.beginPath();
+	    context2.arc(xx, yy, radius-60, 0, 2 * Math.PI, false);
 
 	    // context.fillStyle = 'green';
 	    //context.fill();
-	    context.lineWidth = 2;
-	    context.strokeStyle = '#003300';
-	    context.stroke();  
+	    context2.lineWidth = 2;
+	    context2.strokeStyle = '#003300';
+	    context2.stroke();  
 
 	    
 	}
@@ -166,7 +168,7 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	document.getElementById("myCanvas2").style.left  =-x+"px";
-	document.getElementById("myCanvas2").style.top  = y"px";
+	document.getElementById("myCanvas2").style.top  = y+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
