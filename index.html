@@ -204,13 +204,13 @@
 	    context2.strokeStyle = '#003300';
 	    context2.stroke();  
 
-	    context.beginPath();
-	    context.lineWidth = lineWidth;
-	    context.moveTo(lastxx,lastyy);
-		context.lineTo(xx,yy);
+	    context2.beginPath();
+	    context2.lineWidth = lineWidth;
+	    context2.moveTo(lastxx,lastyy);
+		context2.lineTo(xx,yy);
 		
-	    context.strokeStyle = '#000000';
-	    context.stroke();  
+	    context2.strokeStyle = '#000000';
+	    context2.stroke();  
 	    
 	}
 
@@ -247,7 +247,7 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =prevTouchX;
 	document.getElementById("Y").innerHTML =userX+x;
-	document.getElementById("Z").innerHTML =userX+prevTouchX;
+	document.getElementById("Z").innerHTML =prevTouchX+x;
 
 }
 
