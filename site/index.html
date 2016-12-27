@@ -48,13 +48,14 @@
 	<canvas id="myCanvas" style=" border:6px solid;z-index: 4; "></canvas> 
 	<canvas id="myCanvas2" style="  solid;z-index: 3; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space1.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
+	<img id="img2" src="space.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
 	
 </body>
 <script type="text/javascript">
 
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//===============================================================================================================================================================================
+    
     document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 	document.addEventListener("touchmove", touchmoveFunc, true);
 	document.addEventListener("touchend", touchEndFunc, true);
@@ -100,6 +101,9 @@
 	context2.canvas.width  = imgWidth;//resize canvas to whatever window dimensions are
 	context2.canvas.height = imgHeight;
 	context2.translate(canvas2.width / 2, canvas2.height / 2);
+
+	document.getElementById("myCanvas2").focus();
+
     if (window.DeviceOrientationEvent) 
     {//
     	
@@ -126,7 +130,7 @@
 	    // context.fillStyle = 'green';
 	    //context.fill();
 	    context.lineWidth = 5;
-	    context.strokeStyle = '#003300';
+	    context.strokeStyle = '#000000';
 	    context.stroke();  
 
 	    context.beginPath();
@@ -135,7 +139,7 @@
 		context.lineTo(xx+radius, yy);
 		context.moveTo(xx,radius+yy);
 		context.lineTo(xx,-radius+yy);
-	    context.strokeStyle = '#003300';
+	    context.strokeStyle = '#000000';
 	    context.stroke();  
 	}
 	function drawCir2(xx,yy)
