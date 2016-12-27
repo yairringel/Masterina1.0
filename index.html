@@ -67,8 +67,8 @@
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
-    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height;
-    var sHeight
+    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineWidth=2;
+    var crossLine=50;
     var c1Width
     
 
@@ -97,9 +97,8 @@
     var z=0;
     var startY;
     var startZ;
-    var radius = 70;
     var frameBorder=120;
-    var imageBorder=75;
+    var imageBorder=40;
     var L1=1200;
     var bitTouch=false;
     var userX=0;
@@ -148,7 +147,7 @@
 	function drawCir(xx,yy)
 	{
 		context.beginPath();
-	    context.arc(xx, yy, radius, 0, 2 * Math.PI, false);
+	    context.arc(xx, yy, lineWidth, 0, 2 * Math.PI, false);
 
 	    // context.fillStyle = 'green';
 	    //context.fill();
@@ -158,17 +157,17 @@
 
 	    context.beginPath();
 	    context.lineWidth = 1;
-	    context.moveTo(xx-radius,yy);
-		context.lineTo(xx+radius, yy);
-		context.moveTo(xx,radius+yy);
-		context.lineTo(xx,-radius+yy);
+	    context.moveTo(xx-crossLine,yy);
+		context.lineTo(xx+crossLine, yy);
+		context.moveTo(xx,crossLine+yy);
+		context.lineTo(xx,-crossLine+yy);
 	    context.strokeStyle = '#000000';
 	    context.stroke();  
 	}
 	function drawCir2(xx,yy)
 	{
 		context2.beginPath();
-	    context2.arc(xx, yy, radius-60, 0, 2 * Math.PI, false);
+	    context2.arc(xx, yy, lineWidth, 0, 2 * Math.PI, false);
 
 	    // context.fillStyle = 'green';
 	    //context.fill();
