@@ -45,8 +45,8 @@
 <body >
 	
 	alpha:<span id="alpha" style="position:fixed;"></span><br>
-	beta:<span id="beta"style="position:fixed;"></span><br>
-	gamma:<span id="gamma"style="position:fixed;"></span><br>
+	beta:<span id="beta" style="position:fixed;"></span><br>
+	gamma:<span id="gamma" style="position:fixed;"></span><br>
 	L1:<span id="X"></span><br>
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
 	Z:<span id="Z" style ="position:fixed; z-index: 0;"></span><br>
@@ -55,22 +55,43 @@
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
 	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
+	<input id="lineThik" type="image" src="thik1.png"  style= "top:0px; left:0px; z-index: 6" onclick="funcLineThik()"></input>
 	
 	
 </body>
 <script type="text/javascript">
+//============================================================================ btn func============================================================================
+	iLineThik=1;
 	function funcLock()
 	{
 		document.getElementById("lockScreen").style.zIndex  =-1;
 		document.getElementById("myCanvas").style.zIndex  =4;
 		document.getElementById("myCanvas2").style.zIndex  =3;
 	}
+	function funcLineThik()
+	{
+		
+		document.getElementById("lineThik").src  =lineWidthArray[iLineThik].src;
+		iLineThik+=1;
+		lineWidth=iLineThik*2;
+		if (iLineThik>5)
+		{
+			iLineThik=0;
+			lineWidth=1;
+		}
+
+		console.log(lineWidth);
+	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
     var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineWidth=2;
     var crossLine=50;
     var c1Width
-    
+    var lineWidthArray = new Array();
+    lineWidthArray[0] = new Image();lineWidthArray[1] = new Image();lineWidthArray[2] = new Image();lineWidthArray[3] = new Image();lineWidthArray[4] = new Image();lineWidthArray[5] = new Image();
+	lineWidthArray[0].src = 'thik1.png';lineWidthArray[1].src = 'thik2.png';lineWidthArray[2].src = 'thik3.png';lineWidthArray[3].src = 'thik4.png';lineWidthArray[4].src = 'thik5.png';lineWidthArray[5].src = 'thik6.png';
+	
+	lineWidthArray[1].src = 'thik2.png';
 
     document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 	document.addEventListener("touchmove", touchmoveFunc, true);
@@ -97,7 +118,8 @@
     var z=0;
     var startY;
     var startZ;
-    var frameBorder=15;
+    var frameBorderW=15;
+    var frameBorderH=11;
     var imageBorder=40;
     var L1=1200;
     var bitTouch=false;
@@ -120,12 +142,15 @@
 
     console.log(width);
     console.log(height);
-    c2Width=imgWidth-(imgWidth*frameBorder*2/100);
-    c2Height=imgHeight-(imgHeight*frameBorder*2/100);
+    c2Width=imgWidth-(imgWidth*frameBorderW*2/100);
+    c2Height=imgHeight-(imgHeight*frameBorderH*2/100);
 	context2.canvas.width  = c2Width;//resize canvas to whatever window dimensions are
 	context2.canvas.height = c2Height;
 	context2.translate(canvas2.width / 2, canvas2.height / 2);
 
+//=======================================================================================================================================================================
+//============================================================================================================FUNC ======================================================
+//=======================================================================================================================================================================
     if (window.DeviceOrientationEvent) 
     {//
     	
@@ -200,9 +225,9 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("img2").style.top  = y/10-300+"px";	
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
-	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorder/100)+"px";
-	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorder/100)+"px";
-	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
+	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
+	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
+	
 	
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
