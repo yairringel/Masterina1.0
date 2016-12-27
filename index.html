@@ -113,7 +113,8 @@
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
    	context.translate(canvas.width / 2, canvas.height / 2); 
-    
+    var lastXX=-1;
+    var lastYY=-1;
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
     var first=0;  
     var x=0;
@@ -193,7 +194,7 @@
 	    context.strokeStyle = '#000000';
 	    context.stroke();  
 	}
-	function drawCir2(xx,yy,lastxx,lastyy)
+	function drawCir2(xx,yy)
 	{
 		context2.beginPath();
 	    context2.arc(xx, yy, lineWidth, 0, 2 * Math.PI, false);
@@ -203,14 +204,20 @@
 	    context2.lineWidth = 2;
 	    context2.strokeStyle = '#003300';
 	    context2.stroke();  
+	    if (lastXX== -1)
+	    {
+	    	lastXX=xx; lastYY=yy;
+	    }	[
 
 	    context2.beginPath();
 	    context2.lineWidth = lineWidth;
-	    context2.moveTo(lastxx,lastyy);
+	    context2.moveTo(lastXX,lastYY);
 		context2.lineTo(xx,yy);
 		
 	    context2.strokeStyle = '#000000';
 	    context2.stroke();  
+	    lastXX=xx;
+	    lastYY=yy;
 	    
 	}
 
@@ -360,6 +367,7 @@ function touchEndFunc(e)
   userX=0;
 	userY=0;
 	bitTouch=false;
+	lastXX= -1; lastYY= -1;
 }
 function userXYmove(ux,uy)
 {
