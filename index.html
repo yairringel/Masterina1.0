@@ -231,7 +231,8 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-	
+	document.getElementById("lineThik").style.left  =-x-120+"px";
+	document.getElementById("lineThik").style.top  = document.getElementById("img1").style.top ;	
 	
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
