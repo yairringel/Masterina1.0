@@ -162,7 +162,10 @@ function processGyro(alpha,beta,gamma)
 	{
 		drawCir2(x+userX+width/2-imgWidth/2,y+userY);	
 	}
+		context.save();
+		context.setTransform(1, 0, 0, 1, 0, 0);
 		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.restore();
 		drawCir(0+userX,0+userY);
 	
 
