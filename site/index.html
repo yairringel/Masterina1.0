@@ -55,7 +55,10 @@
 
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//===============================================================================================================================================================================
-   
+    document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
+	document.addEventListener("touchmove", touchmoveFunc, true);
+	document.addEventListener("touchend", touchEndFunc, true);
+
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var canvas2 = document.getElementById('myCanvas2');
@@ -258,9 +261,6 @@ window.addEventListener('orientationchange', function () {
 }, true);
 //========================================================================================================================================================================
 //========================================================================================================================================================================
-document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
-document.addEventListener("touchmove", touchmoveFunc, true);
-document.addEventListener("touchend", touchEndFunc, true);
 
 
 function touchStartFunc(e)
