@@ -158,17 +158,17 @@ function processGyro(alpha,beta,gamma)
 	
 	if (bitTouch)
 	{
-		drawCir2(0+userX,0+userY);	
+		drawCir2(x+userX,y+userY);	
 	}
 	else
 	{
-		drawCir(0,0);
+		drawCir(x,y);
 	}
 
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
-	document.getElementById("myCanvas2").style.left  =-x+"px";
-	document.getElementById("myCanvas2").style.top  = y+"px";
+	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+"px";
+	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
