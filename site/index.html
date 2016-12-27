@@ -93,7 +93,8 @@
     var startY;
     var startZ;
     var radius = 70;
-    
+    var frameBorder=60;
+    var imageBorder=200;
     var L1=600;
     var bitTouch=false;
     var userX=0;
@@ -107,19 +108,17 @@
     document.getElementById("img2").height  =height*1.5;
     document.getElementById("img2").style.top  =-300;
     document.getElementById("img2").style.left  =-300;
-    document.getElementById("img1").width  =width-200;
-    document.getElementById("img1").height  =height-200;
+    document.getElementById("img1").width  =width-imageBorder;
+    document.getElementById("img1").height  =height-imageBorder;
 
     var imgWidth=document.getElementById("img1").width;
     var imgHeight=document.getElementById("img1").height;
     console.log(width);
     console.log(height);
     
-	context2.canvas.width  = imgWidth;//resize canvas to whatever window dimensions are
-	context2.canvas.height = imgHeight;
+	context2.canvas.width  = imgWidth-frameBorder;//resize canvas to whatever window dimensions are
+	context2.canvas.height = imgHeight-frameBorder;
 	context2.translate(canvas2.width / 2, canvas2.height / 2);
-
-	document.getElementById("myCanvas2").focus();
 
     if (window.DeviceOrientationEvent) 
     {//
