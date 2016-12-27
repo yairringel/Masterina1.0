@@ -66,9 +66,8 @@
     var height=window.innerHeight;
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
-   
-    context.translate(canvas.width / 2, canvas.height / 2); 
-    context2.translate(canvas2.width / 2, canvas2.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
+   	context.translate(canvas.width / 2, canvas.height / 2); 
+     //put 0,0,0 origin at center of screen instead of upper left corner
     var first=0; 
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
     var x=0;
@@ -97,7 +96,7 @@
     
 	context2.canvas.width  = imgWidth;//resize canvas to whatever window dimensions are
 	context2.canvas.height = imgHeight;
-
+	context2.translate(canvas2.width / 2, canvas2.height / 2);
     if (window.DeviceOrientationEvent) 
     {//
     	
