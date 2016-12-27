@@ -45,9 +45,10 @@
 	Y:<span id="Y" style ="z-index: 4;"></span><br>
 	Z:<span id="Z" style ="z-index: 4;"></span><br>
 	
-	<canvas id="myCanvas" style=" border:6px solid;z-index: 3; "></canvas> 
+	<canvas id="myCanvas" style=" border:6px solid;z-index: 4; "></canvas> 
+	<canvas id="myCanvas2" style=" border:6px solid;z-index: 3; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space1.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
+	<img id="img2" src="space.jpg" style =" width:1920; height:1080; top:-1px ; left:-1px ;z-index: 1;">
 	
 </body>
 <script type="text/javascript">
@@ -57,13 +58,18 @@
    
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
-    var initialBeta = 1000;
+    var canvas2 = document.getElementById('myCanvas2');
+    var context2 = canvas2.getContext('2d');
+
+    
     var width=window.innerWidth;
     var height=window.innerHeight;
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
-    var radius = 70;
-    context.translate(canvas.width / 2, canvas.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
+
+   
+    context.translate(canvas.width / 2, canvas.height / 2); 
+    context2.translate(canvas2.width / 2, canvas2.height / 2); //put 0,0,0 origin at center of screen instead of upper left corner
     var first=0; 
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
     var x=0;
@@ -71,15 +77,16 @@
     var z=0;
     var startY;
     var startZ;
-    var pointRA=[];
+     var radius = 70;
+    
     var L1=600;
     var bitTouch=false;
     var userX=0;
 	var userY=0;
     document.getElementById("img2").width  =width*1.5;
-    document.getElementById("img1").height  =height*1.5;
-    document.getElementById("img1").style.top  =-300;
-    document.getElementById("img1").style.left  =-300;
+    document.getElementById("img2").height  =height*1.5;
+    document.getElementById("img2").style.top  =-300;
+    document.getElementById("img2").style.left  =-300;
     document.getElementById("img1").width  =width-300;
     document.getElementById("img1").height  =height-300;
     var imgWidth=document.getElementById("img1").width;
@@ -158,6 +165,8 @@ function processGyro(alpha,beta,gamma)
 
 	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
+	document.getElementById("myCanvas2").style.left  =-x+"px";
+	document.getElementById("myCanvas2").style.top  = y"px";
 	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
 	
 	document.getElementById("alpha").innerHTML=alpha;
@@ -285,8 +294,8 @@ function userXYmove(ux,uy)
 	{
 	  var xMovement=ux-prevTouchX;
 	  var yMovement=uy-prevTouchY;
-	  userX=ux-prevTouchX;
-	userY=uy-prevTouchY;
+	  userX=ux;
+	userY=uy;
 	  //var xMovementQuat=quatFromAxisAngle(1,0,0,y/200);//movement on y rotates x and vice versa
 	  //var yMovementQuat=quatFromAxisAngle(0,1,0,x/200);//200 is there to scale the movement way down to an intuitive amount
 	 //userQuot=quaternionMultiply([yMovementQuat,xMovementQuat]);//use reverse order
