@@ -206,8 +206,8 @@
 
 	    context.beginPath();
 	    context.lineWidth = lineWidth;
-	    context.moveTo(prevTouchX,prevTouchY);
-		context.lineTo(x,y);
+	    context.moveTo(userX+prevTouchX,userY-prevTouchY);
+		context.lineTo(xx,yy);
 		
 	    context.strokeStyle = '#000000';
 	    context.stroke();  
