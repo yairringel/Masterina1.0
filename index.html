@@ -57,6 +57,7 @@
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
 	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
 	<input id="pieType" type="image" src="pie1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcPieType()"></input>
+	<input id="Mirror" type="image" src="mirror1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcMirror()"></input>
 	
 	
 </body>
@@ -65,9 +66,9 @@
 document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 document.addEventListener("touchmove", touchmoveFunc, true);
 document.addEventListener("touchend", touchEndFunc, true);
-
-	iLineThik=0;
-	iPieType=0;
+	var iMirror=0;
+	var iLineThik=0;
+	var iPieType=0;
 	function funcLock()
 	{
 		document.getElementById("lockScreen").style.zIndex  =-1;
@@ -85,7 +86,6 @@ document.addEventListener("touchend", touchEndFunc, true);
 			iLineThik=-1;
 			
 		}
-		
 	}
 	function funcPieType()
 	{
@@ -97,11 +97,21 @@ document.addEventListener("touchend", touchEndFunc, true);
 			iPieType=-1;
 			
 		}
-		
+	}
+	function funcMirror()
+	{
+		iMirror+=1;
+		mirror=mirrorRA[iMirror];
+		document.getElementById("Mirror").src  =mirrorArray[iMirror].src;
+		if (iMirror==1)
+		{
+			iMirror=-1;
+			
+		}
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
-    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;
+    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;mirror=0;
     var crossLine=50;
     var c1Width
     var lineThikArray = new Array();
@@ -117,7 +127,12 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var pieTypeRA=[];
 	pieTypeRA[0]=1;pieTypeRA[1]=3;pieTypeRA[2]=4;pieTypeRA[3]=6;pieTypeRA[4]=10;pieTypeRA[5]=16;
 
-	
+	var mirrorArray = new Array();
+	mirrorArray[0] = new Image();mirrorArray[1] = new Image();
+	mirrorArray[0].src = 'mirror1.png';mirrorArray[1].src = 'mirror2.png';
+	var mirrorRA=[];
+	mirrorRA[0]=1;mirrorRA[1]=2;
+
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var canvas2 = document.getElementById('myCanvas2');
@@ -152,6 +167,8 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var firstY=0;
 	var prevTouchX=-1;
 	var prevTouchY=-1;
+	var btnLeftSpace=150;
+	var btnTopSpace=180;
 	document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
 	document.getElementById("lockScreen").style.left  = (width/2)-250+"px";
     document.getElementById("img2").width  =1.5*width;
@@ -186,11 +203,13 @@ function positioning()
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-	document.getElementById("lineThik").style.left  =-x/0.7-130+"px";
+	document.getElementById("lineThik").style.left  =-x/0.7-btnLeftSpace+"px";
 	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
-	document.getElementById("pieType").style.left  =-x/0.7-130+"px";
-	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+170+"px";//same as img 1 top	
-	
+	document.getElementById("pieType").style.left  =-x/0.7-btnLeftSpace+"px";
+	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace+"px";//same as img 1 top	
+	document.getElementById("Mirror").style.left  =-x/0.7-btnLeftSpace+"px";
+	document.getElementById("Mirror").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace*2+"px";//same as img 1 top	
+
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
@@ -222,12 +241,12 @@ function drawPie(drawX,drawY)
 	    	for (var ii=1; ii < pieType+1; ii++) {
 	    		lastPointX[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii)
 	    		lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
-
-	    		lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
-	    		lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
+	    		if (mirror==2){
+	    			lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
+	    			lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
+	    		}
 	    	}
-	    	console.log(pointsX[1])
-	    console.log(lastPointX[1])
+	    	
 	    }	
 
 	    
@@ -235,10 +254,10 @@ function drawPie(drawX,drawY)
 		
     	pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
     	pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-
-    	pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
-    	pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
-
+    	if (mirror==2){
+    		pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
+    		pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
+    	}
 
     	}
     for (var iiii=1; iiii < pieType+1; iiii++) {
@@ -249,21 +268,23 @@ function drawPie(drawX,drawY)
 		context2.lineCap = 'round';
 	    context2.strokeStyle = '#000000';
 	    context2.stroke(); 
-
-	    context2.beginPath();
-	    context2.lineWidth = lineThik;
-	    context2.moveTo(lastPointXm[iiii],lastPointYm[iiii]);
-		context2.lineTo(pointsXm[iiii],pointsYm[iiii]);
-		context2.lineCap = 'round';
-	    context2.strokeStyle = '#000000';
-	    context2.stroke(); 
+	    if (mirror==2){
+		    context2.beginPath();
+		    context2.lineWidth = lineThik;
+		    context2.moveTo(lastPointXm[iiii],lastPointYm[iiii]);
+			context2.lineTo(pointsXm[iiii],pointsYm[iiii]);
+			context2.lineCap = 'round';
+		    context2.strokeStyle = '#000000';
+		    context2.stroke(); 
+		}
 	    } 
 	for (var iiiii=1; iiiii < pieType+1; iiiii++) {
 	    lastPointX[iiiii]=pointsX[iiiii];
 	    lastPointY[iiiii]=pointsY[iiiii];
-
-	    lastPointXm[iiiii]=pointsXm[iiiii];
-	    lastPointYm[iiiii]=pointsYm[iiiii];
+	    if (mirror==2){
+	    	lastPointXm[iiiii]=pointsXm[iiiii];
+	    	lastPointYm[iiiii]=pointsYm[iiiii];
+		}
 	    }
 	   startMove=true;
 	   
