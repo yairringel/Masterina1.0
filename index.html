@@ -172,7 +172,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var firstY=0;
 	var prevTouchX=-1;
 	var prevTouchY=-1;
-	var btnLeftSpace=20;
+	var btnLeftSpace=130;
 	var btnTopSpace=180;
 	document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
 	document.getElementById("lockScreen").style.left  = (width/2)-250+"px";
@@ -183,7 +183,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     document.getElementById("img1").width  =width-imageBorder*2;
     document.getElementById("img1").height  =height-imageBorder*2;
     //document.getElementById("Color").width  =width-imageBorder*2;
-    document.getElementById("Color").height  = document.getElementById("img1").height;
+    document.getElementById("Color").height  = document.getElementById("img1").height+30;
 
     var imgWidth=document.getElementById("img1").width;
     var imgHeight=document.getElementById("img1").height;
@@ -211,14 +211,14 @@ function positioning()
 	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
 	document.getElementById("lineThik").style.left  =-x/0.7-btnLeftSpace+"px";
-	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
+	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2-20+"px";//same as img 1 top	
 	document.getElementById("pieType").style.left  =-x/0.7-btnLeftSpace+"px";
-	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace+"px";//same as img 1 top	
+	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace-20+"px";//same as img 1 top	
 	document.getElementById("Mirror").style.left  =-x/0.7-btnLeftSpace+"px";
-	document.getElementById("Mirror").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace*2+"px";//same as img 1 top	
+	document.getElementById("Mirror").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace*2-20+"px";//same as img 1 top	
 
-	document.getElementById("Color").style.left  =-x+ width/2+imgWidth/2+30+"px";
-	document.getElementById("Color").style.top  = y+height/2-imgHeight/2+"px";
+	document.getElementById("Color").style.left  =-x/0.7+ width/2+imgWidth/2+30+"px";
+	document.getElementById("Color").style.top  = y/0.7+height/2-imgHeight/2-20+"px";
 
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
