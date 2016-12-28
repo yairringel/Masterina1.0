@@ -131,7 +131,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
    	context.translate(canvas.width / 2, canvas.height / 2); 
-   	var pointsX=[]; var pointsY=[]; var lastPointX=[];var lastPointY=[];
+   	var pointsX=[]; var pointsY=[]; var lastPointX=[];var lastPointY=[];var pointsXm=[]; var pointsYm=[]; var lastPointXm=[];var lastPointYm=[];
     var startMove=false;
     
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
@@ -188,7 +188,7 @@ function positioning()
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
 	document.getElementById("lineThik").style.left  =-x/0.7-130+"px";
 	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
-	document.getElementById("pieType").style.left  =-x/0.7-30+"px";
+	document.getElementById("pieType").style.left  =-x/0.7-130+"px";
 	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+170+"px";//same as img 1 top	
 	
 	document.getElementById("alpha").innerHTML=alpha;
@@ -222,6 +222,9 @@ function drawPie(drawX,drawY)
 	    	for (var ii=1; ii < pieType+1; ii++) {
 	    		lastPointX[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii)
 	    		lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
+
+	    		lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
+	    		lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
 	    	}
 	    	console.log(pointsX[1])
 	    console.log(lastPointX[1])
@@ -232,6 +235,11 @@ function drawPie(drawX,drawY)
 		
     	pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
     	pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+
+    	pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
+    	pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
+
+
     	}
     for (var iiii=1; iiii < pieType+1; iiii++) {
 		context2.beginPath();
@@ -241,10 +249,21 @@ function drawPie(drawX,drawY)
 		context2.lineCap = 'round';
 	    context2.strokeStyle = '#000000';
 	    context2.stroke(); 
+
+	    context2.beginPath();
+	    context2.lineWidth = lineThik;
+	    context2.moveTo(lastPointXm[iiii],lastPointYm[iiii]);
+		context2.lineTo(pointsXm[iiii],pointsYm[iiii]);
+		context2.lineCap = 'round';
+	    context2.strokeStyle = '#000000';
+	    context2.stroke(); 
 	    } 
 	for (var iiiii=1; iiiii < pieType+1; iiiii++) {
 	    lastPointX[iiiii]=pointsX[iiiii];
 	    lastPointY[iiiii]=pointsY[iiiii];
+
+	    lastPointXm[iiiii]=pointsXm[iiiii];
+	    lastPointYm[iiiii]=pointsYm[iiiii];
 	    }
 	   startMove=true;
 	   
