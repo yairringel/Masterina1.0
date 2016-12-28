@@ -122,6 +122,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
+
     var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;mirror=0;
     var crossLine=50;
     var c1Width
@@ -396,7 +397,8 @@ function touchStartFunc(e)
 
 function touchmoveFunc(e)
 {
-	
+	if (!(color))
+	{
 		if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
 		{   
 		  e.preventDefault();
@@ -417,7 +419,7 @@ function touchmoveFunc(e)
 			
 		}
 		bitTouch=true;
-	 
+	 }
 }
 
 function touchEndFunc(e)
