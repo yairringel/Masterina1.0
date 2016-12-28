@@ -13,7 +13,7 @@
   	
 	margin: 0px;
 	padding: 0px;
-	font-size:60px;
+	font-size:120px;
 	position: fixed;
 }
   canvas
@@ -225,8 +225,8 @@ function positioning()
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
-	document.getElementById("X").innerHTML =prevTouchX;
-	document.getElementById("Y").innerHTML =x;
+	document.getElementById("X").innerHTML =width;
+	document.getElementById("Y").innerHTML =e.touches[0].clientX;
 	document.getElementById("Z").innerHTML =document.getElementById("Color").style.left;
 }
 
