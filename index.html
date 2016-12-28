@@ -58,6 +58,7 @@
 	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
 	<input id="pieType" type="image" src="pie1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcPieType()"></input>
 	<input id="Mirror" type="image" src="mirror1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcMirror()"></input>
+	<input id="Color" type="image" src="color.png"  style= " z-index: 6" onclick="funcColor()"></input>
 	
 	
 </body>
@@ -109,6 +110,10 @@ document.addEventListener("touchend", touchEndFunc, true);
 			
 		}
 	}
+	function funcColor()
+	{
+		
+	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
     var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;mirror=0;
@@ -159,7 +164,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     var frameBorderW=15;
     var frameBorderH=11;
     var imageBorder=40;
-    var L1=1200;
+    var L1=10200;
     var bitTouch=false;
     var userX=0;
 	var userY=0;
@@ -177,6 +182,8 @@ document.addEventListener("touchend", touchEndFunc, true);
     document.getElementById("img2").style.left  =-300+"px";
     document.getElementById("img1").width  =width-imageBorder*2;
     document.getElementById("img1").height  =height-imageBorder*2;
+    //document.getElementById("Color").width  =width-imageBorder*2;
+    document.getElementById("Color").height  = document.getElementById("img1").height;
 
     var imgWidth=document.getElementById("img1").width;
     var imgHeight=document.getElementById("img1").height;
@@ -209,6 +216,9 @@ function positioning()
 	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace+"px";//same as img 1 top	
 	document.getElementById("Mirror").style.left  =-x/0.7-btnLeftSpace+"px";
 	document.getElementById("Mirror").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace*2+"px";//same as img 1 top	
+
+	document.getElementById("Color").style.left  =-x+ width/2+imgWidth/2+30+"px";
+	document.getElementById("Color").style.top  = y+height/2-imgHeight/2+"px";
 
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
