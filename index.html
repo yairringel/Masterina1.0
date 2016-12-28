@@ -196,7 +196,7 @@ function positioning()
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =prevTouchX;
 	document.getElementById("Y").innerHTML =userX+x;
-	document.getElementById("Z").innerHTML =prevTouchX+x;
+	document.getElementById("Z").innerHTML =userX;
 }
 
 if (window.DeviceOrientationEvent) 
@@ -240,23 +240,7 @@ function processGyro(alpha,beta,gamma)
 
 	if (bitTouch)
 	{
-		switch(pieType)
-		{
-			case 1:
-
-			drawPie(userX+x,userY-y)
-
-
-
-
-		}
-	
-
-
-
-
-
-		draw(userX+x,userY-y);	
+		
 	}
 	else
 	{
