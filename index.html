@@ -53,7 +53,7 @@
 	<canvas id="myCanvas" style=" border:6px solid;z-index: -10; "></canvas> 
 	<canvas id="myCanvas2" style="  z-index: -11; "></canvas> 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
+	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
 	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
 	<input id="pieType" type="image" src="pie1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcPieType()"></input>
@@ -90,14 +90,14 @@ document.addEventListener("touchend", touchEndFunc, true);
 	function funcPieType()
 	{
 		iPieType+=1;
-		PieType=pieTypeRA[iPieType];
+		pieType=pieTypeRA[iPieType];
 		document.getElementById("pieType").src  =pieTypeArray[iPieType].src;
 		if (iPieType==5)
 		{
 			iPieType=-1;
 			
 		}
-		console.log(pieType);
+		
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
@@ -131,8 +131,9 @@ document.addEventListener("touchend", touchEndFunc, true);
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
    	context.translate(canvas.width / 2, canvas.height / 2); 
-    var lastXX=-1;
-    var lastYY=-1;
+   	var pointsX=[]; var pointsY=[]; var lastPointX=[];var lastPointY=[];
+    var startMove=false;
+    
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
     var first=0;  
     var x=0;
@@ -163,8 +164,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     var imgWidth=document.getElementById("img1").width;
     var imgHeight=document.getElementById("img1").height;
 
-    console.log(width);
-    console.log(height);
+    
     c2Width=imgWidth-(imgWidth*frameBorderW*2/100);
     c2Height=imgHeight-(imgHeight*frameBorderH*2/100);
 	context2.canvas.width  = c2Width;//resize canvas to whatever window dimensions are
@@ -188,13 +188,15 @@ function positioning()
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
 	document.getElementById("lineThik").style.left  =-x/0.7-130+"px";
 	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
-	document.getElementById("pieType").style.left  =-x/0.7-130+"px";
+	document.getElementById("pieType").style.left  =-x/0.7-30+"px";
 	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+170+"px";//same as img 1 top	
 	
-	
+	document.getElementById("alpha").innerHTML=alpha;
+	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =prevTouchX;
-	
+	document.getElementById("Y").innerHTML =userY;
+	document.getElementById("Z").innerHTML =userX;
 }
 
 if (window.DeviceOrientationEvent) 
@@ -215,14 +217,39 @@ if (window.DeviceOrientationEvent)
 
 function drawPie(drawX,drawY)
 {
-	document.getElementById("alpha").innerHTML=drawX;
-	document.getElementById("beta").innerHTML=drawY;
-	for (var i=1; i < pieType+1; i++) {
-    	draw(drawX,drawY);
+	if (startMove==false)
+	    {	
+	    	for (var ii=1; ii < pieType+1; ii++) {
+	    		lastPointX[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii)
+	    		lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
+	    	}
+	    	console.log(pointsX[1])
+	    console.log(lastPointX[1])
+	    }	
 
-    //Do something
+	    
+	for (var iii=1; iii < pieType+1; iii++) {
+		
+    	pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
+    	pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+    	}
+    for (var iiii=1; iiii < pieType+1; iiii++) {
+		context2.beginPath();
+	    context2.lineWidth = lineThik;
+	    context2.moveTo(lastPointX[iiii],lastPointY[iiii]);
+		context2.lineTo(pointsX[iiii],pointsY[iiii]);
+		context2.lineCap = 'round';
+	    context2.strokeStyle = '#000000';
+	    context2.stroke(); 
+	    } 
+	for (var iiiii=1; iiiii < pieType+1; iiiii++) {
+	    lastPointX[iiiii]=pointsX[iiiii];
+	    lastPointY[iiiii]=pointsY[iiiii];
+	    }
+	   startMove=true;
+	   
 }
-}	
+	
 
 
 
@@ -291,8 +318,6 @@ function touchmoveFunc(e)
 		
 	}
 	if (bitTouch){
-		document.getElementById("Y").innerHTML =userX+x;
-		document.getElementById("Z").innerHTML =userY-y;
 		drawPie(userX+x,userY-y)
 		
 	}
@@ -307,7 +332,7 @@ function touchEndFunc(e)
   userX=0;
 	userY=0;
 	bitTouch=false;
-	lastXX= -1; lastYY= -1;
+	startMove=false;
 }
 
 //====================================================================MOUSE=================================================================
@@ -330,9 +355,8 @@ function mouseMoveFunc(e)
 		firstY=e.clientY;
 	}
 	if (bitTouch){
-		
 		drawPie(userX,userY)
-		console.log(userX,userY);
+		
 	}
 }
 
@@ -341,7 +365,7 @@ function mouseUpFunc(e)
    userX=0;
 	userY=0;
 	bitTouch=false;
-	lastXX= -1; lastYY= -1;
+	startMove=false;
 	
 }
 

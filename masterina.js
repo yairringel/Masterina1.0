@@ -24,31 +24,7 @@ function drawCir(xx,yy)
 	    context.fill();  
 	}
 
-	function draw(xx,yy)
-	{
-		//context2.beginPath();
-	    //context2.arc(xx, yy, lineWidth, 0, 2 * Math.PI, false);
-		// context.fillStyle = 'green';
-	    //context.fill();
-	    //context2.lineWidth = 2;
-	    //context2.strokeStyle = '#003300';
-	    //context2.stroke();  
-	    if (lastXX== -1)
-	    {
-	    	lastXX=xx; lastYY=yy;
-	    }	
-
-	    context2.beginPath();
-	    context2.lineWidth = lineThik;
-	    context2.moveTo(lastXX,lastYY);
-		context2.lineTo(xx,yy);
-		context2.lineCap = 'round';
-	    context2.strokeStyle = '#000000';
-	    context2.stroke();  
-	    lastXX=xx;
-	    lastYY=yy;
-	    
-	}
+	
 	function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angles
 {
 	var oldX=0;
