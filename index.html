@@ -55,7 +55,7 @@
 	<canvas id="myColorCanvas" style="  z-index: 0; "></canvas> 
 
 	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
+	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 15" onclick="funcLock()"></input>
 	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
@@ -209,7 +209,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	color_image = new Image();
     color_image.src = 'color.png';
     color_image.onload = function(){
-    	colorContext.drawImage(color_image,0,0);
+    	colorContext.drawImage(color_image,0,0,width,height);
   	}
     
 	
@@ -430,7 +430,7 @@ function touchEndFunc(e)
 	startMove=false;
 	if (color)
 	{
-		document.getElementById('myColorCanvas').zIndex=0;
+		document.getElementById('myColorCanvas').style.zIndex=0;
 		color=false;
 	}
 	
