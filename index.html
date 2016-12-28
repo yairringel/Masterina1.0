@@ -157,7 +157,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
     var first=0; 
-    
+    var touchX=0;
     var x=0;
     var y=0;
     var z=0;
@@ -380,7 +380,7 @@ function touchmoveFunc(e)
 		{   
 		  e.preventDefault();
 		}
-		
+		touchX=e.touches[0].clientX
 		userX=e.touches[0].clientX-firstX;
 		userY=e.touches[0].clientY-firstY;
 		
