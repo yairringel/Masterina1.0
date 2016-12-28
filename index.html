@@ -250,7 +250,7 @@ function processGyro(alpha,beta,gamma)
 
 
 		}
-	positioning();	
+	
 
 
 
@@ -263,7 +263,7 @@ function processGyro(alpha,beta,gamma)
 		rotatePointViaGyroEulars(0,startY,startZ);
 	}
 	
-		
+	positioning();		
 	
 
 }
@@ -331,7 +331,8 @@ function mouseDownFunc(e)
 }
 
 function mouseMoveFunc(e)
-{	userX=e.clientX-firstX;
+{	
+	userX=e.clientX-firstX;
 	userY=e.clientY-firstY;
 	if (!(bitTouch))
 	{
