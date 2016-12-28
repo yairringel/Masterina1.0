@@ -56,12 +56,14 @@
 	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
 	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
+	<input id="pieType" type="image" src="pie1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcPieType()"></input>
 	
 	
 </body>
 <script type="text/javascript">
 //============================================================================ btn func============================================================================
 	iLineThik=0;
+	iPieType=0;
 	function funcLock()
 	{
 		document.getElementById("lockScreen").style.zIndex  =-1;
@@ -71,32 +73,41 @@
 	function funcLineThik()
 	{
 		iLineThik+=1;
-		lineWidth=thikRa[iLineThik];
-		document.getElementById("lineThik").src  =lineWidthArray[iLineThik].src;
-		
-		
+		lineThik=thikRa[iLineThik];
+		document.getElementById("lineThik").src  =lineThikArray[iLineThik].src;
 		if (iLineThik==5)
 		{
 			iLineThik=-1;
 			
 		}
-
+		console.log(lineThik);
+	}
+	function funcPieType()
+	{
+		iPieType+=1;
+		PieType=thikRa[iLineThik];
+		document.getElementById("lineThik").src  =lineWidthArray[iLineThik].src;
+		if (iLineThik==5)
+		{
+			iLineThik=-1;
+			
+		}
 		console.log(lineWidth);
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
-    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineWidth=1;
+    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1;
     var crossLine=50;
     var c1Width
     var lineWidthArray = new Array();
-    lineWidthArray[0] = new Image();lineWidthArray[1] = new Image();lineWidthArray[2] = new Image();lineWidthArray[3] = new Image();lineWidthArray[4] = new Image();lineWidthArray[5] = new Image();
-	lineWidthArray[0].src = 'thik1.png';lineWidthArray[1].src = 'thik2.png';lineWidthArray[2].src = 'thik3.png';lineWidthArray[3].src = 'thik4.png';lineWidthArray[4].src = 'thik5.png';lineWidthArray[5].src = 'thik6.png';
+    lineThikArray[0] = new Image();lineThikArray[1] = new Image();lineThikArray[2] = new Image();lineThikArray[3] = new Image();lineThikArray[4] = new Image();lineThikArray[5] = new Image();
+	lineThikArray[0].src = 'thik1.png';lineThikArray[1].src = 'thik2.png';lineThikArray[2].src = 'thik3.png';lineThikArray[3].src = 'thik4.png';lineThikArray[4].src = 'thik5.png';lineThikArray[5].src = 'thik6.png';
 	var thikRa=[];
 	thikRa[0]=1;thikRa[1]=2;thikRa[2]=4;thikRa[3]=10;thikRa[4]=17;thikRa[5]=25;
-	
-	lineWidthArray[1].src = 'thik2.png';
 
-    document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
+
+	
+	document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 	document.addEventListener("touchmove", touchmoveFunc, true);
 	document.addEventListener("touchend", touchEndFunc, true);
 
@@ -206,7 +217,7 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-	document.getElementById("lineThik").style.left  =-x/0.7-160+"px";
+	document.getElementById("lineThik").style.left  =-x/0.7-140+"px";
 	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
 	
 	document.getElementById("alpha").innerHTML=alpha;

@@ -19,7 +19,7 @@ function drawCir(xx,yy)
 	    context.strokeStyle = '#ffffff';
 	    context.stroke(); 
 	    context.beginPath();
-	    context.arc(xx, yy, lineWidth, 0, 2 * Math.PI, false);
+	    context.arc(xx, yy, lineThik, 0, 2 * Math.PI, false);
 		context.fillStyle = '#000000';
 	    context.fill();  
 	}
@@ -39,7 +39,7 @@ function drawCir(xx,yy)
 	    }	
 
 	    context2.beginPath();
-	    context2.lineWidth = lineWidth;
+	    context2.lineWidth = lineThik;
 	    context2.moveTo(lastXX,lastYY);
 		context2.lineTo(xx,yy);
 		context2.lineCap = 'round';
