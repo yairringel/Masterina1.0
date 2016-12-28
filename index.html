@@ -69,6 +69,7 @@
 		document.getElementById("lockScreen").style.zIndex  =-1;
 		document.getElementById("myCanvas").style.zIndex  =4;
 		document.getElementById("myCanvas2").style.zIndex  =3;
+		positioning();
 	}
 	function funcLineThik()
 	{
@@ -96,7 +97,7 @@
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
-    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1;
+    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;
     var crossLine=50;
     var c1Width
     var lineThikArray = new Array();
@@ -112,10 +113,7 @@
 	var pieTypeRA=[];
 	pieTypeRA[0]=1;pieTypeRA[1]=3;pieTypeRA[2]=4;pieTypeRA[3]=6;pieTypeRA[4]=10;pieTypeRA[5]=16;
 
-	document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
-	document.addEventListener("touchmove", touchmoveFunc, true);
-	document.addEventListener("touchend", touchEndFunc, true);
-
+	
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var canvas2 = document.getElementById('myCanvas2');
@@ -172,48 +170,10 @@
 //=======================================================================================================================================================================
 //============================================================================================================FUNC ======================================================
 //=======================================================================================================================================================================
-    if (window.DeviceOrientationEvent) 
-    {//
-    	
-    	window.addEventListener("deviceorientation", function () {//gyro
-    	if (first==0)
-    	{
-    		startZ=Math.cos(degToRad(event.beta))*L1;
-    		startY=Math.sin(degToRad(event.beta))*L1;
-    		first=1;	
-    	}	
-    	
-        processGyro(event.alpha, event.beta, event.gamma); 
-    	}, true);
-    	
-	}
 
-	
-
-
-
-function processGyro(alpha,beta,gamma)
-{ 
-	deviceOrientationData.alpha=alpha;
-	deviceOrientationData.beta=beta;
-	deviceOrientationData.gamma=gamma;
-	
-	context.save();
-	context.setTransform(1, 0, 0, 1, 0, 0);
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.restore();
-	drawCir(0+userX,0+userY);
-
-	if (bitTouch)
-	{
-		drawCir2(userX+x,userY-y,prevTouchX+x,prevTouchY-y);	
-	}
-	else
-	{
-		rotatePointViaGyroEulars(0,startY,startZ);
-	}
-	
-		
+  
+function positioning()
+{
 	document.getElementById("lineThik").style.left  =-x-120+"px";
 	document.getElementById("lineThik").style.top  = y+10+"px";	
 	document.getElementById("img2").style.left  =-x/10-300+"px";
@@ -233,6 +193,74 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("X").innerHTML =prevTouchX;
 	document.getElementById("Y").innerHTML =userX+x;
 	document.getElementById("Z").innerHTML =prevTouchX+x;
+}
+
+if (window.DeviceOrientationEvent) 
+    {//
+    	
+    	window.addEventListener("deviceorientation", function () {//gyro
+    	if (first==0)
+    	{
+    		startZ=Math.cos(degToRad(event.beta))*L1;
+    		startY=Math.sin(degToRad(event.beta))*L1;
+    		first=1;	
+    	}	
+    	
+        processGyro(event.alpha, event.beta, event.gamma); 
+    	}, true);
+    	
+}
+
+function drawPie(drawX,drawY)
+{
+	for (var i=1; i < pieType+1; i++) {
+    	draw(drawX,drawY);
+
+    //Do something
+}
+}	
+
+
+
+function processGyro(alpha,beta,gamma)
+{ 
+	deviceOrientationData.alpha=alpha;
+	deviceOrientationData.beta=beta;
+	deviceOrientationData.gamma=gamma;
+	
+	context.save();
+	context.setTransform(1, 0, 0, 1, 0, 0);
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.restore();
+	drawCir(0+userX,0+userY);
+
+	if (bitTouch)
+	{
+		switch(pieType)
+		{
+			case 1:
+
+			drawPie(userX+x,userY-y)
+
+
+
+
+		}
+	positioning();	
+
+
+
+
+
+		draw(userX+x,userY-y);	
+	}
+	else
+	{
+		rotatePointViaGyroEulars(0,startY,startZ);
+	}
+	
+		
+	
 
 }
 
@@ -247,7 +275,10 @@ function degToRad(deg)// Degree-to-Radian conversion
 
 
 //========================================================================================================================================================================
-//========================================================================================================================================================================
+//======================================================================TOUCH==================================================================================================
+document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
+document.addEventListener("touchmove", touchmoveFunc, true);
+document.addEventListener("touchend", touchEndFunc, true);
 
 
 function touchStartFunc(e)
@@ -262,46 +293,62 @@ function touchmoveFunc(e)
 	{   
 	  e.preventDefault();
 	}
-	userXYmove(e.touches[0].clientX,e.touches[0].clientY);
+	
+	userX=e.touches[0].clientX-firstX;
+	userY=e.touches[0].clientY-firstY;
+	
 	if (!(bitTouch))
 	{
 		
 		firstX=e.touches[0].clientX;
 		firstY=e.touches[0].clientY;
+		drawPie(userX,userY)
 	}
 	bitTouch=true;
-	 prevTouchX =e.touches[0].clientX;
-	 prevTouchY =e.touches[0].clientY;
+	 
 }
 
 function touchEndFunc(e)
 {
 	
-  prevTouchX = -1;
-  prevTouchY = -1;
+  
   userX=0;
 	userY=0;
 	bitTouch=false;
 	lastXX= -1; lastYY= -1;
 }
-function userXYmove(ux,uy)
-{
 
-	
-	
-	if(prevTouchX != -1 ) //need valid prevTouch info to calculate swipe
+//====================================================================MOUSE=================================================================
+document.addEventListener("mousedown", mouseDownFunc, true);
+document.addEventListener("mousemove", mouseMoveFunc, true);
+document.addEventListener("mouseup", mouseUpFunc, true);
+
+function mouseDownFunc(e)
+{
+  bitTouch=true;
+}
+
+function mouseMoveFunc(e)
+{	userX=e.clientX-firstX;
+	userY=e.clientY-firstY;
+	if (!(bitTouch))
 	{
-	  var xMovement=ux-prevTouchX;
-	  var yMovement=uy-prevTouchY;
-	  userX=ux-firstX;
-	  userY=uy-firstY;
-	  //var xMovementQuat=quatFromAxisAngle(1,0,0,y/200);//movement on y rotates x and vice versa
-	  //var yMovementQuat=quatFromAxisAngle(0,1,0,x/200);//200 is there to scale the movement way down to an intuitive amount
-	 //userQuot=quaternionMultiply([yMovementQuat,xMovementQuat]);//use reverse order
-	 
+		firstX=e.clientX;
+		firstY=e.clientY;
 	}
-	prevTouchY=uy;
-	prevTouchX=ux;
+	if (bitTouch){
+		drawPie(userX,userY)
+		console.log(userX,userY);
+	}
+}
+
+function mouseUpFunc(e)
+{
+   userX=0;
+	userY=0;
+	bitTouch=false;
+	lastXX= -1; lastYY= -1;
+	
 }
 
 		
