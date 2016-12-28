@@ -181,17 +181,23 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.alpha=alpha;
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
-	rotatePointViaGyroEulars(0,startY,startZ);
 	
+	context.save();
+	context.setTransform(1, 0, 0, 1, 0, 0);
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.restore();
+	drawCir(0+userX,0+userY);
+
 	if (bitTouch)
 	{
 		drawCir2(userX+x,userY-y,prevTouchX+x,prevTouchY-y);	
 	}
-		context.save();
-		context.setTransform(1, 0, 0, 1, 0, 0);
-		context.clearRect(0, 0, canvas.width, canvas.height);
-		context.restore();
-		drawCir(0+userX,0+userY);
+	else
+	{
+		rotatePointViaGyroEulars(0,startY,startZ);
+	}
+	
+		
 	document.getElementById("lineThik").style.left  =-x-120+"px";
 	document.getElementById("lineThik").style.top  = y+10+"px";	
 	document.getElementById("img2").style.left  =-x/10-300+"px";
