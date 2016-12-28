@@ -191,8 +191,7 @@ function positioning()
 	document.getElementById("pieType").style.left  =-x/0.7-130+"px";
 	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+170+"px";//same as img 1 top	
 	
-	document.getElementById("alpha").innerHTML=alpha;
-	document.getElementById("beta").innerHTML=startY;
+	
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =prevTouchX;
 	
@@ -216,6 +215,8 @@ if (window.DeviceOrientationEvent)
 
 function drawPie(drawX,drawY)
 {
+	document.getElementById("alpha").innerHTML=drawX;
+	document.getElementById("beta").innerHTML=drawY;
 	for (var i=1; i < pieType+1; i++) {
     	draw(drawX,drawY);
 

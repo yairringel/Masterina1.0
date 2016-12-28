@@ -24,7 +24,7 @@ function drawCir(xx,yy)
 	    context.fill();  
 	}
 
-	function drawCir2(xx,yy)
+	function draw(xx,yy)
 	{
 		//context2.beginPath();
 	    //context2.arc(xx, yy, lineWidth, 0, 2 * Math.PI, false);
