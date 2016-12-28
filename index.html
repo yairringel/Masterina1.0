@@ -62,6 +62,10 @@
 </body>
 <script type="text/javascript">
 //============================================================================ btn func============================================================================
+document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
+document.addEventListener("touchmove", touchmoveFunc, true);
+document.addEventListener("touchend", touchEndFunc, true);
+
 	iLineThik=0;
 	iPieType=0;
 	function funcLock()
@@ -276,9 +280,7 @@ function degToRad(deg)// Degree-to-Radian conversion
 
 //========================================================================================================================================================================
 //======================================================================TOUCH==================================================================================================
-document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
-document.addEventListener("touchmove", touchmoveFunc, true);
-document.addEventListener("touchend", touchEndFunc, true);
+
 
 
 function touchStartFunc(e)
