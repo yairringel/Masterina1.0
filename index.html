@@ -85,11 +85,11 @@
 	function funcPieType()
 	{
 		iPieType+=1;
-		PieType=pieTypeRa[iPieType];
-		document.getElementById("lineThik").src  =lineWidthArray[iLineThik].src;
-		if (iLineThik==5)
+		PieType=pieTypeRA[iPieType];
+		document.getElementById("pieType").src  =pieTypeArray[iPieType].src;
+		if (iPieType==5)
 		{
-			iLineThik=-1;
+			iPieType=-1;
 			
 		}
 		console.log(pieType);
@@ -222,9 +222,9 @@ function processGyro(alpha,beta,gamma)
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-	document.getElementById("lineThik").style.left  =-x/0.7-120+"px";
+	document.getElementById("lineThik").style.left  =-x/0.7-130+"px";
 	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
-	document.getElementById("pieType").style.left  =-x/0.7-120+"px";
+	document.getElementById("pieType").style.left  =-x/0.7-130+"px";
 	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+170+"px";//same as img 1 top	
 	
 	document.getElementById("alpha").innerHTML=alpha;
