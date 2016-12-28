@@ -172,7 +172,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var firstY=0;
 	var prevTouchX=-1;
 	var prevTouchY=-1;
-	var btnLeftSpace=130;
+	var btnLeftSpace=200;
 	var btnTopSpace=180;
 	document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
 	document.getElementById("lockScreen").style.left  = (width/2)-250+"px";
@@ -217,7 +217,7 @@ function positioning()
 	document.getElementById("Mirror").style.left  =-x/0.7-btnLeftSpace+"px";
 	document.getElementById("Mirror").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace*2-20+"px";//same as img 1 top	
 
-	document.getElementById("Color").style.left  =-x/0.7+ width/2+imgWidth/2+30+"px";
+	document.getElementById("Color").style.left  =-x/0.7+ width/2+imgWidth/2+130+"px";
 	document.getElementById("Color").style.top  = y/0.7+height/2-imgHeight/2-20+"px";
 
 	document.getElementById("alpha").innerHTML=alpha;
