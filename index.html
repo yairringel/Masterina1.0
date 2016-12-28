@@ -167,7 +167,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var firstY=0;
 	var prevTouchX=-1;
 	var prevTouchY=-1;
-	var btnLeftSpace=150;
+	var btnLeftSpace=20;
 	var btnTopSpace=180;
 	document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
 	document.getElementById("lockScreen").style.left  = (width/2)-250+"px";
@@ -236,31 +236,52 @@ if (window.DeviceOrientationEvent)
 
 function drawPie(drawX,drawY)
 {
+
 	if (startMove==false)
 	    {	
-	    	for (var ii=1; ii < pieType+1; ii++) {
+	    	for (var ii=1; ii < pieType+1; ii++)
+	    	 {
 	    		lastPointX[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii)
 	    		lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
-	    		if (mirror==2){
-	    			lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
-	    			lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
-	    		}
+				if (mirror==2)
+	    			{
+	    			if (pieType==1)
+	    				{
+	    				lastPointX[ii]=-(drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii))
+	    				lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
+
+	    				}
+	    			else{
+	    				lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
+	    				lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
+	    				}
+	    			}
 	    	}
 	    	
 	    }	
 
 	    
-	for (var iii=1; iii < pieType+1; iii++) {
+	for (var iii=1; iii < pieType+1; iii++)
+		 {
 		
-    	pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
-    	pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-    	if (mirror==2){
-    		pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
-    		pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
+    		pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
+    		pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+    		if (mirror==2)
+    			{
+    				if (pieType==1)
+    					{
+    						pointsXm[iii]=-(drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii))
+    						pointsYm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+    					}
+    				else
+    					{
+    						pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
+    						pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
+    					}
+    			}
     	}
-
-    	}
-    for (var iiii=1; iiii < pieType+1; iiii++) {
+ for (var iiii=1; iiii < pieType+1; iiii++) {
+    	console.log(drawY);
 		context2.beginPath();
 	    context2.lineWidth = lineThik;
 	    context2.moveTo(lastPointX[iiii],lastPointY[iiii]);
@@ -282,12 +303,12 @@ function drawPie(drawX,drawY)
 	    lastPointX[iiiii]=pointsX[iiiii];
 	    lastPointY[iiiii]=pointsY[iiiii];
 	    if (mirror==2){
+	    	
 	    	lastPointXm[iiiii]=pointsXm[iiiii];
 	    	lastPointYm[iiiii]=pointsYm[iiiii];
-		}
 	    }
 	   startMove=true;
-	   
+	}
 }
 	
 
