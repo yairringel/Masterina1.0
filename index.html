@@ -112,7 +112,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	}
 	function funcColor()
 	{
-		
+		color = true;
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
@@ -155,7 +155,8 @@ document.addEventListener("touchend", touchEndFunc, true);
     var startMove=false;
     
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
-    var first=0;  
+    var first=0; 
+    var color false; 
     var x=0;
     var y=0;
     var z=0;
@@ -373,28 +374,29 @@ function touchStartFunc(e)
 
 function touchmoveFunc(e)
 {
-	
-	if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
-	{   
-	  e.preventDefault();
-	}
-	
-	userX=e.touches[0].clientX-firstX;
-	userY=e.touches[0].clientY-firstY;
-	
-	if (!(bitTouch))
+	if (!(color))
 	{
+		if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
+		{   
+		  e.preventDefault();
+		}
 		
-		firstX=e.touches[0].clientX;
-		firstY=e.touches[0].clientY;
+		userX=e.touches[0].clientX-firstX;
+		userY=e.touches[0].clientY-firstY;
 		
-	}
-	if (bitTouch){
-		drawPie(userX+x,userY-y)
-		
-	}
-	bitTouch=true;
-	 
+		if (!(bitTouch))
+		{
+			
+			firstX=e.touches[0].clientX;
+			firstY=e.touches[0].clientY;
+			
+		}
+		if (bitTouch){
+			drawPie(userX+x,userY-y)
+			
+		}
+		bitTouch=true;
+	} 
 }
 
 function touchEndFunc(e)
@@ -405,6 +407,7 @@ function touchEndFunc(e)
 	userY=0;
 	bitTouch=false;
 	startMove=false;
+	color=true;
 }
 
 //====================================================================MOUSE=================================================================
