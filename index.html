@@ -230,24 +230,22 @@ function positioning()
 	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
 	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
 	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-
-	document.getElementById("myColorCanvas").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
-	document.getElementById("myColorCanvas").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-
 	document.getElementById("lineThik").style.left  =-x/0.7-btnLeftSpace+"px";
 	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
 	document.getElementById("pieType").style.left  =-x/0.7-btnLeftSpace+"px";
 	document.getElementById("pieType").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace+"px";//same as img 1 top	
 	document.getElementById("Mirror").style.left  =-x/0.7-btnLeftSpace+"px";
-	document.getElementById("Mirror").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace*2+"px";//same as img 1 top	
+	document.getElementById("Mirror").style.top  =  y/0.7+height/2-imgHeight/2+btnTopSpace*2+"px";//same as img 1 top
+	document.getElementById("Color").style.left  =-x/0.7+ width/2+imgWidth/2+60+"px";
+	document.getElementById("Color").style.top  = y/0.7+height/2-imgHeight/2+"px";	
 	if (color)
 	{
-		document.getElementById("Color").style.left  =-x/0.7+ width/2+imgWidth/2+60+"px";
-		document.getElementById("Color").style.top  = y/0.7+height/2-imgHeight/2+"px";
+		document.getElementById("myColorCanvas").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
+		document.getElementById("myColorCanvas").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
 	}
 	else
 	{
-		document.getElementById("Color").style.left  =-1000+"px";
+		document.getElementById("myColorCanvas").style.left  =-1000+"px";
 	}
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
