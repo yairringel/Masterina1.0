@@ -51,11 +51,11 @@
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
 	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
 	<canvas id="myCanvas" style=" border:6px solid;z-index: -10; "></canvas> 
-	<canvas id="myCanvas2" style="  z-index: -11; "></canvas> 
+	<canvas id="myCanvas2" style="border:6px  solid;z-index: -11; "></canvas> 
 	<canvas id="myColorCanvas" style="left:-1000px;  z-index: 0; "></canvas> 
 
-	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
+	<img id="frameImg" src="frame.jpg" style ="z-index: 2;">
+	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 15" onclick="funcLock()"></input>
 	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
@@ -78,7 +78,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	{
 		document.getElementById("lockScreen").style.zIndex  =-1;
 		document.getElementById("myCanvas").style.zIndex  =4;
-		document.getElementById("myCanvas2").style.zIndex  =3;
+		document.getElementById("myCanvas2").style.zIndex  =5;
 		positioning();
 	}
 	function funcLineThik()
@@ -122,10 +122,34 @@ document.addEventListener("touchend", touchEndFunc, true);
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//================================================================================ VAR ===============================================================================================
+	var width=window.innerWidth;
+    var height=window.innerHeight;
+    //------------------------------------------------------------------------------- DYNAMIC --------------------------------------------------------------------------------------------
+    var frameWper=0.8,frameHper=0.8,frameW=width*frameWper,frameH=height*frameHper,frameXpos=(width-width*frameWper)/2,frameYpos=(height-height*frameHper)/2;
+    var canvasWper=0.75,canvasHper=0.75,canvasW=width*canvasWper,canvasH=height*canvasHper,canvasXpos=(width-width*canvasWper)/2,canvasYpos=(height-height*canvasHper)/2;
+    
+    document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
+	document.getElementById("lockScreen").style.left  = (width/2)-250+"px";
+    document.getElementById("spaceImg").width  =1.5*width;
+    document.getElementById("spaceImg").height  =1.5*height;
+    document.getElementById("spaceImg").style.top  =-300+"px";
+    document.getElementById("spaceImg").style.left  =-300+"px";
+    document.getElementById("frameImg").width  =frameW;
+    document.getElementById("frameImg").height  =frameH;
 
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+    var canvas2 = document.getElementById('myCanvas2');
+    var context2 = canvas2.getContext('2d');
+    var colorCanvas = document.getElementById('myColorCanvas');
+    var colorContext = colorCanvas.getContext('2d');
+    context2.canvas.width  = canvasW;//resize canvas to whatever window dimensions are
+	context2.canvas.height = canvasH;
+	context2.translate(canvas2.width / 2, canvas2.height / 2);
+    //------------------------------------------------------------------------------- STATIC ----------------------------------------------------------------------------------------------
     var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;mirror=0;
     var crossLine=50;
-    var c1Width
+    
     var lineThikArray = new Array();
     lineThikArray[0] = new Image();lineThikArray[1] = new Image();lineThikArray[2] = new Image();lineThikArray[3] = new Image();lineThikArray[4] = new Image();lineThikArray[5] = new Image();
 	lineThikArray[0].src = 'thik1.png';lineThikArray[1].src = 'thik2.png';lineThikArray[2].src = 'thik3.png';lineThikArray[3].src = 'thik4.png';lineThikArray[4].src = 'thik5.png';lineThikArray[5].src = 'thik6.png';
@@ -145,17 +169,8 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var mirrorRA=[];
 	mirrorRA[0]=1;mirrorRA[1]=2;
 
-    var canvas = document.getElementById('myCanvas');
-    var context = canvas.getContext('2d');
-    var canvas2 = document.getElementById('myCanvas2');
-    var context2 = canvas2.getContext('2d');
-    var colorCanvas = document.getElementById('myColorCanvas');
-    var colorContext = colorCanvas.getContext('2d');
     
-    var width=window.innerWidth;
-    var height=window.innerHeight;
-    c1Width=width;
-    c1Height=height;
+    
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
    	context.translate(canvas.width / 2, canvas.height / 2); 
@@ -184,33 +199,15 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var prevTouchY=-1;
 	var btnLeftSpace=200;
 	var btnTopSpace=180;
-	document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
-	document.getElementById("lockScreen").style.left  = (width/2)-250+"px";
-    document.getElementById("img2").width  =1.5*width;
-    document.getElementById("img2").height  =1.5*height;
-    document.getElementById("img2").style.top  =-300+"px";
-    document.getElementById("img2").style.left  =-300+"px";
-    document.getElementById("img1").width  =width-imageBorder*2;
-    document.getElementById("img1").height  =height-imageBorder*2;
-    
-    
-
-    var imgWidth=document.getElementById("img1").width;
-    var imgHeight=document.getElementById("img1").height;
-
-    
-    c2Width=imgWidth-(imgWidth*frameBorderW*2/100);
-    c2Height=imgHeight-(imgHeight*frameBorderH*2/100);
-	context2.canvas.width  = c2Width;//resize canvas to whatever window dimensions are
-	context2.canvas.height = c2Height;
-	context2.translate(canvas2.width / 2, canvas2.height / 2);
+	
+	
 
 	colorContext.canvas.width  = c2Width;//resize canvas to whatever window dimensions are
 	colorContext.canvas.height = c2Height;
 	color_image = new Image();
     color_image.src = 'color.png';
     color_image.onload = function(){
-    	colorContext.drawImage(color_image,0,0,width,height);
+    colorContext.drawImage(color_image,0,0,width,height);
   	}
     
 	
@@ -224,12 +221,12 @@ function positioning()
 {
 	document.getElementById("lineThik").style.left  =-x-120+"px";
 	document.getElementById("lineThik").style.top  = y+10+"px";	
-	document.getElementById("img2").style.left  =-x/10-300+"px";
-	document.getElementById("img2").style.top  = y/10-300+"px";	
-	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
-	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
-	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
-	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
+	document.getElementById("spaceImg").style.left  =-x/10-300+"px";
+	document.getElementById("spaceImg").style.top  = y/10-300+"px";	
+	document.getElementById("frameImg").style.left  =-x+ frameXpos+"px";
+	document.getElementById("frameImg").style.top  = y+frameYpos+"px";
+	document.getElementById("myCanvas2").style.left  =-x+ canvasXpos+"px";
+	document.getElementById("myCanvas2").style.top  = y+canvasYpos+"px";
 	document.getElementById("lineThik").style.left  =-x/0.7-btnLeftSpace+"px";
 	document.getElementById("lineThik").style.top  =  y/0.7+height/2-imgHeight/2+"px";//same as img 1 top	
 	document.getElementById("pieType").style.left  =-x/0.7-btnLeftSpace+"px";
@@ -250,9 +247,9 @@ function positioning()
 	document.getElementById("alpha").innerHTML=alpha;
 	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
-	document.getElementById("X").innerHTML =width;
-	document.getElementById("Y").innerHTML =touchX;
-	document.getElementById("Z").innerHTML =document.getElementById("Color").style.left;
+	document.getElementById("X").innerHTML =frameXpos;
+	document.getElementById("Y").innerHTML =frameW;
+	document.getElementById("Z").innerHTML =width*frameWper/2
 }
 
 if (window.DeviceOrientationEvent) 
