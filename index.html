@@ -51,11 +51,15 @@
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
 	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
 	<canvas id="myCanvas" style=" border:6px solid;z-index: -10; "></canvas> 
-	<canvas id="myCanvas2" style="border:6px  solid;z-index: -11; "></canvas> 
+	<canvas id="myCanvas2" style="width:80%;height:80%;top:10%;left:10%;border:6px  solid;z-index: -11; "></canvas> 
 	<canvas id="myColorCanvas" style="left:-1000px;  z-index: 0; "></canvas> 
 
-	<img id="frameImg" src="frame.jpg" style ="z-index: 2;">
+	<img id="frameImg" src="frame1.jpg" style ="z-index: 2;">
 	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
+	<img id="sideImg" src="side.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
+	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 2;">
+	<img id="topImg" src="top.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
+	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 2;">
 	
 	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 15" onclick="funcLock()"></input>
 	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
@@ -149,12 +153,13 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var width=window.innerWidth;
     var height=window.innerHeight;
     
+    var sideW=0.1*width; topH=0.05*height;
     var frameWper=0.8,frameHper=0.8,frameW=width*frameWper,frameH=height*frameHper,frameXpos=(width-width*frameWper)/2,frameYpos=(height-height*frameHper)/2;
     var canvasWper=0.75,canvasHper=0.75,canvasW=width*canvasWper,canvasH=height*canvasHper,canvasXpos=(width-width*canvasWper)/2,canvasYpos=(height-height*canvasHper)/2;
-    var btnSizeper=0.07,btnLeftSpace=15,btnTopSpace=0.06*height,btnBottomSpace=0.05*height,btnRightSpace=width*0.05,btn2btnSpace=width*0.03;
-    var btnLineW=width*btnSizeper,btnLineH=btnLineW,btnLineXpos=-btnLeftSpace,btnLineYpos=frameYpos;
-    var btnPyeW=width*btnSizeper,btnPyeH=btnPyeW,btnPyeXpos=-btnLeftSpace,btnPyeYpos=frameYpos+(btnTopSpace+btnPyeH)*1;
-    var btnMirW=width*btnSizeper,btnMirH=btnMirW,btnMirXpos=-btnLeftSpace,btnMirYpos=frameYpos+(btnTopSpace+btnPyeH)*2;
+    var btnSizeper=0.07,btnW=width*btnSizeper,btnH=btnW,btnLeftSpace=15,btnTopSpace=0.06*height,btnBottomSpace=0.05*height,btnRightSpace=width*0.05,btn2btnSpace=width*0.03;
+    var btnLineXpos=-btnLeftSpace,btnLineYpos=frameYpos;
+    var btnPyeXpos=-btnLeftSpace,btnPyeYpos=frameYpos+(btnTopSpace+btnH)*1;
+    var btnMirXpos=-btnLeftSpace,btnMirYpos=frameYpos+(btnTopSpace+btnH)*2;
 
 
     document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
@@ -163,10 +168,12 @@ document.addEventListener("touchend", touchEndFunc, true);
     document.getElementById("spaceImg").height  =1.5*height;
     document.getElementById("spaceImg").style.top  =-300+"px";
     document.getElementById("spaceImg").style.left  =-300+"px";
-    document.getElementById("frameImg").width  =frameW;
-    document.getElementById("frameImg").height  =frameH;
-    document.getElementById("lineThik").width  =btnLineW;
-    document.getElementById("lineThik").height  =btnLineH;
+    //document.getElementById("frameImg").width  =frameW;
+    //document.getElementById("frameImg").height  =frameH;
+    document.getElementById("lineThik").width  =btnW;
+    document.getElementById("lineThik").height  =btnH;
+    //document.getElementById("sideImg").width  =btnW*2;
+    //document.getElementById("sideImg").height  =frameH;
 
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
@@ -177,7 +184,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     context2.canvas.width  = canvasW;//resize canvas to whatever window dimensions are
 	context2.canvas.height = canvasH;
 	context2.translate(canvas2.width / 2, canvas2.height / 2);
-	positioning();
+	
     
     context.canvas.width  = width;//resize canvas to whatever window dimensions are
 	context.canvas.height = height;
@@ -231,10 +238,10 @@ function positioning()
 	document.getElementById("lineThik").style.top  = y+10+"px";	
 	document.getElementById("spaceImg").style.left  =-x/10-300+"px";
 	document.getElementById("spaceImg").style.top  = y/10-300+"px";	
-	document.getElementById("frameImg").style.left  =-x+ frameXpos+"px";
-	document.getElementById("frameImg").style.top  = y+frameYpos+"px";
-	document.getElementById("myCanvas2").style.left  =-x+ canvasXpos+"px";
-	document.getElementById("myCanvas2").style.top  = y+canvasYpos+"px";
+	//document.getElementById("frameImg").style.left  =-x+ frameXpos+"px";
+	//document.getElementById("frameImg").style.top  = y+frameYpos+"px";
+	//document.getElementById("myCanvas2").style.left  =-x+ canvasXpos+"px";
+	//document.getElementById("myCanvas2").style.top  = y+canvasYpos+"px";
 	document.getElementById("lineThik").style.left  =-x+btnLineXpos+"px";
 	document.getElementById("lineThik").style.top  =  y+btnLineYpos+"px";//same as img 1 top	
 	document.getElementById("pieType").style.left  =-x+btnPyeXpos+"px";
@@ -257,7 +264,7 @@ function positioning()
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =btnLineXpos;
 	document.getElementById("Y").innerHTML =btnLineYpos;
-	document.getElementById("Z").innerHTML =btnLineW
+	document.getElementById("Z").innerHTML =0;
 }
 
 if (window.DeviceOrientationEvent) 
