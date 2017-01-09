@@ -104,8 +104,8 @@ $('#example').mousemove(function(e) {
     var c = this.getContext('2d');
     var p = c.getImageData((mouseX-width*0.91),( mouseY-height*0.18), 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-    document.getElementById("alpha").innerHTML =hex;
-	document.getElementById("Y").innerHTML =( mouseY-height*0.18);
+    document.getElementById("X").innerHTML =hex;
+	document.getElementById("Y").innerHTML =hex;
 	document.getElementById("Z").innerHTML =hex;
 });
 //============================================================================ btn func============================================================================
