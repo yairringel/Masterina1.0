@@ -164,7 +164,8 @@ document.addEventListener("touchend", touchEndFunc, true);
 
     //================================================================================ VAR ===============================================================================================
 	
-    var staticBit=true;var width=window.innerWidth;
+    var staticBit=true;
+    var width=window.innerWidth;
     var height=window.innerHeight;
 
 
@@ -270,8 +271,8 @@ $('#Color').mousemove(function(e) {
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0, width*0.08, height*0.04);
-    document.getElementById("alpha").innerHTML =(width*0.08+"    "+height*0.16);
-	document.getElementById("beta").innerHTML =( mouseY-height*0.18);
+    document.getElementById("alpha").innerHTML =(width*0.08);
+	document.getElementById("beta").innerHTML =(height*0.04);
 	document.getElementById("gamma").innerHTML =hex;
 
 });
