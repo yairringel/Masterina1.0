@@ -52,15 +52,15 @@
 
 <body >
 	
-	alpha:<span id="alpha" style="position:fixed; z-index: 6;"></span><br>
-	beta:<span id="beta" style="position:fixed; z-index: 6;"></span><br>
-	gamma:<span id="gamma" style="position:fixed;"></span><br>
+	alpha:<span id="alpha" style="position:fixed;left:500px;top:400px; z-index: 8;"></span><br>
+	beta:<span id="beta" style="position:fixed;left:500px;top:500px; z-index: 8;"></span><br>
+	gamma:<span id="gamma" style="position:fixed;left:500px;top:600px;z-index: 8;"></span><br>
 	L1:<span id="X"></span><br>
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
 	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
 	<canvas id="myCanvas" style="top:0px;left:0px; z-index: 2; "></canvas> 
 	<canvas id="myCanvas2" style="top:0px;left:0px; z-index: 1; "></canvas> 
-	<canvas id="example" type="image" style="width:30%;height:30%;left:70%;top:18%;  z-index: 6; "></canvas>
+	<canvas id="example" type="image" style="width:30%;height:30%;left:70%;top:20%;  z-index: 6; "></canvas>
 	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 3; "></canvas> 
 	
 	
@@ -107,12 +107,12 @@ $('#example').mousemove(function(e) {
     var yyy = 10 ;
     
     var c = this.getContext('2d');
-    var p = c.getImageData((mouseX-width*0.70),( mouseY-height*0.20), 1, 1).data; 
+    var p = c.getImageData((mouseX-width*0.7),( mouseY-height*0.2), 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0, 100, 20);
-    document.getElementById("X").innerHTML =hex;
-	document.getElementById("Y").innerHTML =hex;
+    document.getElementById("X").innerHTML =(mouseX-width*0.7);
+	document.getElementById("Y").innerHTML =( mouseY-height*0.2);
 	document.getElementById("Z").innerHTML =hex;
 });
 //============================================================================ btn func============================================================================
