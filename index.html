@@ -8,6 +8,8 @@
 <script type="text/javascript" src="masterina.js"></script>
 
 <style>
+ 
+
  /body 
   {
   	
@@ -18,6 +20,9 @@
 }
   canvas
   { 
+
+    
+
 	margin: 0px;
 	padding: 0px;
 	position:fixed;
@@ -27,6 +32,7 @@
   } 
  img
   { 
+  	cursor:auto;
 	margin: 0px;
 	padding: 0px;
 	position:fixed;
@@ -44,28 +50,30 @@
 
 <body >
 	
-	alpha:<span id="alpha" style="position:fixed;"></span><br>
-	beta:<span id="beta" style="position:fixed;"></span><br>
+	alpha:<span id="alpha" style="position:fixed; z-index: 6;"></span><br>
+	beta:<span id="beta" style="position:fixed; z-index: 6;"></span><br>
 	gamma:<span id="gamma" style="position:fixed;"></span><br>
 	L1:<span id="X"></span><br>
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
 	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
-	<canvas id="myCanvas" style=" border:6px solid;z-index: -10; "></canvas> 
-	<canvas id="myCanvas2" style="width:80%;height:80%;top:10%;left:10%;border:6px  solid;z-index: -11; "></canvas> 
+	<canvas id="myCanvas" style="top:0px;left:0px; border:1px ;solid;z-index: 2; "></canvas> 
+	<canvas id="myCanvas2" style="top:0%;left:0%; border:1px;  solid;z-index: 1; "></canvas> 
 	<canvas id="myColorCanvas" style="left:-1000px;  z-index: 0; "></canvas> 
 
 	<img id="frameImg" src="frame1.jpg" style ="z-index: 2;">
 	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<img id="sideImg" src="side.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
 	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 2;">
-	<img id="topImg" src="top.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
+	<img id="topImg" src="bottom.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
+	<img id="masterinaLogo" src="Logo.png" style = "top:1%;left: 1%;height:8%;z-index: 2;">
 	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 2;">
 	
-	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 15" onclick="funcLock()"></input>
-	<input id="lineThik" type="image" src="thik1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcLineThik()"></input>
-	<input id="pieType" type="image" src="pie1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcPieType()"></input>
-	<input id="Mirror" type="image" src="mirror1.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcMirror()"></input>
-	<input id="Color" type="image" src="btnColor.png"  style= "width:150px; height:150px; z-index: 6" onclick="funcColor()"></input>
+	<input id="New" type="image" src="NEW_BTN.png"  style= "top:11%; left: 1%; width:8%; height:4%; z-index: 6" onclick="funcNew()"></input>
+	<input id="lineThik" type="image" src="thik1.png"  style= "top:18%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcLineThik()"></input>
+	<input id="pieType" type="image" src="pie1.png"  style= "top:34%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcPieType()"></input>
+	<input id="Mirror" type="image" src="mirror1.png"  style= "top:50%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcMirror()"></input>
+	<input id="Color" type="image" src="btnColor.png"  style= "top:18%; left: 91%; width:8%; height:width; z-index: 6" onclick="funcColor()"></input>
+	
 	
 	
 	
@@ -78,12 +86,9 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var iMirror=0;
 	var iLineThik=0;
 	var iPieType=0;
-	function funcLock()
+	function funcNew()
 	{
-		document.getElementById("lockScreen").style.zIndex  =-1;
-		document.getElementById("myCanvas").style.zIndex  =4;
-		document.getElementById("myCanvas2").style.zIndex  =3;
-		
+		context2.clearRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2);
 	}
 	function funcLineThik()
 	{
@@ -150,9 +155,14 @@ document.addEventListener("touchend", touchEndFunc, true);
 	mirrorRA[0]=1;mirrorRA[1]=2;
 
     //================================================================================ VAR ===============================================================================================
-	var width=window.innerWidth;
+	
+    var staticBit=true;var width=window.innerWidth;
     var height=window.innerHeight;
-    
+
+
+   
+
+
     var sideW=0.1*width; topH=0.05*height;
     var frameWper=0.8,frameHper=0.8,frameW=width*frameWper,frameH=height*frameHper,frameXpos=(width-width*frameWper)/2,frameYpos=(height-height*frameHper)/2;
     var canvasWper=0.75,canvasHper=0.75,canvasW=width*canvasWper,canvasH=height*canvasHper,canvasXpos=(width-width*canvasWper)/2,canvasYpos=(height-height*canvasHper)/2;
@@ -161,36 +171,29 @@ document.addEventListener("touchend", touchEndFunc, true);
     var btnPyeXpos=-btnLeftSpace,btnPyeYpos=frameYpos+(btnTopSpace+btnH)*1;
     var btnMirXpos=-btnLeftSpace,btnMirYpos=frameYpos+(btnTopSpace+btnH)*2;
 
-
-    document.getElementById("lockScreen").style.top  =(height/2)-250+"px";
-	document.getElementById("lockScreen").style.left  = (width/2)-250+"px";
     document.getElementById("spaceImg").width  =1.5*width;
     document.getElementById("spaceImg").height  =1.5*height;
     document.getElementById("spaceImg").style.top  =-300+"px";
     document.getElementById("spaceImg").style.left  =-300+"px";
-    //document.getElementById("frameImg").width  =frameW;
-    //document.getElementById("frameImg").height  =frameH;
-    document.getElementById("lineThik").width  =btnW;
-    document.getElementById("lineThik").height  =btnH;
-    //document.getElementById("sideImg").width  =btnW*2;
-    //document.getElementById("sideImg").height  =frameH;
-
+    document.getElementById("myCanvas").width  =2000;
+    document.getElementById("myCanvas").height =1100;
+    document.getElementById("myCanvas2").width  =2000;
+    document.getElementById("myCanvas2").height =1100;
+    
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var canvas2 = document.getElementById('myCanvas2');
     var context2 = canvas2.getContext('2d');
     var colorCanvas = document.getElementById('myColorCanvas');
     var colorContext = colorCanvas.getContext('2d');
-    context2.canvas.width  = canvasW;//resize canvas to whatever window dimensions are
-	context2.canvas.height = canvasH;
-	context2.translate(canvas2.width / 2, canvas2.height / 2);
+
+	context.translate(width/ 2, height / 2); 
+	var centerOffsetX=width/2, centerOffsetY=height/2
 	
-    
-    context.canvas.width  = width;//resize canvas to whatever window dimensions are
-	context.canvas.height = height;
-   	context.translate(canvas.width / 2, canvas.height / 2); 
+	context2.translate(centerOffsetX, centerOffsetY);
    	var pointsX=[]; var pointsY=[]; var lastPointX=[];var lastPointY=[];var pointsXm=[]; var pointsYm=[]; var lastPointXm=[];var lastPointYm=[];
     var startMove=false;
+    
     
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
     var first=0; 
@@ -217,21 +220,32 @@ document.addEventListener("touchend", touchEndFunc, true);
 	
 	
 
-	colorContext.canvas.width  = c2Width;//resize canvas to whatever window dimensions are
-	colorContext.canvas.height = c2Height;
-	color_image = new Image();
-    color_image.src = 'color.png';
-    color_image.onload = function(){
-    colorContext.drawImage(color_image,0,0,width,height);
-  	}
-    
+	var masterina=
+	{
+		radius1:200,
+		radius2:210,
+
+		line:10,
+		posX:width/2,
+		posY:height/2,
+		move:false,
+		scale:false,
+		draw:false,
+		dX:0,
+		dY:0
+	}
+  	 
 	
 
 //=======================================================================================================================================================================
 //============================================================================================================FUNC ======================================================
 //=======================================================================================================================================================================
 
-  
+ window.onresize = function(event) // ============================ rsize =================================================================
+    {
+    	width=window.innerWidth;
+    	height=window.innerHeight;
+	};//===================================================================================================================================== 
 function positioning()
 {
 	document.getElementById("lineThik").style.left  =-x-120+"px";
@@ -259,7 +273,7 @@ function positioning()
 	{
 		document.getElementById("myColorCanvas").style.left  =-1000+"px";
 	}
-	document.getElementById("alpha").innerHTML=alpha;
+	document.getElementById("alpha").innerHTML=centerOffsetX;
 	document.getElementById("beta").innerHTML=startY;
 	document.getElementById("gamma").innerHTML =startZ;
 	document.getElementById("X").innerHTML =btnLineXpos;
@@ -330,7 +344,7 @@ function drawPie(drawX,drawY)
     			}
     	}
  for (var iiii=1; iiii < pieType+1; iiii++) {
-    	console.log(drawY);
+    	
 		context2.beginPath();
 	    context2.lineWidth = lineThik;
 	    context2.moveTo(lastPointX[iiii],lastPointY[iiii]);
@@ -369,12 +383,7 @@ function processGyro(alpha,beta,gamma)
 	deviceOrientationData.beta=beta;
 	deviceOrientationData.gamma=gamma;
 	
-	context.save();
-	context.setTransform(1, 0, 0, 1, 0, 0);
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	context.restore();
-	console.log(userX);
-	drawCir(userX,userY);
+	drawMasterina();
 
 	if (bitTouch)
 	{
@@ -385,7 +394,7 @@ function processGyro(alpha,beta,gamma)
 		rotatePointViaGyroEulars(0,startY,startZ);
 	}
 	
-	positioning();		
+	//positioning();		
 	
 
 }
@@ -458,24 +467,81 @@ document.addEventListener("mousedown", mouseDownFunc, true);
 document.addEventListener("mousemove", mouseMoveFunc, true);
 document.addEventListener("mouseup", mouseUpFunc, true);
 
+
 function mouseDownFunc(e)
 {
-  bitTouch=true;
+  	bitTouch=true;
+  	if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius1-masterina.line/2))
+	 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2-masterina.line/2)))
+	{
+		masterina.scale=true;
+	}
+	if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius2-masterina.line/2))
+	 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2+masterina.line/2)))
+	{
+		masterina.move=true;
+	}
+  	
 }
 
 function mouseMoveFunc(e)
 {	
-	userX=e.clientX-firstX;
-	userY=e.clientY-firstY;
-	if (!(bitTouch))
-	{
-		firstX=e.clientX;
-		firstY=e.clientY;
-	}
+	console.log(masterina.scale + "     " +masterina.move);
+	if ((!(masterina.move))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
+  	{
+  		masterina.draw=true;
+  	}
+  	else
+  	{
+  		masterina.draw=false;
+  		startMove=false;
+  	}
+//=================================================================================================DRAW=======================================================	
 	if (bitTouch){
-		drawPie(userX,userY)
+
+		userX=e.clientX;
+		userY=e.clientY;
+		if (masterina.draw)
+		{
+			drawPie(userX-masterina.posX, userY-masterina.posY);
+		}
+//===================================================================================================MOVE==============================================
+	if (masterina.move)
+	{
+		context2.translate(e.clientX-masterina.dX,e.clientY-masterina.dY);
+		context.translate(e.clientX-masterina.dX,e.clientY-masterina.dY);
+		masterina.posX+=(e.clientX-masterina.dX);masterina.posY+=(e.clientY-masterina.dY);
+		drawMasterina();
+	}
+//=================================================================================================SCALE================================================
+	if (masterina.scale){
+		if (e.clientX>masterina.posX)
+		{
+			masterina.radius1+=(e.clientX-masterina.dX);
+			masterina.radius2+=(e.clientX-masterina.dX);
+		}
+		else
+		{
+			masterina.radius1-=(e.clientX-masterina.dX);
+			masterina.radius2-=(e.clientX-masterina.dX);
+		}
+		drawMasterina();
+	}
+
+	}
+	
+	if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius1-masterina.line/2))
+	 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2+masterina.line/2)))
+	{
+		document.body.style.cursor = 'pointer';
 		
 	}
+	else
+	{
+		document.body.style.cursor = 'crosshair';
+		
+	}
+	masterina.dX=e.clientX;masterina.dY=e.clientY;
 }
 
 function mouseUpFunc(e)
@@ -484,8 +550,11 @@ function mouseUpFunc(e)
 	userY=0;
 	bitTouch=false;
 	startMove=false;
-	
+	masterina.move=false
+	masterina.scale=false
+	masterina.draw=false;
 }
+
 
 		
  </script>
