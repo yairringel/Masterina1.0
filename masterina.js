@@ -1,30 +1,34 @@
 
 
-function drawCir(xx,yy)
-	{
-		
-		context.beginPath();
-	    context.lineWidth = 2;
-	    context.moveTo(xx-crossLine,yy-1);
-		context.lineTo(xx+crossLine, yy-1);
-		context.moveTo(xx-1,crossLine+yy);
-		context.lineTo(xx-1,-crossLine+yy);
-	    context.strokeStyle = '#000000';
-	    context.stroke(); 
-	    context.beginPath();
-	    context.moveTo(xx-crossLine,yy+1);
-		context.lineTo(xx+crossLine, yy+1);
-		context.moveTo(xx+1,crossLine+yy);
-		context.lineTo(xx+1,-crossLine+yy);
-	    context.strokeStyle = '#ffffff';
-	    context.stroke(); 
-	    context.beginPath();
-	    context.arc(xx, yy, lineThik, 0, 2 * Math.PI, false);
-		context.fillStyle = '#000000';
-	    context.fill();  
-	}
+
+
+function drawMasterina()
+{
+	context.save();
+	context.setTransform(1, 0, 0, 1, 0, 0);
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.restore();
+	
+	context.beginPath();
+	context.lineWidth = 1;
+	context.moveTo(-masterina.radius1,0);
+	context.lineTo(masterina.radius1, 0);
+	context.moveTo(0,masterina.radius1);
+	context.lineTo(0,-masterina.radius1);
+	context.strokeStyle = '#ffbbbb';
+	context.stroke(); 
+	context.beginPath();
+	context.lineWidth = masterina.line;
+	context.arc(0, 0,masterina.radius1, 0, 2 * Math.PI, false);
+	context.strokeStyle = '#ababab';
+	context.stroke(); 
+	context.beginPath();
+	context.arc(0, 0, masterina.radius2, 0, 2 * Math.PI, false);
+	context.strokeStyle = '#000000';
+	context.stroke(); 
 
 	
+}	
 	function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angles
 {
 	var oldX=0;
