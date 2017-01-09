@@ -110,7 +110,7 @@ $('#Color').mousemove(function(e) {
     var yyy = 10 ;
     
     var c = this.getContext('2d');
-    var p = c.getImageData((mouseX-width*0.91), (mouseY-height*0.18), 1, 1).data; 
+    var p = c.getImageData((mouseX-width*0.91)*2, (mouseY-height*0.18)*0.95, 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0, 100, 20);
