@@ -8,7 +8,7 @@ function drawMasterina()
 	context.setTransform(1, 0, 0, 1, 0, 0);
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.restore();
-	
+
 	context.beginPath();
 	context.lineWidth = 1;
 	context.moveTo(-masterina.radius1,0);
@@ -94,3 +94,20 @@ window.addEventListener('orientationchange', function () {
         document.getElementById('orient').className = '';
     }
 }, true);
+
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+    return ((r << 16) | (g << 8) | b).toString(16);
+}
+function findPos(obj) {
+    var curleft = 0, curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curleft += obj.offsetLeft;
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+        return { x: curleft, y: curtop };
+    }
+    return undefined;
+}

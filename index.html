@@ -1,11 +1,13 @@
 <!doctype html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<title>Gyro </title>
 
 </head>
 <script type="text/javascript" src="masterina.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
 
 <style>
  
@@ -56,15 +58,17 @@
 	L1:<span id="X"></span><br>
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
 	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
-	<canvas id="myCanvas" style="top:0px;left:0px; border:1px ;solid;z-index: 2; "></canvas> 
-	<canvas id="myCanvas2" style="top:0%;left:0%; border:1px;  solid;z-index: 1; "></canvas> 
-	<canvas id="myColorCanvas" style="left:-1000px;  z-index: 0; "></canvas> 
+	<canvas id="myCanvas" style="top:0px;left:0px; z-index: 2; "></canvas> 
+	<canvas id="myCanvas2" style="top:0px;left:0px; z-index: 1; "></canvas> 
+	<canvas id="example" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 6; "></canvas>
 
-	<img id="frameImg" src="frame1.jpg" style ="z-index: 2;">
+	<!-img id="Color" src="colors.png"  style="width:8%;height:16%;left:91%;top:18%;  z-index: 3; "></canvas> 
+	<img id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 3; "></canvas> 
+	
 	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<img id="sideImg" src="side.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
 	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 2;">
-	<img id="topImg" src="bottom.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
+	<img id="topImg" src="bottom1.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
 	<img id="masterinaLogo" src="LOGO.png" style = "top:1%;left: 1%;height:8%;z-index: 2;">
 	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 2;">
 	
@@ -72,13 +76,38 @@
 	<input id="lineThik" type="image" src="thik1.png"  style= "top:18%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcLineThik()"></input>
 	<input id="pieType" type="image" src="pie1.png"  style= "top:34%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcPieType()"></input>
 	<input id="Mirror" type="image" src="mirror1.png"  style= "top:50%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcMirror()"></input>
-	<input id="Color" type="image" src="btnColor.png"  style= "top:18%; left: 91%; width:8%; height:width; z-index: 6" onclick="funcColor()"></input>
+	
 	
 	
 	
 	
 </body>
 <script type="text/javascript">
+
+
+var canvasC = document.getElementById('example');
+      var contextC = canvasC.getContext('2d');
+      var imageObj = new Image();
+      imageObj.crossOrigin = 'anonymous'; 
+      imageObj.src = 'colors.png'+ '?' + new Date().getTime();;
+      imageObj.onload = function() {
+       contextC.drawImage(imageObj, 0, 0);
+      };
+
+
+
+$('#example').mousemove(function(e) {
+    
+    var xxx = 10 ;
+    var yyy = 10 ;
+    
+    var c = this.getContext('2d');
+    var p = c.getImageData((mouseX-width*0.91),( mouseY-height*0.18), 1, 1).data; 
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    document.getElementById("X").innerHTML =(mouseX-width*0.91);
+	document.getElementById("Y").innerHTML =( mouseY-height*0.18);
+	document.getElementById("Z").innerHTML =hex;
+});
 //============================================================================ btn func============================================================================
 document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 document.addEventListener("touchmove", touchmoveFunc, true);
@@ -184,9 +213,6 @@ document.addEventListener("touchend", touchEndFunc, true);
     var context = canvas.getContext('2d');
     var canvas2 = document.getElementById('myCanvas2');
     var context2 = canvas2.getContext('2d');
-    var colorCanvas = document.getElementById('myColorCanvas');
-    var colorContext = colorCanvas.getContext('2d');
-
 	context.translate(width/ 2, height / 2); 
 	var centerOffsetX=width/2, centerOffsetY=height/2
 	
@@ -217,14 +243,14 @@ document.addEventListener("touchend", touchEndFunc, true);
 	var prevTouchY=-1;
 	var btnLeftSpace=200;
 	var btnTopSpace=180;
-	
+	var mouseX=0,mouseY=0;
 	
 
 	var masterina=
 	{
 		radius1:200,
 		radius2:210,
-
+		color:"000000",
 		line:10,
 		posX:width/2,
 		posY:height/2,
@@ -350,7 +376,7 @@ function drawPie(drawX,drawY)
 	    context2.moveTo(lastPointX[iiii],lastPointY[iiii]);
 		context2.lineTo(pointsX[iiii],pointsY[iiii]);
 		context2.lineCap = 'round';
-	    context2.strokeStyle = '#000000';
+	    context2.strokeStyle = masterina.color;
 	    context2.stroke(); 
 	    if (mirror==2){
 		    context2.beginPath();
@@ -358,7 +384,7 @@ function drawPie(drawX,drawY)
 		    context2.moveTo(lastPointXm[iiii],lastPointYm[iiii]);
 			context2.lineTo(pointsXm[iiii],pointsYm[iiii]);
 			context2.lineCap = 'round';
-		    context2.strokeStyle = '#000000';
+		    context2.strokeStyle = masterina.color;
 		    context2.stroke(); 
 		}
 	    } 
@@ -486,7 +512,8 @@ function mouseDownFunc(e)
 
 function mouseMoveFunc(e)
 {	
-	console.log(masterina.scale + "     " +masterina.move);
+	mouseX=e.clientX;mouseY=e.clientY;
+	
 	if ((!(masterina.move))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
   	{
   		masterina.draw=true;
@@ -524,6 +551,10 @@ function mouseMoveFunc(e)
 		{
 			masterina.radius1-=(e.clientX-masterina.dX);
 			masterina.radius2-=(e.clientX-masterina.dX);
+		}
+		if (masterina.radius1<30)
+		{
+			masterina.radius1=30;masterina.radius2=40;
 		}
 		drawMasterina();
 	}
