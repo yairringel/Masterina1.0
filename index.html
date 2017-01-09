@@ -84,40 +84,9 @@
 <script type="text/javascript">
 
 
-var canvasC = document.getElementById('Color');
-var contextC = canvasC.getContext('2d');
-var imageObj = new Image();
-imageObj.crossOrigin = 'anonymous'; 
-imageObj.src = 'colors.png'+ '?' + new Date().getTime();;
-imageObj.onload = function() 
-{
-	contextC.drawImage(imageObj, 0, 0);
-};
-var colorShow = document.getElementById('ColorShow');
-var contextCS = colorShow.getContext('2d');
-contextCS.fillStyle = "rgb(255,0,0)";
-contextCS.fillRect(0, 0, 50, 50);
-contextCS.save();
-	contextCS.setTransform(1, 0, 0, 1, 0, 0);
-	
-	contextCS.restore();
 
 
 
-$('#Color').mousemove(function(e) {
-    
-    var xxx = 10 ;
-    var yyy = 10 ;
-    
-    var c = this.getContext('2d');
-    var p = c.getImageData((mouseX-width*0.91)*300/94, (mouseY-height*0.18)*150/138, 1, 1).data; 
-    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-    contextCS.fillStyle = hex;
-	contextCS.fillRect(0, 0, 100, 20);
-    document.getElementById("alpha").innerHTML =(width*0.08+"    "+height*0.16);
-	document.getElementById("beta").innerHTML =( mouseY-height*0.18);
-	document.getElementById("gamma").innerHTML =hex;
-});
 //============================================================================ btn func============================================================================
 document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
 document.addEventListener("touchmove", touchmoveFunc, true);
@@ -230,11 +199,26 @@ document.addEventListener("touchend", touchEndFunc, true);
    	var pointsX=[]; var pointsY=[]; var lastPointX=[];var lastPointY=[];var pointsXm=[]; var pointsYm=[]; var lastPointXm=[];var lastPointYm=[];
     var startMove=false;
     
-    
+    var canvasC = document.getElementById('Color');
+	var contextC = canvasC.getContext('2d');
+	var imageObj = new Image();
+	imageObj.crossOrigin = 'anonymous'; 
+	imageObj.src = 'colors.png'+ '?' + new Date().getTime();;
+	imageObj.onload = function() 
+	{
+		contextC.drawImage(imageObj, 0, 0);
+	};
+	var colorShow = document.getElementById('ColorShow');
+	var contextCS = colorShow.getContext('2d');
+	contextCS.fillStyle = "rgb(255,0,0)";
+	contextCS.fillRect(0, 0, width*0.08, height*0.04);
+
+
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
     var first=0; 
     var touchX=0;
     var color=false;
+    var chooseColor="000000";
     var x=0;
     var y=0;
     var z=0;

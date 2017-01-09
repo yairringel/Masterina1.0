@@ -100,14 +100,18 @@ function rgbToHex(r, g, b) {
         throw "Invalid color component";
     return ((r << 16) | (g << 8) | b).toString(16);
 }
-function findPos(obj) {
-    var curleft = 0, curtop = 0;
-    if (obj.offsetParent) {
-        do {
-            curleft += obj.offsetLeft;
-            curtop += obj.offsetTop;
-        } while (obj = obj.offsetParent);
-        return { x: curleft, y: curtop };
-    }
-    return undefined;
-}
+$('#Color').mousemove(function(e) {
+    
+    var xxx = 10 ;
+    var yyy = 10 ;
+    
+    var c = this.getContext('2d');
+    var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    contextCS.fillStyle = hex;
+	contextCS.fillRect(0, 0, width*0.08, height*0.04);
+    document.getElementById("alpha").innerHTML =(width*0.08+"    "+height*0.16);
+	document.getElementById("beta").innerHTML =( mouseY-height*0.18);
+	document.getElementById("gamma").innerHTML =hex;
+
+});
