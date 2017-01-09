@@ -68,7 +68,7 @@
 	<img id="sideImg" src="side1.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
 	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 2;">
 	<img id="topImg" src="bottom1.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
-	<img id="masterinaLogo" src="LOGO1.png" style = "top:1%;left: 1%;height:8%;z-index: 2;">
+	<img id="masterinaLogo" src="LOGO.png" style = "top:1%;left: 1%;height:8%;z-index: 2;">
 	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 2;">
 	
 	<input id="New" type="image" src="NEW_BTN.png"  style= "top:11%; left: 1%; width:8%; height:4%; z-index: 6" onclick="funcNew()"></input>
@@ -114,9 +114,9 @@ $('#Color').mousemove(function(e) {
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0, 100, 20);
-    document.getElementById("X").innerHTML =(mouseX-width*0.7);
-	document.getElementById("Y").innerHTML =( mouseY-height*0.2);
-	document.getElementById("Z").innerHTML =hex;
+    document.getElementById("alpha").innerHTML =(mouseX-width*0.7);
+	document.getElementById("beta").innerHTML =( mouseY-height*0.2);
+	document.getElementById("gamma").innerHTML =hex;
 });
 //============================================================================ btn func============================================================================
 document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
