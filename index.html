@@ -61,9 +61,8 @@
 	<canvas id="myCanvas" style="top:0px;left:0px; z-index: 2; "></canvas> 
 	<canvas id="myCanvas2" style="top:0px;left:0px; z-index: 1; "></canvas> 
 	<canvas id="example" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 6; "></canvas>
-
-	<!-img id="Color" src="colors.png"  style="width:8%;height:16%;left:91%;top:18%;  z-index: 3; "></canvas> 
-	<img id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 3; "></canvas> 
+	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 3; "></canvas> 
+	
 	
 	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
 	<img id="sideImg" src="side1.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
@@ -86,13 +85,19 @@
 
 
 var canvasC = document.getElementById('example');
-      var contextC = canvasC.getContext('2d');
-      var imageObj = new Image();
-      imageObj.crossOrigin = 'anonymous'; 
-      imageObj.src = 'colors.png'+ '?' + new Date().getTime();;
-      imageObj.onload = function() {
-       contextC.drawImage(imageObj, 0, 0);
-      };
+var contextC = canvasC.getContext('2d');
+var imageObj = new Image();
+imageObj.crossOrigin = 'anonymous'; 
+imageObj.src = 'colors.png'+ '?' + new Date().getTime();;
+imageObj.onload = function() 
+{
+	contextC.drawImage(imageObj, 0, 0);
+};
+var colorShow = document.getElementById('ColorShow');
+var contextCS = colorShow.getContext('2d');
+contextCS.fillStyle = "rgb(255,0,0)";
+contextCS.fillRect(0, 0, 50, 50);
+
 
 
 
@@ -104,6 +109,8 @@ $('#example').mousemove(function(e) {
     var c = this.getContext('2d');
     var p = c.getImageData((mouseX-width*0.91),( mouseY-height*0.18), 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    contextCS.fillStyle = hex;
+	contextCS.fillRect(0, 0, 100, 20);
     document.getElementById("X").innerHTML =hex;
 	document.getElementById("Y").innerHTML =hex;
 	document.getElementById("Z").innerHTML =hex;
