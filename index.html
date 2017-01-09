@@ -110,11 +110,11 @@ $('#Color').mousemove(function(e) {
     var yyy = 10 ;
     
     var c = this.getContext('2d');
-    var p = c.getImageData((mouseX-width*0.91)*2, (mouseY-height*0.18)*0.95, 1, 1).data; 
+    var p = c.getImageData((mouseX-width*0.91)*2.5, (mouseY-height*0.18)*0.90, 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0, 100, 20);
-    document.getElementById("alpha").innerHTML =(mouseX-width*0.91);
+    document.getElementById("alpha").innerHTML =(width*0.91+"    "+height*0.18);
 	document.getElementById("beta").innerHTML =( mouseY-height*0.18);
 	document.getElementById("gamma").innerHTML =hex;
 });
