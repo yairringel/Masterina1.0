@@ -114,8 +114,8 @@ $('#Color').mousemove(function(e) {
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0, 100, 20);
-    document.getElementById("alpha").innerHTML =(mouseX-width*0.7);
-	document.getElementById("beta").innerHTML =( mouseY-height*0.2);
+    document.getElementById("alpha").innerHTML =(mouseX-width*0.91);
+	document.getElementById("beta").innerHTML =( mouseY-height*0.18);
 	document.getElementById("gamma").innerHTML =hex;
 });
 //============================================================================ btn func============================================================================
