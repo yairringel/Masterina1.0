@@ -61,7 +61,7 @@
 	<canvas id="myCanvas" style="top:0px;left:0px; z-index: 2; "></canvas> 
 	<canvas id="myCanvas2" style="top:0px;left:0px; z-index: 1; "></canvas> 
 	<canvas id="Color" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 6; "></canvas>
-	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 3; "></canvas> 
+	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 8; "></canvas> 
 	
 	
 	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
@@ -203,6 +203,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     var canvasC = document.getElementById('Color');
 	var contextC = canvasC.getContext('2d');
 	var imageObj = new Image();
+	
 	imageObj.crossOrigin = 'anonymous'; 
 	imageObj.src = 'colors.png'+ '?' + new Date().getTime();;
 	imageObj.onload = function() 
@@ -211,9 +212,8 @@ document.addEventListener("touchend", touchEndFunc, true);
 	};
 	var colorShow = document.getElementById('ColorShow');
 	var contextCS = colorShow.getContext('2d');
-	contextCS.fillStyle = "rgb(255,0,0)";
-	contextCS.fillRect(0, 0, width*0.08, height*0.04);
-
+	contextCS.fillStyle = "000000";
+	contextCS.fillRect(0, 0, width, height);
 
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
     var first=0; 
@@ -269,13 +269,20 @@ $('#Color').mousemove(function(e) {
     var c = this.getContext('2d');
     var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    chooseColor=hex;
     contextCS.fillStyle = hex;
-	contextCS.fillRect(0, 0, 114, 36);
-    document.getElementById("alpha").innerHTML =(width*0.08);
-	document.getElementById("beta").innerHTML =(height*0.04);
+	contextCS.fillRect(0, 0,width, height);
+    document.getElementById("alpha").innerHTML =width;
+	document.getElementById("beta").innerHTML =height;
 	document.getElementById("gamma").innerHTML =hex;
 
 });
+$('#Color').mousedown(function(e) {
+    masterina.color=chooseColor;
+    contextCS.fillStyle = hex;
+	contextCS.fillRect(0, 0,width, height);
+});
+
  window.onresize = function(event) // ============================ rsize =================================================================
     {
     	width=window.innerWidth;
