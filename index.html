@@ -279,7 +279,7 @@ $('#Color').mousemove(function(e) {
 });
 $('#Color').mouseup(function(e) {
     masterina.color=chooseColor;
-    contextCS.fillStyle = hex;
+    contextCS.fillStyle = masterina.color;
 	contextCS.fillRect(0, 0,width, height);
 });
 $('#Color').mouseout(function(e) {
