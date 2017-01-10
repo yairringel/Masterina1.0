@@ -262,14 +262,10 @@ document.addEventListener("touchend", touchEndFunc, true);
 //============================================================================================================FUNC ======================================================
 //=======================================================================================================================================================================
 $('#Color').mousemove(function(e) {
-    
-    var xxx = 10 ;
-    var yyy = 10 ;
-    
+
     var c = this.getContext('2d');
     var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-    chooseColor=str(hex);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
     document.getElementById("alpha").innerHTML =width;
@@ -278,8 +274,12 @@ $('#Color').mousemove(function(e) {
 
 });
 $('#Color').mouseup(function(e) {
-    masterina.color=chooseColor;
-    contextCS.fillStyle = masterina.color;
+    var cUp = this.getContext('2d');
+    var pUp = cUp.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
+    var hexUp = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    chooseColor=hexUp;
+    masterina.console=chooseColor;
+    contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
 });
 $('#Color').mouseout(function(e) {
