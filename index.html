@@ -245,7 +245,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	{
 		radius1:200,
 		radius2:210,
-		color:"000000",
+		color:"#000000",
 		line:10,
 		posX:width/2,
 		posY:height/2,
@@ -262,10 +262,14 @@ document.addEventListener("touchend", touchEndFunc, true);
 //============================================================================================================FUNC ======================================================
 //=======================================================================================================================================================================
 $('#Color').mousemove(function(e) {
-
+    
+    var xxx = 10 ;
+    var yyy = 10 ;
+    
     var c = this.getContext('2d');
     var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
-    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    var hex = "#" +("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    chooseColor=hex;
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
     document.getElementById("alpha").innerHTML =width;
@@ -274,17 +278,13 @@ $('#Color').mousemove(function(e) {
 
 });
 $('#Color').mouseup(function(e) {
-    var cUp = this.getContext('2d');
-    var pUp = cUp.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
-    var hexUp = "#" + ("000000" + rgbToHex(pUp[0], pUp[1], pUp[2])).slice(-6);
-    chooseColor=hexUp;
-    masterina.console=chooseColor;
-    contextCS.fillStyle = hexUp;
+    masterina.color=chooseColor;
+    contextCS.fillStyle = masterina.color;
 	contextCS.fillRect(0, 0,width, height);
 });
 $('#Color').mouseout(function(e) {
     console.log(masterina.color);
-    
+    masterina.color=chooseColor;
     contextCS.fillStyle =masterina.color;
 	contextCS.fillRect(0, 0,width, height);
 });
