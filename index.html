@@ -277,7 +277,7 @@ $('#Color').mousemove(function(e) {
 	document.getElementById("gamma").innerHTML =hex;
 
 });
-$('#Color').mousedown(function(e) {
+$('#Color').mouseup(function(e) {
     masterina.color=chooseColor;
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
