@@ -219,7 +219,7 @@ document.addEventListener("touchend", touchEndFunc, true);
     var first=0; 
     var touchX=0;
     var color=false;
-    var chooseColor="000000";
+    var chooseColor="000000"
     var x=0;
     var y=0;
     var z=0;
@@ -280,6 +280,11 @@ $('#Color').mousemove(function(e) {
 $('#Color').mousedown(function(e) {
     masterina.color=chooseColor;
     contextCS.fillStyle = hex;
+	contextCS.fillRect(0, 0,width, height);
+});
+$('#Color').mouseout(function(e) {
+    
+    contextCS.fillStyle =masterina.color;
 	contextCS.fillRect(0, 0,width, height);
 });
 
