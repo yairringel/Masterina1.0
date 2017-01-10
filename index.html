@@ -8,6 +8,7 @@
 </head>
 <script type="text/javascript" src="masterina.js"></script>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="fileSaver.js"></script>
 
 <style>
  
@@ -154,6 +155,14 @@ document.addEventListener("touchend", touchEndFunc, true);
 		{
 			undo();
 		}
+	}
+	function funcSave()
+	{
+		//var imageSave = canvas2.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+		//window.location.href=imageSave; // it will save locally
+		canvas2.toBlob(function(blob) {
+    saveAs(blob, "pretty image.png");
+});
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
