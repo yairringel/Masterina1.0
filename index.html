@@ -276,7 +276,7 @@ $('#Color').mousemove(function(e) {
 $('#Color').mouseup(function(e) {
     var cUp = this.getContext('2d');
     var pUp = cUp.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
-    var hexUp = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    var hexUp = "#" + ("000000" + rgbToHex(pUp[0], pUp[1], pUp[2])).slice(-6);
     chooseColor=hexUp;
     masterina.console=chooseColor;
     contextCS.fillStyle = hex;
