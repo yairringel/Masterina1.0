@@ -52,9 +52,9 @@
 
 <body >
 	
-	alpha:<span id="alpha" style="position:fixed; z-index: 8;"></span><br>
-	beta:<span id="beta" style="position:fixed; z-index: 8;"></span><br>
-	gamma:<span id="gamma" style="position:fixed;z-index: 8;"></span><br>
+	alpha:<span id="alpha" style="position:fixed;top:20%; left: 30%; z-index: 8;"></span><br>
+	beta:<span id="beta" style="position:fixed;top:22%; left: 30%; z-index: 8;"></span><br>
+	gamma:<span id="gamma" style="position:fixed;top:24%; left: 30%;z-index: 8;"></span><br>
 	L1:<span id="X"></span><br>
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
 	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
@@ -138,13 +138,21 @@ document.addEventListener("touchend", touchEndFunc, true);
 	
 	function funcUndo()
 	{
+		if (firstUndo)
+		{
+			context2.putImageData(historyUndo.pop(), 0, 0);	
+			firstUndo=false;
+		}
 		if (historyUndo.length > 0)
 		{
-			historyRedo.push(context2.getImageData(0, 0, width,height));
-		
+			console.log(historyUndo.length);
 			context2.putImageData(historyUndo.pop(), 0, 0);	
 			console.log(historyUndo.length);
 
+		}
+		if (historyUndo.length == 0)
+		{
+			undo();
 		}
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -226,7 +234,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 	contextCS.fillRect(0, 0, width, height);
 
     var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
-    var first=0; 
+    var first=0,firstUndo=true;
     var touchX=0;
     var chooseColor="000000"
     var x=0;
@@ -265,7 +273,7 @@ document.addEventListener("touchend", touchEndFunc, true);
 		dY:0
 	}
   	 
-	
+	undo();
 
 //=======================================================================================================================================================================
 //============================================================================================================FUNC ======================================================
@@ -282,9 +290,7 @@ $('#Color').mousemove(function(e) {    //=======================================
     chooseColor=hex;
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
-    document.getElementById("alpha").innerHTML =width;
-	document.getElementById("beta").innerHTML =height;
-	document.getElementById("gamma").innerHTML =hex;
+    
 
 });
 $('#Color').mouseup(function(e) {
@@ -355,84 +361,6 @@ if (window.DeviceOrientationEvent)
     	
 }
 
-function drawPie(drawX,drawY)
-{
-
-	if (startMove==false)
-	    {	
-	    	for (var ii=1; ii < pieType+1; ii++)
-	    	 {
-	    		lastPointX[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii)
-	    		lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
-				if (mirror==2)
-	    			{
-	    			if (pieType==1)
-	    				{
-	    				lastPointXm[ii]=-(drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii))
-	    				lastPointYm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
-
-	    				}
-	    			else{
-	    				lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
-	    				lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
-	    				}
-	    			}
-	    	}
-	    	
-	    }	
-
-	    
-	for (var iii=1; iii < pieType+1; iii++)
-		 {
-		
-    		pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
-    		pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-    		if (mirror==2)
-    			{
-    				if (pieType==1)
-    					{
-    						pointsXm[iii]=-(drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii))
-    						pointsYm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-    					}
-    				else
-    					{
-    						pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
-    						pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
-    					}
-    			}
-    	}
- for (var iiii=1; iiii < pieType+1; iiii++) {
-    	
-		context2.beginPath();
-	    context2.lineWidth = lineThik;
-	    context2.moveTo(lastPointX[iiii],lastPointY[iiii]);
-		context2.lineTo(pointsX[iiii],pointsY[iiii]);
-		context2.lineCap = 'round';
-	    context2.strokeStyle = masterina.color;
-	    context2.stroke(); 
-	    if (mirror==2){
-		    context2.beginPath();
-		    context2.lineWidth = lineThik;
-		    context2.moveTo(lastPointXm[iiii],lastPointYm[iiii]);
-			context2.lineTo(pointsXm[iiii],pointsYm[iiii]);
-			context2.lineCap = 'round';
-		    context2.strokeStyle = masterina.color;
-		    context2.stroke(); 
-		}
-	    } 
-	for (var iiiii=1; iiiii < pieType+1; iiiii++) {
-	    lastPointX[iiiii]=pointsX[iiiii];
-	    lastPointY[iiiii]=pointsY[iiiii];
-	    if (mirror==2){
-	    	
-	    	lastPointXm[iiiii]=pointsXm[iiiii];
-	    	lastPointYm[iiiii]=pointsYm[iiiii];
-	    }
-	   startMove=true;
-	}
-
-}
-	
 
 
 
@@ -539,6 +467,9 @@ function mouseDownFunc(e)
 
 function mouseMoveFunc(e)
 {	
+	document.getElementById("alpha").innerHTML =historyUndo.length;
+	//document.getElementById("beta").innerHTML =height;
+	//document.getElementById("gamma").innerHTML =hex;
 	mouseX=e.clientX;mouseY=e.clientY;
 	
 	if ((!(masterina.move))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
@@ -625,14 +556,9 @@ function undo()
 		historyUndo.shift();
 	}
 					
-	//clearing redo array
-	for (var i = 0; i < historyRedo.length; i++)
-	{
-		historyRedo.pop();
-	}
-					
-	historyUndo.push(context2.getImageData(0, 0, width,height));
-	console.log(historyUndo.length);
+	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
+	firstUndo=true;
+	//console.log(historyUndo.length);
 }
 		
  </script>

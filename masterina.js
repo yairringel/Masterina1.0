@@ -1,5 +1,83 @@
 
 
+function drawPie(drawX,drawY)
+{
+
+	if (startMove==false)
+	    {	
+	    	for (var ii=1; ii < pieType+1; ii++)
+	    	 {
+	    		lastPointX[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii)
+	    		lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
+				if (mirror==2)
+	    			{
+	    			if (pieType==1)
+	    				{
+	    				lastPointXm[ii]=-(drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii))
+	    				lastPointYm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
+
+	    				}
+	    			else{
+	    				lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
+	    				lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
+	    				}
+	    			}
+	    	}
+	    	
+	    }	
+
+	    
+	for (var iii=1; iii < pieType+1; iii++)
+		 {
+		
+    		pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
+    		pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+    		if (mirror==2)
+    			{
+    				if (pieType==1)
+    					{
+    						pointsXm[iii]=-(drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii))
+    						pointsYm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+    					}
+    				else
+    					{
+    						pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
+    						pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
+    					}
+    			}
+    	}
+ for (var iiii=1; iiii < pieType+1; iiii++) {
+    	
+		context2.beginPath();
+	    context2.lineWidth = lineThik;
+	    context2.moveTo(lastPointX[iiii],lastPointY[iiii]);
+		context2.lineTo(pointsX[iiii],pointsY[iiii]);
+		context2.lineCap = 'round';
+	    context2.strokeStyle = masterina.color;
+	    context2.stroke(); 
+	    if (mirror==2){
+		    context2.beginPath();
+		    context2.lineWidth = lineThik;
+		    context2.moveTo(lastPointXm[iiii],lastPointYm[iiii]);
+			context2.lineTo(pointsXm[iiii],pointsYm[iiii]);
+			context2.lineCap = 'round';
+		    context2.strokeStyle = masterina.color;
+		    context2.stroke(); 
+		}
+	    } 
+	for (var iiiii=1; iiiii < pieType+1; iiiii++) {
+	    lastPointX[iiiii]=pointsX[iiiii];
+	    lastPointY[iiiii]=pointsY[iiiii];
+	    if (mirror==2){
+	    	
+	    	lastPointXm[iiiii]=pointsXm[iiiii];
+	    	lastPointYm[iiiii]=pointsYm[iiiii];
+	    }
+	   startMove=true;
+	}
+
+}
+	
 
 
 function drawMasterina()
