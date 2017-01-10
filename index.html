@@ -284,6 +284,7 @@ $('#Color').mouseup(function(e) {
 });
 $('#Color').mouseout(function(e) {
     console.log(masterina.color);
+    masterina.color='000000';
     contextCS.fillStyle =masterina.color;
 	contextCS.fillRect(0, 0,width, height);
 });
