@@ -269,7 +269,7 @@ $('#Color').mousemove(function(e) {
     var c = this.getContext('2d');
     var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-    chooseColor=hex;
+    chooseColor=str(hex);
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
     document.getElementById("alpha").innerHTML =width;
@@ -284,7 +284,7 @@ $('#Color').mouseup(function(e) {
 });
 $('#Color').mouseout(function(e) {
     console.log(masterina.color);
-    masterina.color='000000';
+    
     contextCS.fillStyle =masterina.color;
 	contextCS.fillRect(0, 0,width, height);
 });
