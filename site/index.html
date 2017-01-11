@@ -1,23 +1,31 @@
 <!doctype html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
-	<title>Gyro </title>
+	<title>Masterina </title>
 
 </head>
-
+<script type="text/javascript" src="masterina.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="fileSaver.js"></script>
 
 <style>
+ 
+
  /body 
   {
   	
 	margin: 0px;
 	padding: 0px;
-	font-size:60px;
+	font-size:120px;
 	position: fixed;
 }
   canvas
   { 
+
+    
+
 	margin: 0px;
 	padding: 0px;
 	position:fixed;
@@ -27,6 +35,7 @@
   } 
  img
   { 
+  	cursor:auto;
 	margin: 0px;
 	padding: 0px;
 	position:fixed;
@@ -44,306 +53,425 @@
 
 <body >
 	
-	alpha:<span id="alpha" style="position:fixed;"></span><br>
-	beta:<span id="beta"style="position:fixed;"></span><br>
-	gamma:<span id="gamma"style="position:fixed;"></span><br>
+	alpha:<span id="alpha" style="position:fixed;top:0%; left: 0%; z-index: 0;"></span><br>
+	beta:<span id="beta" style="position:fixed;top:0%; left: 0%; z-index: 0;"></span><br>
+	gamma:<span id="gamma" style="position:fixed;top:0%; left: 0%;z-index: 0;"></span><br>
 	L1:<span id="X"></span><br>
 	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
-	Z:<span id="Z" style ="position:fixed; z-index: 0;"></span><br>
-	<canvas id="myCanvas" style=" border:6px solid;z-index: -10; "></canvas> 
-	<canvas id="myCanvas2" style="  solid;z-index: -11; "></canvas> 
-	<img id="img1" src="frame.jpg" style ="z-index: 2;">
-	<img id="img2" src="space.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
-	<input id="lockScreen" type="image" src="screenLock.png"  style= "width:500px; height:500px; z-index: 5" onclick="funcLock()"></input>
+	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
+	<canvas id="myCanvas" style="top:0px;left:0px; z-index: 2; "></canvas> 
+	<canvas id="myCanvas2" style="top:0px;left:0px; z-index: 1; "></canvas> 
+	<canvas id="Color" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 6; "></canvas>
+	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 8; "></canvas> 
+	
+	
+	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
+	<img id="sideImg" src="side.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
+	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 2;">
+	<img id="topImg" src="bottom.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
+	<img id="masterinaLogo" src="LOGO.png" style = "top:1%;left: 1%;height:8%;z-index: 2;">
+	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 2;">
+	
+	<input id="New" type="image" src="NEW_BTN.png"  style= "top:11%; left: 1%; width:8%; height:4%; z-index: 6" onclick="funcNew()"></input>
+	<input id="lineThik" type="image" src="thik1.png"  style= "top:18%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcLineThik()"></input>
+	<input id="pieType" type="image" src="pie1.png"  style= "top:34%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcPieType()"></input>
+	<input id="Mirror" type="image" src="mirror1.png"  style= "top:50%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcMirror()"></input>
+	<input id="Fill" type="image" src="fill.png"  style= "top:36%; left: 91%; width:8%; height:width; z-index: 6" onclick="funcFill()"></input>
+	<input id="Undo" type="image" src="undo.png"  style= "top:92%; left: 70%; width:4%; height:width; z-index: 6" onclick="funcUndo()"></input>
+	<input id="Save" type="image" src="save.png"  style= "top:92%; left: 75%; width:4%; height:width; z-index: 6" onclick="funcSave()"></input>
+	<input id="Pic" type="image" src="pic.png"  style= "top:92%; left: 80%; width:4%; height:width; z-index: 6" onclick="funcPic()"></input>
+	<input id="Camera" type="image" src="camera.png"  style= "top:92%; left: 85%; width:4%; height:width; z-index: 6" onclick="funcCamera()"></input>
+	
+	
+	
 	
 	
 </body>
 <script type="text/javascript">
-	function funcLock()
-	{
-		document.getElementById("lockScreen").style.zIndex  =-1;
-		document.getElementById("myCanvas").style.zIndex  =4;
-		document.getElementById("myCanvas2").style.zIndex  =3;
-	}
- //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//===============================================================================================================================================================================
-    
-    document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
-	document.addEventListener("touchmove", touchmoveFunc, true);
-	document.addEventListener("touchend", touchEndFunc, true);
 
+
+
+
+
+
+    //------------------------------------------------------------------------------- STATIC ----------------------------------------------------------------------------------------------
+    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;mirror=0;
+    var crossLine=50;
+    
+    var lineThikArray = new Array();
+    lineThikArray[0] = new Image();lineThikArray[1] = new Image();lineThikArray[2] = new Image();lineThikArray[3] = new Image();lineThikArray[4] = new Image();lineThikArray[5] = new Image();
+	lineThikArray[0].src = 'thik1.png';lineThikArray[1].src = 'thik2.png';lineThikArray[2].src = 'thik3.png';lineThikArray[3].src = 'thik4.png';lineThikArray[4].src = 'thik5.png';lineThikArray[5].src = 'thik6.png';
+	var thikRa=[]
+	thikRa[0]=1;thikRa[1]=2;thikRa[2]=4;thikRa[3]=10;thikRa[4]=17;thikRa[5]=25;
+	
+	
+	var pieTypeArray = new Array();
+	pieTypeArray[0] = new Image();pieTypeArray[1] = new Image();pieTypeArray[2] = new Image();pieTypeArray[3] = new Image();pieTypeArray[4] = new Image();pieTypeArray[5] = new Image(); 
+	pieTypeArray[0].src = 'pie1.png';pieTypeArray[1].src = 'pie3.png';pieTypeArray[2].src = 'pie4.png';pieTypeArray[3].src = 'pie6.png';pieTypeArray[4].src = 'pie12.png';pieTypeArray[5].src = 'pie16.png';
+	var pieTypeRA=[];
+	pieTypeRA[0]=1;pieTypeRA[1]=3;pieTypeRA[2]=4;pieTypeRA[3]=6;pieTypeRA[4]=10;pieTypeRA[5]=16;
+
+	var mirrorArray = new Array();
+	mirrorArray[0] = new Image();mirrorArray[1] = new Image();
+	mirrorArray[0].src = 'mirror1.png';mirrorArray[1].src = 'mirror2.png';
+	var mirrorRA=[];
+	mirrorRA[0]=1;mirrorRA[1]=2;
+
+    //================================================================================ VAR ===============================================================================================
+	
+    var staticBit=true;
+    var width=window.innerWidth;
+    var height=window.innerHeight;
+
+
+   
+
+
+    var sideW=0.1*width; topH=0.05*height;
+    var frameWper=0.8,frameHper=0.8,frameW=width*frameWper,frameH=height*frameHper,frameXpos=(width-width*frameWper)/2,frameYpos=(height-height*frameHper)/2;
+    var canvasWper=0.75,canvasHper=0.75,canvasW=width*canvasWper,canvasH=height*canvasHper,canvasXpos=(width-width*canvasWper)/2,canvasYpos=(height-height*canvasHper)/2;
+    var btnSizeper=0.07,btnW=width*btnSizeper,btnH=btnW,btnLeftSpace=15,btnTopSpace=0.06*height,btnBottomSpace=0.05*height,btnRightSpace=width*0.05,btn2btnSpace=width*0.03;
+    var btnLineXpos=-btnLeftSpace,btnLineYpos=frameYpos;
+    var btnPyeXpos=-btnLeftSpace,btnPyeYpos=frameYpos+(btnTopSpace+btnH)*1;
+    var btnMirXpos=-btnLeftSpace,btnMirYpos=frameYpos+(btnTopSpace+btnH)*2;
+
+    document.getElementById("spaceImg").width  =1.5*width;
+    document.getElementById("spaceImg").height  =1.5*height;
+    document.getElementById("spaceImg").style.top  =-300+"px";
+    document.getElementById("spaceImg").style.left  =-300+"px";
+    document.getElementById("myCanvas").width  =2000;
+    document.getElementById("myCanvas").height =1100;
+    document.getElementById("myCanvas2").width  =2000;
+    document.getElementById("myCanvas2").height =1100;
+    
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var canvas2 = document.getElementById('myCanvas2');
     var context2 = canvas2.getContext('2d');
-
+	context.translate(width/ 2, height / 2); 
+	var centerOffsetX=width/2, centerOffsetY=height/2
+	context2.fillStyle ="#ffffff";
+	context2.fillRect(0, 0,width, height); 
+	context2.translate(centerOffsetX, centerOffsetY);
+   	var pointsX=[]; var pointsY=[]; var lastPointX=[];var lastPointY=[];var pointsXm=[]; var pointsYm=[]; var lastPointXm=[];var lastPointYm=[];
+    var startMove=false;
     
-    var width=window.innerWidth;
-    var height=window.innerHeight;
+    var canvasC = document.getElementById('Color');
+	var contextC = canvasC.getContext('2d');
+	var imageObj = new Image();
+	
+	imageObj.crossOrigin = 'anonymous'; 
+	imageObj.src = 'colors.png'+ '?' + new Date().getTime();;
+	imageObj.onload = function() 
+	{
+		contextC.drawImage(imageObj, 0, 0);
+	};
+	var colorShow = document.getElementById('ColorShow');
+	var contextCS = colorShow.getContext('2d');
+	contextCS.fillStyle = "000000";
+	contextCS.fillRect(0, 0, width, height);
 
-    context.canvas.width  = width;//resize canvas to whatever window dimensions are
-	context.canvas.height = height;
-   	context.translate(canvas.width / 2, canvas.height / 2); 
-     //put 0,0,0 origin at center of screen instead of upper left corner
-    var first=0; 
-    var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults  
+    var deviceOrientationData ={alpha:0,beta:0,gamma:0};//init with 0 as defaults 
+    var first=0,firstUndo=true;
+    var bitFill=false;
+    var touchX=0;
+    var chooseColor="000000"
     var x=0;
     var y=0;
     var z=0;
     var startY;
     var startZ;
-    var radius = 70;
-    var frameBorder=150;
-    var imageBorder=200;
-    var L1=600;
+    var frameBorderW=15;
+    var frameBorderH=11;
+    var imageBorder=40;
+    var L1=900;
     var bitTouch=false;
     var userX=0;
 	var userY=0;
 	var firstX=0;
 	var firstY=0;
+	var prevTouchX=-1;
+	var prevTouchY=-1;
+	var btnLeftSpace=200;
+	var btnTopSpace=180;
+	var mouseX=0,mouseY=0;
+	var historyUndo = new Array(), historyRedo = new Array(), maxHistory = 50;
 
-	document.getElementById("lockScreen").style.top  =(height/2)+"px";
-	document.getElementById("lockScreen").style.left  = (width/2)+"px";
-    document.getElementById("img2").width  =width*1.5;
-    document.getElementById("img2").height  =height*1.5;
-    document.getElementById("img2").style.top  =-300;
-    document.getElementById("img2").style.left  =-300;
-    document.getElementById("img1").width  =width-imageBorder;
-    document.getElementById("img1").height  =height-imageBorder;
+	var masterina=
+	{
+		radius1:200,
+		radius2:210,
+		color:'#000000',
+		line:10,
+		posX:width/2,
+		posY:height/2,
+		move:false,
+		scale:false,
+		draw:false,
+		dX:0,
+		dY:0
+	}
+  	
+	undo();
 
-    var imgWidth=document.getElementById("img1").width;
-    var imgHeight=document.getElementById("img1").height;
+//=======================================================================================================================================================================
+//============================================================================================================FUNC ======================================================
+//=======================================================================================================================================================================
 
-    console.log(width);
-    console.log(height);
+//=======================================================================================  floodFill==============================================================
+function floodFill(floodx,floody)
+{
+ 	var imageDataPix = context2.getImageData(floodx,floody,1,1);
+ 	
+ 	
+ 	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
+ 	//var fillColorR=0,fillColorG=0,fillColorB=0;
+ 	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
+ 	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
+ 	var pixelStack = [[floodx, floody]];
+ 	console.log(hexToRgbA(masterina.color)[0],"  ",hexToRgbA(masterina.color)[1],"  ",hexToRgbA(masterina.color)[2]);
+ 	console.log(startR,"  ",startG,"  ",startB);
+	 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
+	 {	
+		 	while(pixelStack.length)
+		{
+		  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
+		  newPos = pixelStack.pop();
+		  x = newPos[0];
+		  y = newPos[1];
+		  
+		  pixelPos = (y*canvasWidth + x) * 4;
+		  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
+		  {
+		    pixelPos -= canvasWidth * 4;
+		  }
+		  pixelPos += canvasWidth * 4;
+		  ++y;
+		  reachLeft = false;
+		  reachRight = false;
+		  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
+		  {
+		    colorPixel(pixelPos);
+
+		    if(x > 0)
+		    {
+		      if(matchStartColor(pixelPos - 4))
+		      {
+		        if(!reachLeft){
+		          pixelStack.push([x - 1, y]);
+		          reachLeft = true;
+		        }
+		      }
+		      else if(reachLeft)
+		      {
+		        reachLeft = false;
+		      }
+		    }
+			
+		    if(x < canvasWidth-1)
+		    {
+		      if(matchStartColor(pixelPos + 4))
+		      {
+		        if(!reachRight)
+		        {
+		          pixelStack.push([x + 1, y]);
+		          reachRight = true;
+		        }
+		      }
+		      else if(reachRight)
+		      {
+		        reachRight = false;
+		      }
+		    }
+					
+		    pixelPos += canvasWidth * 4;
+		  }
+		}
+		context2.putImageData(colorLayer, 0, 0);
+		  
+		function matchStartColor(pixelPos)
+		{
+		  var r = colorLayer.data[pixelPos];	
+		  var g = colorLayer.data[pixelPos+1];	
+		  var b = colorLayer.data[pixelPos+2];
+
+		  return (r == startR && g == startG && b == startB);
+		}
+
+		function colorPixel(pixelPos)
+		{
+		  colorLayer.data[pixelPos] = fillColorR;
+		  colorLayer.data[pixelPos+1] = fillColorG;
+		  colorLayer.data[pixelPos+2] = fillColorB;
+		  colorLayer.data[pixelPos+3] = 255;
+		}
+	}
+      //undo();                     
+}
+
+
+
+
+ //=============================================== choose color =================================================================
+
+$('#Color').mousemove(function(e) {   
     
-	context2.canvas.width  = imgWidth-frameBorder;//resize canvas to whatever window dimensions are
-	context2.canvas.height = imgHeight-frameBorder;
-	context2.translate(canvas2.width / 2, canvas2.height / 2);
+    var xxx = 10 ;
+    var yyy = 10 ;
+    
+    var c = this.getContext('2d');
+    var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
+    var hex = "#" +("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    chooseColor=hex;
+    contextCS.fillStyle = hex;
+	contextCS.fillRect(0, 0,width, height);
+    
 
-    if (window.DeviceOrientationEvent) 
-    {//
-    	
-    	window.addEventListener("deviceorientation", function () {//gyro
-    	if (first==0)
-    	{
-    		startZ=Math.cos(degToRad(event.beta))*L1;
-    		startY=Math.sin(degToRad(event.beta))*L1;
-    		first=1;	
-    	}	
-    	
-        processGyro(event.alpha, event.beta, event.gamma); 
-    	}, true);
-    	
-	}
+});
+$('#Color').mouseup(function(e) {
+    masterina.color=chooseColor;
+    contextCS.fillStyle = masterina.color;
+	contextCS.fillRect(0, 0,width, height);
+});
+$('#Color').mouseout(function(e) {
+   
+    contextCS.fillStyle =masterina.color;
+	contextCS.fillRect(0, 0,width, height);
+});
 
-	
-
-	function drawCir(xx,yy)
-	{
-		context.beginPath();
-	    context.arc(xx, yy, radius, 0, 2 * Math.PI, false);
-
-	    // context.fillStyle = 'green';
-	    //context.fill();
-	    context.lineWidth = 5;
-	    context.strokeStyle = '#000000';
-	    context.stroke();  
-
-	    context.beginPath();
-	    context.lineWidth = 1;
-	    context.moveTo(xx-radius,yy);
-		context.lineTo(xx+radius, yy);
-		context.moveTo(xx,radius+yy);
-		context.lineTo(xx,-radius+yy);
-	    context.strokeStyle = '#000000';
-	    context.stroke();  
-	}
-	function drawCir2(xx,yy)
-	{
-		context2.beginPath();
-	    context2.arc(xx, yy, radius-60, 0, 2 * Math.PI, false);
-
-	    // context.fillStyle = 'green';
-	    //context.fill();
-	    context2.lineWidth = 2;
-	    context2.strokeStyle = '#003300';
-	    context2.stroke();  
-
-	    
-	}
+ window.onresize = function(event) // ============================ rsize =================================================================
+    {
+    	width=window.innerWidth;
+    	height=window.innerHeight;
+    };
+ //============================================================================================================================================
+//====================================================================MOUSE=================================================================
+document.addEventListener("mousedown", mouseDownFunc, true);
+document.addEventListener("mousemove", mouseMoveFunc, true);
+document.addEventListener("mouseup", mouseUpFunc, true);
 
 
-function processGyro(alpha,beta,gamma)
-{ 
-	deviceOrientationData.alpha=alpha;
-	deviceOrientationData.beta=beta;
-	deviceOrientationData.gamma=gamma;
-	rotatePointViaGyroEulars(0,startY,startZ);
-	
-	if (bitTouch)
-	{
-		drawCir2(userX+x,userY-y);	
-	}
-		context.save();
-		context.setTransform(1, 0, 0, 1, 0, 0);
-		context.clearRect(0, 0, canvas.width, canvas.height);
-		context.restore();
-		drawCir(0+userX,0+userY);
-	
-
-	document.getElementById("img1").style.left  =-x+ width/2-imgWidth/2+"px";
-	document.getElementById("img1").style.top  = y+height/2-imgHeight/2+"px";
-	document.getElementById("myCanvas2").style.left  =-x+ width/2-imgWidth/2+frameBorder/2+"px";
-	document.getElementById("myCanvas2").style.top  = y+height/2-imgHeight/2+frameBorder/2+"px";
-	//note: this code is much simpler but less obvious: function processGyro(event){deviceOrientationData = event;}
-	
-	document.getElementById("alpha").innerHTML=alpha;
-	document.getElementById("beta").innerHTML=startY;
-	document.getElementById("gamma").innerHTML =startZ;
-	document.getElementById("X").innerHTML =bitTouch;
-	document.getElementById("Y").innerHTML =firstX;
-	document.getElementById("Z").innerHTML =userX;
-
+function mouseDownFunc(e)
+{
+		if ((bitFill)&&((e.clientX<width*0.9)&&(e.clientY<height*0.9)&&(e.clientX>width*0.1)&&(e.clientY>height*0.1)))// check if not floodfill
+			{
+				
+				floodFill(e.clientX,e.clientY);
+			
+			}
+	  	bitTouch=true;
+	  	if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius1-masterina.line/2))
+		 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2-masterina.line/2)))
+		{
+			masterina.scale=true;
+		}
+		if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius2-masterina.line/2))
+		 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2+masterina.line/2)))
+		{
+			masterina.move=true;
+		}
+  	
 }
 
-
-
-function degToRad(deg)// Degree-to-Radian conversion
-{
-	 return deg * Math.PI / 180; 
-}
-
-
-function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angles
-{
-	var oldX=0;
-	var oldY=-startY;
-	var oldZ=startZ;
+function mouseMoveFunc(e)
+{	
+	document.getElementById("alpha").innerHTML =historyUndo.length;
+	//document.getElementById("beta").innerHTML =height;
+	//document.getElementById("gamma").innerHTML =hex;
+	mouseX=e.clientX;mouseY=e.clientY;
 	
-	//order here is important - it must match the processing order of the device
+	if ((!(masterina.move))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
+  	{
+  		masterina.draw=true;
+  	}
+  	else
+  	{
+  		masterina.draw=false;
+  		startMove=false;
+  	}
+//=================================================================================================DRAW=======================================================	
 	
-	//rotate about z axis
-	var newX = oldX * Math.cos(-degToRad(deviceOrientationData.alpha)) - oldY * Math.sin(-degToRad(deviceOrientationData.alpha));
-	var newY = oldY * Math.cos(-degToRad(deviceOrientationData.alpha)) + oldX * Math.sin(-degToRad(deviceOrientationData.alpha));
-	
-	//rotate about x axis
-	oldY=newY;
-	newY = oldY * Math.cos(-degToRad(deviceOrientationData.beta)) - oldZ * Math.sin(-degToRad(deviceOrientationData.beta));
-	var newZ = oldZ * Math.cos(-degToRad(deviceOrientationData.beta)) + oldY * Math.sin(-degToRad(deviceOrientationData.beta));
+	if (bitTouch){
 
-	
-	//rotate about y axis
-	oldZ=newZ;
-	oldX=newX;
-
-	newZ = oldZ * Math.cos(-degToRad(deviceOrientationData.gamma)) - oldX * Math.sin(-degToRad(deviceOrientationData.gamma));
-	newX = oldX * Math.cos(-degToRad(deviceOrientationData.gamma)) + oldZ * Math.sin(-degToRad(deviceOrientationData.gamma));
-	document.getElementById("alpha").innerHTML=oldZ;
-	x=newX;
-	y=newY;
-	z=newZ;
-
-	
-}
-function computeQuaternionFromEulers(alpha,beta,gamma)//Alpha around Z axis, beta around X axis and gamma around Y axis intrinsic local space in that order(each axis moves depending on how the other moves so processing order is important)
-{
-	var qx = degToRad(beta) ; // beta value
-	var qy = degToRad(gamma) ; // gamma value
-	var qz = degToRad(alpha) ; // alpha value
-
-	//precompute to save on processing time
-	var cX = Math.cos( x/2 );
-	var cY = Math.cos( y/2 );
-	var cZ = Math.cos( z/2 );
-	var sX = Math.sin( x/2 );
-	var sY = Math.sin( y/2 );
-	var sZ = Math.sin( z/2 );
-
-	var qw = cX * cY * cZ - sX * sY * sZ;
-	var qx = sX * cY * cZ - cX * sY * sZ;
-	var qy = cX * sY * cZ + sX * cY * sZ;
-	var qz = cX * cY * sZ + sX * sY * cZ;
-
-	x=qx;
-	y=qy;
-	z=qz;	  
-}
-window.addEventListener('orientationchange', function () {
-    if (window.orientation == -90) {
-        document.getElementById('orient').className = 'orientright';
-    }
-    if (window.orientation == 90) {
-        document.getElementById('orient').className = 'orientleft';
-    }
-    if (window.orientation == 0) {
-        document.getElementById('orient').className = '';
-    }
-}, true);
-//========================================================================================================================================================================
-//========================================================================================================================================================================
-
-
-function touchStartFunc(e)
-{
-	
-	if (!(bitTouch))
+		userX=e.clientX;
+		userY=e.clientY;
+		if (masterina.draw)
+		{
+			if (!(bitFill))// check if not floodfill
+			{
+				drawPie(userX-masterina.posX, userY-masterina.posY);
+			}
+		}
+//===================================================================================================MOVE==============================================
+	if (masterina.move)
 	{
+		context2.translate(e.clientX-masterina.dX,e.clientY-masterina.dY);
+		context.translate(e.clientX-masterina.dX,e.clientY-masterina.dY);
+		masterina.posX+=(e.clientX-masterina.dX);masterina.posY+=(e.clientY-masterina.dY);
+		drawMasterina();
+	}
+//=================================================================================================SCALE================================================
+	if (masterina.scale){
+		if (e.clientX>masterina.posX)
+		{
+			masterina.radius1+=(e.clientX-masterina.dX);
+			masterina.radius2+=(e.clientX-masterina.dX);
+		}
+		else
+		{
+			masterina.radius1-=(e.clientX-masterina.dX);
+			masterina.radius2-=(e.clientX-masterina.dX);
+		}
+		if (masterina.radius1<30)
+		{
+			masterina.radius1=30;masterina.radius2=40;
+		}
+		drawMasterina();
+	}
+
+	}
+	
+	if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius1-masterina.line/2))
+	 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2+masterina.line/2)))
+	{
+		document.body.style.cursor = 'pointer';
 		
-		firstX=e.touches[0].clientX;
-		firstY=e.touches[0].clientY;
-		bitTouch=true;
 	}
-}
-
-function touchmoveFunc(e)
-{
-	
-	if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
-	{   
-	  e.preventDefault();
-	}
-	userXYmove(e.touches[0].clientX,e.touches[0].clientY);
-	if (!(bitTouch))
+	else
 	{
+		document.body.style.cursor = 'crosshair';
 		
-		firstX=e.touches[0].clientX;
-		firstY=e.touches[0].clientY;
 	}
-	bitTouch=true;
-	 prevTouchX =e.touches[0].clientX;
-	 prevTouchY =e.touches[0].clientY;
+	masterina.dX=e.clientX;masterina.dY=e.clientY;
 }
 
-function touchEndFunc(e)
+function mouseUpFunc(e)
 {
-	
-  prevTouchX = -1;
-  prevTouchY = -1;
-  userX=0;
+   userX=0;
 	userY=0;
 	bitTouch=false;
-}
-function userXYmove(ux,uy)
-{
-
-	
-	
-	if(prevTouchX != -1 ) //need valid prevTouch info to calculate swipe
+	startMove=false;
+	masterina.move=false
+	masterina.scale=false
+	if (masterina.draw)
 	{
-	  var xMovement=ux-prevTouchX;
-	  var yMovement=uy-prevTouchY;
-	  userX=ux-firstX;
-	  userY=uy-firstY;
-	  //var xMovementQuat=quatFromAxisAngle(1,0,0,y/200);//movement on y rotates x and vice versa
-	  //var yMovementQuat=quatFromAxisAngle(0,1,0,x/200);//200 is there to scale the movement way down to an intuitive amount
-	 //userQuot=quaternionMultiply([yMovementQuat,xMovementQuat]);//use reverse order
-	 
+		undo();
 	}
-	prevTouchY=uy;
-	prevTouchX=ux;
+	masterina.draw=false;
+	
 }
 
+function undo()
+{
+	if (historyUndo.length == maxHistory)
+	{
+		historyUndo.shift();
+	}
+					
+	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
+	firstUndo=true;
+	//console.log(historyUndo.length);
+}
 		
  </script>
 </html>
