@@ -196,7 +196,7 @@
 	var btnTopSpace=180;
 	var mouseX=0,mouseY=0;
 	var historyUndo = new Array(), historyRedo = new Array(), maxHistory = 50;
-
+	var borderColor=70;
 	var masterina=
 	{
 		radius1:200,
@@ -379,7 +379,7 @@ function floodFill(floodx,floody)
 			var g = colorLayer.data[pixelPos+1];	
 			var b = colorLayer.data[pixelPos+2];
 
-		 return ((r < startR+50) && (r > startR-50) &&(g < startG+50) && (g > startG-50) &&(b < startB+50) && (b > startB-50) );
+		 return ((r < startR+borderColor) && (r > startR-borderColor) &&(g < startG+borderColor) && (g > startG-borderColor) &&(b < startB+borderColor) && (b > startB-borderColor) );
 		}
 
 		function colorPixel(pixelPos)
