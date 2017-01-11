@@ -223,9 +223,9 @@ function floodFill(floodx,floody)
 {
  	var imageDataPix = context2.getImageData(floodx,floody,1,1);
  	console.log(masterina.color);
- 	console.log(hexToRgbA(masterina.color));
- 	//var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
- 	var fillColorR=0,fillColorG=0,fillColorB=;
+ 	console.log(hexToRgbA(masterina.color)[0],"  ",hexToRgbA(masterina.color)[1],"  ",hexToRgbA(masterina.color)[2]);
+ 	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
+ 	//var fillColorR=0,fillColorG=0,fillColorB=0;
  	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
  	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
  	var pixelStack = [[floodx, floody]];
