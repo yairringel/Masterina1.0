@@ -176,7 +176,54 @@ function drawPie(drawX,drawY)
 
 }
 	
+function drawCross(drawX,drawY)
+{
+	drawMasterina();
 
+	for (var iii=1; iii < pieType+1; iii++)
+		 {
+		
+    		pointsXc[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
+    		pointsYc[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+    		if (mirror==2)
+    			{
+    				if (pieType==1)
+    					{
+    						pointsXmc[iii]=-(drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii))
+    						pointsYmc[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
+    					}
+    				else
+    					{
+    						pointsXmc[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
+    						pointsYmc[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
+    					}
+    			}
+    	}
+ for (var iiii=1; iiii < pieType+1; iiii++) {
+    	
+		context.beginPath();
+	    context.lineWidth = lineThik;
+	    context.moveTo(pointsXc[iiii]-5,pointsYc[iiii]);
+		context.lineTo(pointsXc[iiii]+5,pointsYc[iiii]);
+		context.moveTo(pointsXc[iiii],pointsYc[iiii]-5);
+		context.lineTo(pointsXc[iiii],pointsYc[iiii]+5);
+		context.lineCap = 'round';
+	    context.strokeStyle = '#eeaaaa';
+	    context.stroke(); 
+	    if ((mirror==2)&&(!(bitFill))){
+		    context.beginPath();
+		    context.lineWidth = lineThik;
+		    context.moveTo(pointsXmc[iiii]-5,pointsYmc[iiii]);
+			context.lineTo(pointsXmc[iiii]+5,pointsYmc[iiii]);
+			context.moveTo(pointsXmc[iiii],pointsYmc[iiii]-5);
+			context.lineTo(pointsXmc[iiii],pointsYmc[iiii]+5);
+			context.lineCap = 'round';
+		    context.strokeStyle =  '#eebbbb';
+		    context.stroke(); 
+		}
+	    } 
+
+}
 
 function drawMasterina()
 {
@@ -202,7 +249,8 @@ function drawMasterina()
 	context.arc(0, 0, masterina.radius2, 0, 2 * Math.PI, false);
 	context.strokeStyle = '#000000';
 	context.stroke(); 
-
+	
+	
 	
 }	
 	function rotatePointViaGyroEulars(a,b,c) //rotates 3d point based on eular angles

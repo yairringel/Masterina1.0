@@ -153,7 +153,8 @@
 	context2.fillStyle ="#ffffff";
 	context2.fillRect(0, 0,width, height); 
 	context2.translate(centerOffsetX, centerOffsetY);
-   	var pointsX=[]; var pointsY=[]; var lastPointX=[];var lastPointY=[];var pointsXm=[]; var pointsYm=[]; var lastPointXm=[];var lastPointYm=[];
+   	var pointsX=[]; var pointsY=[];var pointsXc=[]; var pointsYc=[]; var pointsXco=[]; var pointsYco=[];var lastPointX=[];var lastPointY=[];var pointsXm=[]; var pointsYm=[];var pointsXmc=[]; 
+   	var pointsYmc=[]; var lastPointXm=[];var lastPointYm=[];
     var startMove=false;
     
     var canvasC = document.getElementById('Color');
@@ -221,6 +222,9 @@
 //=======================================================================================  floodFill==============================================================
 function floodFill(floodx,floody)
 {
+
+	
+
  	var imageDataPix = context2.getImageData(floodx,floody,1,1);
  	
  	
@@ -379,7 +383,10 @@ function mouseMoveFunc(e)
 	//document.getElementById("beta").innerHTML =height;
 	//document.getElementById("gamma").innerHTML =hex;
 	mouseX=e.clientX;mouseY=e.clientY;
-	
+	if ((!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
+  	{
+		drawCross(e.clientX-masterina.posX, e.clientY-masterina.posY);
+	}
 	if ((!(masterina.move))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
   	{
   		masterina.draw=true;
@@ -426,7 +433,7 @@ function mouseMoveFunc(e)
 		{
 			masterina.radius1=30;masterina.radius2=40;
 		}
-		drawMasterina();
+		drawMasterina(userX-masterina.posX, userY-masterina.posY);
 	}
 
 	}
