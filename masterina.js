@@ -5,9 +5,11 @@
 	var iPieType=0;
 	function funcNew()
 	{
+		context2.clearRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2);
+		context2.fillStyle ="#ffffff";
+		context2.fillRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2); 
 		if (bitFill){
 		funcFill();}
-		context2.clearRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2);
 		
 	}
 	function funcLineThik()
