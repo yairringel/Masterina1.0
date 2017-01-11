@@ -1,4 +1,100 @@
+//============================================================================ btn func============================================================================
 
+	var iMirror=0;
+	var iLineThik=0;
+	var iPieType=0;
+	function funcNew()
+	{
+		if (bitFill){
+		funcFill();}
+		context2.clearRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2);
+		
+	}
+	function funcLineThik()
+	{
+		if (bitFill){
+		funcFill();}
+		iLineThik+=1;
+		lineThik=thikRa[iLineThik];
+		document.getElementById("lineThik").src  =lineThikArray[iLineThik].src;
+		if (iLineThik==5)
+		{
+			iLineThik=-1;
+			
+		}
+	}
+	function funcPieType()
+	{
+		if (bitFill){
+		funcFill();}
+		iPieType+=1;
+		pieType=pieTypeRA[iPieType];
+		document.getElementById("pieType").src  =pieTypeArray[iPieType].src;
+		if (iPieType==5)
+		{
+			iPieType=-1;
+			
+		}
+	}
+	function funcMirror()
+	{
+		if (bitFill){
+		funcFill();}
+		iMirror+=1;
+		mirror=mirrorRA[iMirror];
+		document.getElementById("Mirror").src  =mirrorArray[iMirror].src;
+		if (iMirror==1)
+		{
+			iMirror=-1;
+			
+		}
+	}
+	
+	function funcUndo()
+	{
+		if (bitFill){
+		funcFill();}
+		if (firstUndo)
+		{
+			context2.putImageData(historyUndo.pop(), 0, 0);	
+			firstUndo=false;
+		}
+		if (historyUndo.length > 0)
+		{
+			console.log(historyUndo.length);
+			context2.putImageData(historyUndo.pop(), 0, 0);	
+			console.log(historyUndo.length);
+
+		}
+		if (historyUndo.length == 0)
+		{
+			undo();
+		}
+	}
+	function funcSave()
+	{
+		if (bitFill){
+		funcFill();}
+		canvas2.toBlob(function(blob) {
+    	saveAs(blob, "masterina.jpg");
+		});
+	}
+	function funcFill()
+	{
+		if (!(bitFill))
+		{
+			document.getElementById("Fill").src  ="fill2.png";
+			bitFill=true;
+		}
+		else
+		{
+			document.getElementById("Fill").src  ="fill.png";
+			bitFill=false;
+		}
+		
+	}
+ //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
 
 function drawPie(drawX,drawY)
 {
@@ -178,3 +274,144 @@ function rgbToHex(r, g, b) {
         throw "Invalid color component";
     return ((r << 16) | (g << 8) | b).toString(16);
 }
+//=====================================================================================================================================================================================
+//============================================================================  ORIENTATION ===========================================================================================
+	//===================================================================================================================================== 
+document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
+document.addEventListener("touchmove", touchmoveFunc, true);
+document.addEventListener("touchend", touchEndFunc, true);
+
+function positioning()
+{
+	document.getElementById("lineThik").style.left  =-x-120+"px";
+	document.getElementById("lineThik").style.top  = y+10+"px";	
+	document.getElementById("spaceImg").style.left  =-x/10-300+"px";
+	document.getElementById("spaceImg").style.top  = y/10-300+"px";	
+	document.getElementById("sideImg").style.left  =-x+ 10%+"px";
+	document.getElementById("sideImg").style.top  = y+0%+"px";
+	document.getElementById("topImg").style.left  =-x+0%+"px";
+	document.getElementById("topImg").style.top  = y+10%+"px";
+	document.getElementById("lineThik").style.left  =-x+btnLineXpos+"px";
+	document.getElementById("lineThik").style.top  =  y+btnLineYpos+"px";//same as img 1 top	
+	document.getElementById("pieType").style.left  =-x+btnPyeXpos+"px";
+	document.getElementById("pieType").style.top  =  y+btnPyeYpos+"px";//same as img 1 top	
+	document.getElementById("Mirror").style.left  =-x+btnMirXpos+"px";
+	document.getElementById("Mirror").style.top  =  y+btnMirYpos+"px";//same as img 1 top
+	document.getElementById("Color").style.left  =-x/0.7+ width/2+imgWidth/2+60+"px";
+	document.getElementById("Color").style.top  = y/0.7+height/2-imgHeight/2+"px";	
+	if (color)
+	{
+		document.getElementById("myColorCanvas").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
+		document.getElementById("myColorCanvas").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
+	}
+	else
+	{
+		document.getElementById("myColorCanvas").style.left  =-1000+"px";
+	}
+	document.getElementById("alpha").innerHTML=centerOffsetX;
+	document.getElementById("beta").innerHTML=startY;
+	document.getElementById("gamma").innerHTML =startZ;
+	document.getElementById("X").innerHTML =btnLineXpos;
+	document.getElementById("Y").innerHTML =btnLineYpos;
+	document.getElementById("Z").innerHTML =0;
+}
+
+if (window.DeviceOrientationEvent) 
+    {//
+    	
+    	window.addEventListener("deviceorientation", function () {//gyro
+    	if (first==0)
+    	{
+    		startZ=Math.cos(degToRad(event.beta))*L1;
+    		startY=Math.sin(degToRad(event.beta))*L1;
+    		first=1;	
+    	}	
+    	
+        processGyro(event.alpha, event.beta, event.gamma); 
+    	}, true);
+    	
+}
+
+
+
+
+function processGyro(alpha,beta,gamma)
+{ 
+	deviceOrientationData.alpha=alpha;
+	deviceOrientationData.beta=beta;
+	deviceOrientationData.gamma=gamma;
+	
+	drawMasterina();
+
+	if (bitTouch)
+	{
+		
+	}
+	else
+	{
+		rotatePointViaGyroEulars(0,startY,startZ);
+	}
+	
+	//positioning();		
+	
+
+}
+
+
+
+function degToRad(deg)// Degree-to-Radian conversion
+{
+	 return deg * Math.PI / 180; 
+}
+
+
+
+
+//========================================================================================================================================================================
+//======================================================================TOUCH==================================================================================================
+
+
+
+function touchStartFunc(e)
+{
+	
+}
+
+function touchmoveFunc(e)
+{
+	
+		if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
+		{   
+		  e.preventDefault();
+		}
+		touchX=e.touches[0].clientX
+		userX=e.touches[0].clientX-firstX;
+		userY=e.touches[0].clientY-firstY;
+		
+		if (!(bitTouch))
+		{
+			
+			firstX=e.touches[0].clientX;
+			firstY=e.touches[0].clientY;
+			
+		}
+		if (bitTouch){
+			drawPie(userX+x,userY-y)
+			
+		}
+		bitTouch=true;
+	 
+}
+
+function touchEndFunc(e)
+{
+	
+  
+  userX=0;
+	userY=0;
+	bitTouch=false;
+	startMove=false;
+	
+}
+
+//=========================================================================================================================================================================
