@@ -417,7 +417,7 @@ function drawCross(drawX,drawY)
  for (var iiii=0; iiii < pieType; iiii++) {
     	
 		context.beginPath();
-	    context.lineWidth = lineThik;
+	    context.lineWidth = 1;
 	    context.moveTo(pointsXc[iiii]-5,pointsYc[iiii]);
 		context.lineTo(pointsXc[iiii]+5,pointsYc[iiii]);
 		context.moveTo(pointsXc[iiii],pointsYc[iiii]-5);
@@ -427,7 +427,7 @@ function drawCross(drawX,drawY)
 	    context.stroke(); 
 	    if (mirror==2){
 		    context.beginPath();
-		    context.lineWidth = lineThik;
+		    context.lineWidth = 1;
 		    context.moveTo(pointsXmc[iiii]-5,pointsYmc[iiii]);
 			context.lineTo(pointsXmc[iiii]+5,pointsYmc[iiii]);
 			context.moveTo(pointsXmc[iiii],pointsYmc[iiii]-5);
