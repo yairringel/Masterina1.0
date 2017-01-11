@@ -153,8 +153,7 @@
 	context2.fillStyle ="#ffffff";
 	context2.fillRect(0, 0,width, height); 
 	context2.translate(centerOffsetX, centerOffsetY);
-   	var pointsX=[]; var pointsY=[];var pointsXc=[]; var pointsYc=[]; var pointsXco=[]; var pointsYco=[];var lastPointX=[];var lastPointY=[];var pointsXm=[]; var pointsYm=[];var pointsXmc=[]; 
-   	var pointsYmc=[]; var lastPointXm=[];var lastPointYm=[];
+   	var pointsX=[], pointsY=[], pointsXc=[], pointsYc=[],Xco=[], Yco=[],Xmco=[], Ymco=[],lastPointX=[],lastPointY=[], pointsXm=[],pointsYm=[],pointsXmc=[],pointsYmc=[],lastPointXm=[],lastPointYm=[];
     var startMove=false;
     
     var canvasC = document.getElementById('Color');
@@ -204,8 +203,8 @@
 		radius2:210,
 		color:'#000000',
 		line:10,
-		posX:width/2,
-		posY:height/2,
+		posX:Math.round(width/2,0),
+		posY:Math.round(height/2,0),
 		move:false,
 		scale:false,
 		draw:false,
@@ -220,97 +219,190 @@
 //=======================================================================================================================================================================
 
 //=======================================================================================  floodFill==============================================================
+
+
 function floodFill(floodx,floody)
 {
-
-	
-
- 	var imageDataPix = context2.getImageData(floodx,floody,1,1);
- 	
- 	
- 	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
- 	//var fillColorR=0,fillColorG=0,fillColorB=0;
- 	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
- 	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
- 	var pixelStack = [[floodx, floody]];
- 	console.log(hexToRgbA(masterina.color)[0],"  ",hexToRgbA(masterina.color)[1],"  ",hexToRgbA(masterina.color)[2]);
- 	console.log(startR,"  ",startG,"  ",startB);
-	 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
-	 {	
-		 	while(pixelStack.length)
-		{
-		  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
-		  newPos = pixelStack.pop();
-		  x = newPos[0];
-		  y = newPos[1];
-		  
-		  pixelPos = (y*canvasWidth + x) * 4;
-		  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
-		  {
-		    pixelPos -= canvasWidth * 4;
-		  }
-		  pixelPos += canvasWidth * 4;
-		  ++y;
-		  reachLeft = false;
-		  reachRight = false;
-		  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
-		  {
-		    colorPixel(pixelPos);
-
-		    if(x > 0)
-		    {
-		      if(matchStartColor(pixelPos - 4))
-		      {
-		        if(!reachLeft){
-		          pixelStack.push([x - 1, y]);
-		          reachLeft = true;
-		        }
-		      }
-		      else if(reachLeft)
-		      {
-		        reachLeft = false;
-		      }
-		    }
+	console.log(floodx,floody);
+	var tempX=(floodx-masterina.posX),tempY=(floody-masterina.posY);
+	Xco=piePoints(tempX,tempY)[0];
+	Yco=piePoints(tempX,tempY)[1];
+	Xmco=piePoints(tempX,tempY)[2];
+	Ymco=piePoints(tempX,tempY)[3];
+	var imageDataPix = context2.getImageData(floodx,floody,1,1);
+	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
+	//var fillColorR=0,fillColorG=0,fillColorB=0;
+	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
+	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
+	for (var uii=0; uii < pieType; uii++)
+	{
 			
-		    if(x < canvasWidth-1)
-		    {
-		      if(matchStartColor(pixelPos + 4))
-		      {
-		        if(!reachRight)
-		        {
-		          pixelStack.push([x + 1, y]);
-		          reachRight = true;
-		        }
-		      }
-		      else if(reachRight)
-		      {
-		        reachRight = false;
-		      }
-		    }
+		 	var pixelStack = [[(Xco[uii]+masterina.posX),(Yco[uii]+masterina.posY)]];
+		 	console.log(hexToRgbA(masterina.color)[0],"  ",hexToRgbA(masterina.color)[1],"  ",hexToRgbA(masterina.color)[2]);
+		 	console.log(startR,"  ",startG,"  ",startB);
+		 	console.log(Xco[uii]+masterina.posX,"   ",Yco[uii]+masterina.posY);
+			 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
+			 {	
+				 	while(pixelStack.length)
+				{
+				  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
+				  newPos = pixelStack.pop();
+				  x = newPos[0];
+				  y = newPos[1];
+				  
+				  pixelPos = (y*canvasWidth + x) * 4;
+				  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
+				  {
+				    pixelPos -= canvasWidth * 4;
+				  }
+				  pixelPos += canvasWidth * 4;
+				  ++y;
+				  reachLeft = false;
+				  reachRight = false;
+				  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
+				  {
+				    colorPixel(pixelPos);
+
+				    if(x > 0)
+				    {
+				      if(matchStartColor(pixelPos - 4))
+				      {
+				        if(!reachLeft){
+				          pixelStack.push([x - 1, y]);
+				          reachLeft = true;
+				        }
+				      }
+				      else if(reachLeft)
+				      {
+				        reachLeft = false;
+				      }
+				    }
 					
-		    pixelPos += canvasWidth * 4;
-		  }
-		}
-		context2.putImageData(colorLayer, 0, 0);
-		  
-		function matchStartColor(pixelPos)
-		{
-		  var r = colorLayer.data[pixelPos];	
-		  var g = colorLayer.data[pixelPos+1];	
-		  var b = colorLayer.data[pixelPos+2];
+				    if(x < canvasWidth-1)
+				    {
+				      if(matchStartColor(pixelPos + 4))
+				      {
+				        if(!reachRight)
+				        {
+				          pixelStack.push([x + 1, y]);
+				          reachRight = true;
+				        }
+				      }
+				      else if(reachRight)
+				      {
+				        reachRight = false;
+				      }
+				    }
+							
+				    pixelPos += canvasWidth * 4;
+				  }
+				}
+				context2.putImageData(colorLayer, 0, 0);
+				  
+				function matchStartColor(pixelPos)
+				{
+				  var r = colorLayer.data[pixelPos];	
+				  var g = colorLayer.data[pixelPos+1];	
+				  var b = colorLayer.data[pixelPos+2];
 
-		  return (r == startR && g == startG && b == startB);
-		}
+				  return ((r < startR+100) && (r > startR-100) &&(g < startG+100) && (g > startG-100) &&(b < startB+100) && (b > startB-100) );
+				}
 
-		function colorPixel(pixelPos)
-		{
-		  colorLayer.data[pixelPos] = fillColorR;
-		  colorLayer.data[pixelPos+1] = fillColorG;
-		  colorLayer.data[pixelPos+2] = fillColorB;
-		  colorLayer.data[pixelPos+3] = 255;
-		}
-	}
-      //undo();                     
+				function colorPixel(pixelPos)
+				{
+				  colorLayer.data[pixelPos] = fillColorR;
+				  colorLayer.data[pixelPos+1] = fillColorG;
+				  colorLayer.data[pixelPos+2] = fillColorB;
+				  colorLayer.data[pixelPos+3] = 255;
+				}
+			}
+      }  
+      if (mirror==2)
+      {
+      	for (var uii=0; uii < pieType; uii++)
+	{
+			
+		 	var pixelStack = [[(Xmco[uii]+masterina.posX),(Ymco[uii]+masterina.posY)]];
+		 	console.log(hexToRgbA(masterina.color)[0],"  ",hexToRgbA(masterina.color)[1],"  ",hexToRgbA(masterina.color)[2]);
+		 	console.log(startR,"  ",startG,"  ",startB);
+		 	console.log(Xmco[uii]+masterina.posX,"   ",Ymco[uii]+masterina.posY);
+			 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
+			 {	
+				 	while(pixelStack.length)
+				{
+				  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
+				  newPos = pixelStack.pop();
+				  x = newPos[0];
+				  y = newPos[1];
+				  
+				  pixelPos = (y*canvasWidth + x) * 4;
+				  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
+				  {
+				    pixelPos -= canvasWidth * 4;
+				  }
+				  pixelPos += canvasWidth * 4;
+				  ++y;
+				  reachLeft = false;
+				  reachRight = false;
+				  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
+				  {
+				    colorPixel(pixelPos);
+
+				    if(x > 0)
+				    {
+				      if(matchStartColor(pixelPos - 4))
+				      {
+				        if(!reachLeft){
+				          pixelStack.push([x - 1, y]);
+				          reachLeft = true;
+				        }
+				      }
+				      else if(reachLeft)
+				      {
+				        reachLeft = false;
+				      }
+				    }
+					
+				    if(x < canvasWidth-1)
+				    {
+				      if(matchStartColor(pixelPos + 4))
+				      {
+				        if(!reachRight)
+				        {
+				          pixelStack.push([x + 1, y]);
+				          reachRight = true;
+				        }
+				      }
+				      else if(reachRight)
+				      {
+				        reachRight = false;
+				      }
+				    }
+							
+				    pixelPos += canvasWidth * 4;
+				  }
+				}
+				context2.putImageData(colorLayer, 0, 0);
+				  
+				function matchStartColor(pixelPos)
+				{
+				  var r = colorLayer.data[pixelPos];	
+				  var g = colorLayer.data[pixelPos+1];	
+				  var b = colorLayer.data[pixelPos+2];
+
+				  return ((r < startR+100) && (r > startR-100) &&(g < startG+100) && (g > startG-100) &&(b < startB+100) && (b > startB-100) );
+				}
+
+				function colorPixel(pixelPos)
+				{
+				  colorLayer.data[pixelPos] = fillColorR;
+				  colorLayer.data[pixelPos+1] = fillColorG;
+				  colorLayer.data[pixelPos+2] = fillColorB;
+				  colorLayer.data[pixelPos+3] = 255;
+				}
+			}
+      }  
+      }                  
 }
 
 
@@ -380,6 +472,7 @@ function mouseDownFunc(e)
 
 function mouseMoveFunc(e)
 {	
+	piePoints(e.clientX-masterina.posX,e.clientY-masterina.posY);
 	document.getElementById("alpha").innerHTML =historyUndo.length;
 	//document.getElementById("beta").innerHTML =height;
 	//document.getElementById("gamma").innerHTML =hex;

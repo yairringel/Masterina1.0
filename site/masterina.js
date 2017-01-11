@@ -96,55 +96,50 @@
 		
 	}
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	
+function piePoints(uX,uY)
+{
+	var pp=[];
+	var ppX=[],ppY=[],ppXm=[],ppYm=[];
+	for (var ui=0; ui < pieType; ui++)
+	    	 {
+	    		ppX[ui]=Math.round(uX*Math.cos(2*Math.PI/pieType*ui)+uY*Math.sin(2*Math.PI/pieType*ui))
+	    		ppY[ui]=Math.round(uY*Math.cos(2*Math.PI/pieType*ui)-uX*Math.sin(2*Math.PI/pieType*ui))
+				if (mirror==2)
+	    			{
+	    			if (pieType==1)
+	    				{
+	    				ppXm[ui]=Math.round(-(uX*Math.cos(2*Math.PI/pieType*ui)+uY*Math.sin(2*Math.PI/pieType*ui)))
+	    				ppYm[ui]=Math.round(uY*Math.cos(2*Math.PI/pieType*ui)-uX*Math.sin(2*Math.PI/pieType*ui))
+
+	    				}
+	    			else{
+	    				ppXm[ui]=Math.round(uY*Math.cos(2*Math.PI/pieType*ui)+uX*Math.sin(2*Math.PI/pieType*ui))
+	    				ppYm[ui]=Math.round(uX*Math.cos(2*Math.PI/pieType*ui)-uY*Math.sin(2*Math.PI/pieType*ui))
+	    				}
+	    			}
+	    	}
+	    	pp=[ppX,ppY,ppXm,ppYm];
+	    	
+	    	return pp;
+}	
 
 function drawPie(drawX,drawY)
 {
 
 	if (startMove==false)
-	    {	
-	    	for (var ii=1; ii < pieType+1; ii++)
-	    	 {
-	    		lastPointX[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii)
-	    		lastPointY[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
-				if (mirror==2)
-	    			{
-	    			if (pieType==1)
-	    				{
-	    				lastPointXm[ii]=-(drawX*Math.cos(2*Math.PI/pieType*ii)+drawY*Math.sin(2*Math.PI/pieType*ii))
-	    				lastPointYm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)-drawX*Math.sin(2*Math.PI/pieType*ii)
+	{
+		lastPointX=piePoints(drawX,drawY)[0];
+		lastPointY=piePoints(drawX,drawY)[1];
+		lastPointXm=piePoints(drawX,drawY)[2];
+		lastPointYm=piePoints(drawX,drawY)[3];
+	}
+	   
+	pointsX=piePoints(drawX,drawY)[0];
+	pointsY=piePoints(drawX,drawY)[1];
+	pointsXm=piePoints(drawX,drawY)[2];
+	pointsYm=piePoints(drawX,drawY)[3];
 
-	    				}
-	    			else{
-	    				lastPointXm[ii]=drawY*Math.cos(2*Math.PI/pieType*ii)+drawX*Math.sin(2*Math.PI/pieType*ii)
-	    				lastPointYm[ii]=drawX*Math.cos(2*Math.PI/pieType*ii)-drawY*Math.sin(2*Math.PI/pieType*ii)
-	    				}
-	    			}
-	    	}
-	    	
-	    }	
-
-	    
-	for (var iii=1; iii < pieType+1; iii++)
-		 {
-		
-    		pointsX[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
-    		pointsY[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-    		if (mirror==2)
-    			{
-    				if (pieType==1)
-    					{
-    						pointsXm[iii]=-(drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii))
-    						pointsYm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-    					}
-    				else
-    					{
-    						pointsXm[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
-    						pointsYm[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
-    					}
-    			}
-    	}
- for (var iiii=1; iiii < pieType+1; iiii++) {
+ for (var iiii=0; iiii < pieType; iiii++) {
     	
 		context2.beginPath();
 	    context2.lineWidth = lineThik;
@@ -163,7 +158,7 @@ function drawPie(drawX,drawY)
 		    context2.stroke(); 
 		}
 	    } 
-	for (var iiiii=1; iiiii < pieType+1; iiiii++) {
+	for (var iiiii=0; iiiii < pieType; iiiii++) {
 	    lastPointX[iiiii]=pointsX[iiiii];
 	    lastPointY[iiiii]=pointsY[iiiii];
 	    if (mirror==2){
@@ -179,27 +174,12 @@ function drawPie(drawX,drawY)
 function drawCross(drawX,drawY)
 {
 	drawMasterina();
-
-	for (var iii=1; iii < pieType+1; iii++)
-		 {
-		
-    		pointsXc[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii)
-    		pointsYc[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-    		if (mirror==2)
-    			{
-    				if (pieType==1)
-    					{
-    						pointsXmc[iii]=-(drawX*Math.cos(2*Math.PI/pieType*iii)+drawY*Math.sin(2*Math.PI/pieType*iii))
-    						pointsYmc[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)-drawX*Math.sin(2*Math.PI/pieType*iii)
-    					}
-    				else
-    					{
-    						pointsXmc[iii]=drawY*Math.cos(2*Math.PI/pieType*iii)+drawX*Math.sin(2*Math.PI/pieType*iii)
-    						pointsYmc[iii]=drawX*Math.cos(2*Math.PI/pieType*iii)-drawY*Math.sin(2*Math.PI/pieType*iii)
-    					}
-    			}
-    	}
- for (var iiii=1; iiii < pieType+1; iiii++) {
+	pointsXc=piePoints(drawX,drawY)[0];
+	pointsYc=piePoints(drawX,drawY)[1];
+	pointsXmc=piePoints(drawX,drawY)[2];
+	pointsYmc=piePoints(drawX,drawY)[3];
+	
+ for (var iiii=0; iiii < pieType; iiii++) {
     	
 		context.beginPath();
 	    context.lineWidth = lineThik;
@@ -210,7 +190,7 @@ function drawCross(drawX,drawY)
 		context.lineCap = 'round';
 	    context.strokeStyle = '#eeaaaa';
 	    context.stroke(); 
-	    if ((mirror==2)&&(!(bitFill))){
+	    if (mirror==2){
 		    context.beginPath();
 		    context.lineWidth = lineThik;
 		    context.moveTo(pointsXmc[iiii]-5,pointsYmc[iiii]);
