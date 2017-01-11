@@ -299,22 +299,7 @@ function floodFill(floodx,floody)
 				}
 				context2.putImageData(colorLayer, 0, 0);
 				  
-				function matchStartColor(pixelPos)
-				{
-				  var r = colorLayer.data[pixelPos];	
-				  var g = colorLayer.data[pixelPos+1];	
-				  var b = colorLayer.data[pixelPos+2];
-
-				  return ((r < startR+100) && (r > startR-100) &&(g < startG+100) && (g > startG-100) &&(b < startB+100) && (b > startB-100) );
-				}
-
-				function colorPixel(pixelPos)
-				{
-				  colorLayer.data[pixelPos] = fillColorR;
-				  colorLayer.data[pixelPos+1] = fillColorG;
-				  colorLayer.data[pixelPos+2] = fillColorB;
-				  colorLayer.data[pixelPos+3] = 255;
-				}
+				
 			}
       }  
       if (mirror==2)
@@ -384,25 +369,26 @@ function floodFill(floodx,floody)
 				}
 				context2.putImageData(colorLayer, 0, 0);
 				  
-				function matchStartColor(pixelPos)
-				{
-				  var r = colorLayer.data[pixelPos];	
-				  var g = colorLayer.data[pixelPos+1];	
-				  var b = colorLayer.data[pixelPos+2];
-
-				  return ((r < startR+100) && (r > startR-100) &&(g < startG+100) && (g > startG-100) &&(b < startB+100) && (b > startB-100) );
-				}
-
-				function colorPixel(pixelPos)
-				{
-				  colorLayer.data[pixelPos] = fillColorR;
-				  colorLayer.data[pixelPos+1] = fillColorG;
-				  colorLayer.data[pixelPos+2] = fillColorB;
-				  colorLayer.data[pixelPos+3] = 255;
-				}
+				
 			}
       }  
-      }                  
+      }  
+      function matchStartColor(pixelPos)
+		{
+			var r = colorLayer.data[pixelPos];	
+			var g = colorLayer.data[pixelPos+1];	
+			var b = colorLayer.data[pixelPos+2];
+
+		 return ((r < startR+50) && (r > startR-50) &&(g < startG+50) && (g > startG-50) &&(b < startB+50) && (b > startB-50) );
+		}
+
+		function colorPixel(pixelPos)
+		{
+			colorLayer.data[pixelPos] = fillColorR;
+			colorLayer.data[pixelPos+1] = fillColorG;
+			colorLayer.data[pixelPos+2] = fillColorB;
+			colorLayer.data[pixelPos+3] = 255;
+		}                
 }
 
 
