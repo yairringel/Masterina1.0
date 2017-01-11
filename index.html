@@ -222,7 +222,8 @@
 function floodFill(floodx,floody)
 {
  	var imageDataPix = context2.getImageData(floodx,floody,1,1);
- 	console.log("r ",imageDataPix.data[0],"G",imageDataPix.data[1],"B",imageDataPix.data[2]);
+ 	console.log(masterina.color);
+ 	console.log(hexToRgbA(masterina.color)[0]);
  	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
 
  	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
