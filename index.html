@@ -230,7 +230,7 @@ function floodFill(floodx,floody)
  	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
  	var pixelStack = [[floodx, floody]];
 
-	 if  (!((startR==fillColorR)&&(startg==fillColorG)&&(startB==fillColorB)))
+	 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
 	 {	
 		 	while(pixelStack.length)
 		{
