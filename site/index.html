@@ -363,6 +363,7 @@ function mouseDownFunc(e)
 				floodFill(e.clientX,e.clientY);
 			
 			}
+
 	  	bitTouch=true;
 	  	if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius1-masterina.line/2))
 		 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2-masterina.line/2)))
@@ -387,6 +388,9 @@ function mouseMoveFunc(e)
   	{
 		drawCross(e.clientX-masterina.posX, e.clientY-masterina.posY);
 	}
+	else{
+				drawMasterina();
+		}	
 	if ((!(masterina.move))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
   	{
   		masterina.draw=true;
