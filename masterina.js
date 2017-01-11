@@ -3,6 +3,7 @@
 	var iMirror=0;
 	var iLineThik=0;
 	var iPieType=0;
+	var iLineType=0;
 	function funcNew()
 	{
 		context2.clearRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2);
@@ -18,7 +19,7 @@
 		funcFill();}
 		iLineThik+=1;
 		lineThik=thikRa[iLineThik];
-		document.getElementById("lineThik").src  =lineThikArray[iLineThik].src;
+		document.getElementById("lineThikBtn").src  =lineThikArray[iLineThik].src;
 		if (iLineThik==5)
 		{
 			iLineThik=-1;
@@ -31,7 +32,7 @@
 		funcFill();}
 		iPieType+=1;
 		pieType=pieTypeRA[iPieType];
-		document.getElementById("pieType").src  =pieTypeArray[iPieType].src;
+		document.getElementById("pieTypeBtn").src  =pieTypeArray[iPieType].src;
 		if (iPieType==5)
 		{
 			iPieType=-1;
@@ -44,14 +45,38 @@
 		funcFill();}
 		iMirror+=1;
 		mirror=mirrorRA[iMirror];
-		document.getElementById("Mirror").src  =mirrorArray[iMirror].src;
+		document.getElementById("MirrorBtn").src  =mirrorArray[iMirror].src;
 		if (iMirror==1)
 		{
 			iMirror=-1;
 			
 		}
 	}
-	
+	function funcLineType()
+	{
+		if (bitFill){
+		funcFill();}
+		iLineType+=1;
+		lineType=lineTypeRA[iLineType];
+		document.getElementById("lineTypeBtn").src  =lineTypeArray[iLineType].src;
+		if (iLineType==4)
+		{
+			iLineType=-1;
+			
+		}
+	}
+	function funcFillCir()
+	{
+		if (bitFill){
+		funcFill();}
+		fillCir();
+	}
+	function funcCirLine()
+	{
+		if (bitFill){
+		funcFill();}
+		CirLine();
+	}
 	function funcUndo()
 	{
 		if (bitFill){
@@ -63,10 +88,9 @@
 		}
 		if (historyUndo.length > 0)
 		{
-			console.log(historyUndo.length);
+			
 			context2.putImageData(historyUndo.pop(), 0, 0);	
-			console.log(historyUndo.length);
-
+			
 		}
 		if (historyUndo.length == 0)
 		{
@@ -122,7 +146,187 @@ function piePoints(uX,uY)
 	    	
 	    	return pp;
 }	
+//======================================================================DRAW LINES==============================================================================
+function drawPieLine(drawX,drawY)
+{
+	
+	if (!(bitDrawLine))
+	{
+		tX=piePoints(drawX,drawY)[0];
+		tY=piePoints(drawX,drawY)[1];
+		tXm=piePoints(drawX,drawY)[2];
+		tYm=piePoints(drawX,drawY)[3];
+		bitDrawLine=true;
+	}
+	pX=piePoints(drawX,drawY)[0];
+	pY=piePoints(drawX,drawY)[1];
+	pXm=piePoints(drawX,drawY)[2];
+	pYm=piePoints(drawX,drawY)[3];
 
+	for (var li=0; li < pieType; li++) {
+    	
+		context.beginPath();
+	    context.lineWidth = lineThik;
+	    context.moveTo(tX[li],tY[li]);
+		context.lineTo(pX[li],pY[li]);
+		context.lineCap = 'round';
+	    context.strokeStyle = masterina.color;
+	    context.stroke(); 
+	    if (mirror==2){
+		    context.beginPath();
+		    context.lineWidth = lineThik;
+		    context.moveTo(tXm[li],tYm[li]);
+			context.lineTo(pXm[li],pYm[li]);
+			context.lineCap = 'round';
+		    context.strokeStyle = masterina.color;
+		    context.stroke(); 
+		}
+	    } 
+}
+
+function drawPieLineTo2(drawX,drawY)
+{
+	for (var li=0; li < pieType; li++) {
+    	
+		context2.beginPath();
+	    context2.lineWidth = lineThik;
+	    context2.moveTo(tX[li],tY[li]);
+		context2.lineTo(pX[li],pY[li]);
+		context2.lineCap = 'round';
+	    context2.strokeStyle = masterina.color;
+	    context2.stroke(); 
+	    if (mirror==2){
+		    context2.beginPath();
+		    context2.lineWidth = lineThik;
+		    context2.moveTo(tXm[li],tYm[li]);
+			context2.lineTo(pXm[li],pYm[li]);
+			context2.lineCap = 'round';
+		    context2.strokeStyle = masterina.color;
+		    context2.stroke(); 
+		}
+	    } 
+}
+//============================================================================================DRAW CIRCLES==========================================================
+function drawPieCir(drawX,drawY)
+{
+	
+	if (!(bitDrawCir))
+	{
+		tX=piePoints(drawX,drawY)[0];
+		tY=piePoints(drawX,drawY)[1];
+		tXm=piePoints(drawX,drawY)[2];
+		tYm=piePoints(drawX,drawY)[3];
+		
+		bitDrawCir=true;
+	}
+	pX=piePoints(drawX,drawY)[0];
+	pY=piePoints(drawX,drawY)[1];
+	pXm=piePoints(drawX,drawY)[2];
+	pYm=piePoints(drawX,drawY)[3];
+	
+
+	for (var li=0; li < pieType; li++) {
+    	
+		context.beginPath();
+		context.arc(tX[li], tY[li], Math.sqrt(((pX[li]-tX[li])**2)+ (pY[li]-tY[li])**2), 0, 2 * Math.PI, false);
+		context.strokeStyle = masterina.color;
+		context.stroke(); 
+	    if (mirror==2){
+		    context.beginPath();
+		context.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
+		context.strokeStyle = masterina.color;
+		context.stroke();
+		}
+	    } 
+}
+
+function drawPieCirTo2(drawX,drawY)
+{
+	for (var li=0; li < pieType; li++) {
+    	
+		context2.beginPath();
+		context2.arc(tX[li], tY[li], Math.sqrt(((pX[li]-tX[li])**2)+ (pY[li]-tY[li])**2), 0, 2 * Math.PI, false);
+		context2.strokeStyle = masterina.color;
+		context2.stroke();
+	    if (mirror==2){
+		context2.beginPath();
+		context2.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
+		context2.strokeStyle = masterina.color;
+		context2.stroke();
+		}
+	    } 
+}
+//============================================================================================DRAW CIRCLES Fill==========================================================
+function drawPieCirFill(drawX,drawY)
+{
+	if (!(bitDrawCirFill))
+	{
+		tX=piePoints(drawX,drawY)[0];
+		tY=piePoints(drawX,drawY)[1];
+		tXm=piePoints(drawX,drawY)[2];
+		tYm=piePoints(drawX,drawY)[3];
+		
+		bitDrawCirFill=true;
+	}
+	pX=piePoints(drawX,drawY)[0];
+	pY=piePoints(drawX,drawY)[1];
+	pXm=piePoints(drawX,drawY)[2];
+	pYm=piePoints(drawX,drawY)[3];
+
+	for (var li=0; li < pieType; li++) {
+    	
+		context.beginPath();
+		context.arc(tX[li], tY[li], Math.sqrt(((pX[li]-tX[li])**2)+ (pY[li]-tY[li])**2), 0, 2 * Math.PI, false);
+		context.fillStyle = masterina.color;
+		context.fill(); 
+	    if (mirror==2){
+		    context.beginPath();
+		context.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
+		context.fillStyle = masterina.color;
+		context.fill();
+		}
+	    } 
+}
+
+function drawPieCirFillTo2(drawX,drawY)
+{
+	for (var li=0; li < pieType; li++) {
+    	
+		context2.beginPath();
+		context2.arc(tX[li], tY[li], Math.sqrt(((pX[li]-tX[li])**2)+ (pY[li]-tY[li])**2), 0, 2 * Math.PI, false);
+		context2.fillStyle = masterina.color;
+		context2.fill();
+	    if (mirror==2){
+		context2.beginPath();
+		context2.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
+		context2.fillStyle = masterina.color;
+		context2.fill();
+		}
+	    } 
+}
+//=============================================================================Fill Cir==============================================================
+function fillCir()
+{
+	context2.beginPath();
+	context2.lineWidth = lineThik;
+	context2.arc(0, 0, masterina.radius1-lineThik/2, 0, 2 * Math.PI, false);
+	context2.fillStyle = masterina.color;
+	context2.fill();
+	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
+	console.log("!!!");
+}
+//============================================================================= Cir Line==============================================================
+function CirLine()
+{
+	context2.beginPath();
+	context2.lineWidth = lineThik;
+	context2.arc(0, 0, masterina.radius1-lineThik/2, 0, 2 * Math.PI, false);
+	context2.strokeStyle = masterina.color;
+	context2.stroke();
+	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
+	console.log("!!!");
+}
+//============================================================================DRAW PIE==============================================================
 function drawPie(drawX,drawY)
 {
 
@@ -170,7 +374,38 @@ function drawPie(drawX,drawY)
 	}
 
 }
+function drawPieDots(drawX,drawY)
+{
+
 	
+	   
+	pointsX=piePoints(drawX,drawY)[0];
+	pointsY=piePoints(drawX,drawY)[1];
+	pointsXm=piePoints(drawX,drawY)[2];
+	pointsYm=piePoints(drawX,drawY)[3];
+
+ for (var iiii=0; iiii < pieType; iiii++) {
+    	
+		context2.beginPath();
+	    context2.lineWidth = lineThik;
+	    context2.moveTo(pointsX[iiii],pointsY[iiii]);
+		context2.lineTo(pointsX[iiii],pointsY[iiii]);
+		context2.lineCap = 'round';
+	    context2.strokeStyle = masterina.color;
+	    context2.stroke(); 
+	    if (mirror==2){
+		    context2.beginPath();
+		    context2.lineWidth = lineThik;
+		    context2.moveTo(pointsXm[iiii],pointsYm[iiii]);
+			context2.lineTo(pointsXm[iiii],pointsYm[iiii]);
+			context2.lineCap = 'round';
+		    context2.strokeStyle = masterina.color;
+		    context2.stroke(); 
+		}
+	 } 
+	
+
+}	
 function drawCross(drawX,drawY)
 {
 	drawMasterina();
@@ -458,4 +693,169 @@ function touchEndFunc(e)
 	
 }
 
-//=========================================================================================================================================================================
+//====================================================================FLOODFILL=====================================================================================================
+function floodFill(floodx,floody)
+{
+	
+	var tempX=(floodx-masterina.posX),tempY=(floody-masterina.posY);
+	Xco=piePoints(tempX,tempY)[0];
+	Yco=piePoints(tempX,tempY)[1];
+	Xmco=piePoints(tempX,tempY)[2];
+	Ymco=piePoints(tempX,tempY)[3];
+	var imageDataPix = context2.getImageData(floodx,floody,1,1);
+	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
+	//var fillColorR=0,fillColorG=0,fillColorB=0;
+	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
+	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
+	for (var uii=0; uii < pieType; uii++)
+	{
+			
+		 	var pixelStack = [[(Xco[uii]+masterina.posX),(Yco[uii]+masterina.posY)]];
+		 	
+			 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
+			 {	
+				 	while(pixelStack.length)
+				{
+				  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
+				  newPos = pixelStack.pop();
+				  x = newPos[0];
+				  y = newPos[1];
+				  
+				  pixelPos = (y*canvasWidth + x) * 4;
+				  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
+				  {
+				    pixelPos -= canvasWidth * 4;
+				  }
+				  pixelPos += canvasWidth * 4;
+				  ++y;
+				  reachLeft = false;
+				  reachRight = false;
+				  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
+				  {
+				    colorPixel(pixelPos);
+
+				    if(x > 0)
+				    {
+				      if(matchStartColor(pixelPos - 4))
+				      {
+				        if(!reachLeft){
+				          pixelStack.push([x - 1, y]);
+				          reachLeft = true;
+				        }
+				      }
+				      else if(reachLeft)
+				      {
+				        reachLeft = false;
+				      }
+				    }
+					
+				    if(x < canvasWidth-1)
+				    {
+				      if(matchStartColor(pixelPos + 4))
+				      {
+				        if(!reachRight)
+				        {
+				          pixelStack.push([x + 1, y]);
+				          reachRight = true;
+				        }
+				      }
+				      else if(reachRight)
+				      {
+				        reachRight = false;
+				      }
+				    }
+							
+				    pixelPos += canvasWidth * 4;
+				  }
+				}
+				context2.putImageData(colorLayer, 0, 0);
+				  
+				
+			}
+      }  
+      if (mirror==2)
+      {
+      	for (var uii=0; uii < pieType; uii++)
+	{
+			
+		 	var pixelStack = [[(Xmco[uii]+masterina.posX),(Ymco[uii]+masterina.posY)]];
+		 	
+			 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
+			 {	
+				 	while(pixelStack.length)
+				{
+				  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
+				  newPos = pixelStack.pop();
+				  x = newPos[0];
+				  y = newPos[1];
+				  
+				  pixelPos = (y*canvasWidth + x) * 4;
+				  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
+				  {
+				    pixelPos -= canvasWidth * 4;
+				  }
+				  pixelPos += canvasWidth * 4;
+				  ++y;
+				  reachLeft = false;
+				  reachRight = false;
+				  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
+				  {
+				    colorPixel(pixelPos);
+
+				    if(x > 0)
+				    {
+				      if(matchStartColor(pixelPos - 4))
+				      {
+				        if(!reachLeft){
+				          pixelStack.push([x - 1, y]);
+				          reachLeft = true;
+				        }
+				      }
+				      else if(reachLeft)
+				      {
+				        reachLeft = false;
+				      }
+				    }
+					
+				    if(x < canvasWidth-1)
+				    {
+				      if(matchStartColor(pixelPos + 4))
+				      {
+				        if(!reachRight)
+				        {
+				          pixelStack.push([x + 1, y]);
+				          reachRight = true;
+				        }
+				      }
+				      else if(reachRight)
+				      {
+				        reachRight = false;
+				      }
+				    }
+							
+				    pixelPos += canvasWidth * 4;
+				  }
+				}
+				context2.putImageData(colorLayer, 0, 0);
+				  
+				
+			}
+      }  
+      }  
+      function matchStartColor(pixelPos)
+		{
+			var r = colorLayer.data[pixelPos];	
+			var g = colorLayer.data[pixelPos+1];	
+			var b = colorLayer.data[pixelPos+2];
+
+		 return ((r < startR+borderColor) && (r > startR-borderColor) &&(g < startG+borderColor) && (g > startG-borderColor) &&(b < startB+borderColor) && (b > startB-borderColor) );
+		}
+
+		function colorPixel(pixelPos)
+		{
+			colorLayer.data[pixelPos] = fillColorR;
+			colorLayer.data[pixelPos+1] = fillColorG;
+			colorLayer.data[pixelPos+2] = fillColorB;
+			colorLayer.data[pixelPos+3] = 255;
+		}                
+}
