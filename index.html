@@ -201,7 +201,7 @@
 	{
 		radius1:200,
 		radius2:210,
-		color:"#000000",
+		color:'#000000',
 		line:10,
 		posX:width/2,
 		posY:height/2,
@@ -223,7 +223,8 @@ function floodFill(floodx,floody)
 {
  	var imageDataPix = context2.getImageData(floodx,floody,1,1);
  	console.log("r ",imageDataPix.data[0],"G",imageDataPix.data[1],"B",imageDataPix.data[2]);
- 	var fillColorR=0,fillColorG=0,fillColorB=0;
+ 	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
+
  	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
  	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
  	var pixelStack = [[floodx, floody]];
@@ -303,7 +304,7 @@ function floodFill(floodx,floody)
 		  colorLayer.data[pixelPos+3] = 255;
 		}
 	}
-                           
+      //undo();                     
 }
 
 
@@ -342,6 +343,7 @@ $('#Color').mouseout(function(e) {
     	width=window.innerWidth;
     	height=window.innerHeight;
     };
+ //============================================================================================================================================
 //====================================================================MOUSE=================================================================
 document.addEventListener("mousedown", mouseDownFunc, true);
 document.addEventListener("mousemove", mouseMoveFunc, true);
@@ -350,7 +352,7 @@ document.addEventListener("mouseup", mouseUpFunc, true);
 
 function mouseDownFunc(e)
 {
-		if ((bitFill)&&((width*0.1<e.clientX<width*0.9)&&(height*0.1<e.clientY<height*0.9)))// check if not floodfill
+		if ((bitFill)&&((e.clientX<width*0.9)&&(e.clientY<height*0.9)&&(e.clientX>width*0.1)&&(e.clientY>height*0.1)))// check if not floodfill
 			{
 				
 				floodFill(e.clientX,e.clientY);
