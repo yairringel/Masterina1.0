@@ -94,7 +94,8 @@
 		if (bitFill){
 		funcFill();}
 
-		
+		document.getElementById("saveCanvas").width=width;
+		document.getElementById("saveCanvas").height=height;
 		contextS.drawImage(canvas2,0,0,width,height,0,0,width,height);
 		contextS.beginPath();
 		contextS.fillStyle = "#ffffee";
@@ -136,12 +137,14 @@
 	imageSave.onload = function() 
 	{
 		contextS.drawImage(imageSave, 4, 4);
-	}
-	document.getElementById("saveCanvas").style.zIndex=10;
-	//====================================================================================================================
 		canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
 		});
+	}
+	//document.getElementById("saveCanvas").style.zIndex=10;
+	
+	//====================================================================================================================
+		
 	}
 	function funcFill()
 	{
