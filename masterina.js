@@ -101,10 +101,8 @@
 	
 	imageSave.crossOrigin = 'anonymous'; 
 	imageSave.src = 'LOGO.png'+ '?' + new Date().getTime();;
-	imageSave.onload = function() 
-	{
-		contextS.drawImage(imageSave, 20, 20);
-	}
+	contextS.drawImage(imageSave, 20, 20);
+	
 	//====================================================================================================================
 		canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
