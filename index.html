@@ -25,9 +25,6 @@
 }
   canvas
   { 
-
-   
-  	
 	margin: 0px;
 	padding: 0px;
 	position:fixed;
@@ -50,10 +47,7 @@
 	padding: 0px;
 	position:fixed;
   }
-  #myCanvas
- {
- 	width:2200;
- }
+ 
 </style>
  
 
@@ -63,7 +57,7 @@
 	<canvas id="myCanvas" width=2200 height=1100 style="top:0px;left:0px; z-index: 2; "></canvas> 
 	<canvas id="myCanvas2" width=2200 height=1100  style="top:0px;left:0px; z-index: 1; "></canvas> 
 	<canvas id="paperCanvas" width=2200 height=1100  style="top:0px;left:0px; z-index:3; "></canvas> 
-	<canvas id="Color" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 6; "></canvas>
+	<canvas id="Color" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 9; "></canvas>
 	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 8; "></canvas> 
 	
 	
@@ -184,6 +178,8 @@
 	{
 		contextC.drawImage(imageObj, 0, 0);
 	};
+
+
 	var colorShow = document.getElementById('ColorShow');
 	var contextCS = colorShow.getContext('2d');
 	contextCS.fillStyle = "000000";
@@ -246,19 +242,14 @@
  //=============================================== choose color =================================================================
 
 $('#Color').mousemove(function(e) {   
-    
-    var xxx = 10 ;
-    var yyy = 10 ;
-    
+   
     var c = this.getContext('2d');
-    var p = c.getImageData(mouseX, mouseY, 1, 1).data; 
+    var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
     var hex = "#" +("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     chooseColor=hex;
-    contextCS.fillStyle = "hex";
+    contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
-	console.log(hex);
-   
-
+	
 });
 $('#Color').mouseup(function(e) {
     masterina.color=chooseColor;
