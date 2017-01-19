@@ -104,8 +104,11 @@
 		contextS.beginPath();
 		contextS.fillStyle = "#acacac";
 		contextS.fillRect(0, 0,width*0.92, height*0.92);
+		contextS.beginPath();
+		contextS.fillStyle = "#acacac";
+		contextS.fillRect(0, 0,192, 76);
 		
-		contextS.drawImage(canvas2,width*0.1,height*0.1,width*0.8,height*0.8,width*0.01,height*0.01,width*0.92,height*0.92);
+		contextS.drawImage(canvas2,width*0.1,height*0.1,width*0.8,height*0.8,width*0.01,height*0.01,width*0.90,height*0.90);
 		contextS.beginPath();
 		contextS.fillStyle = "#000000";
 		context.lineWidth = 4;
