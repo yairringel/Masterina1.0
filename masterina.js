@@ -97,16 +97,16 @@
 		
 		contextS.drawImage(canvas2,0,0,width,height,0,0,width,height);
 		contextS.beginPath();
-		contextS.fillStyle = "#ffffaa";
+		contextS.fillStyle = "#acacac";
 		contextS.fillRect(0, 0,width, height*0.1);
 		contextS.beginPath();
-		contextS.fillStyle = "#ffffaa";
+		contextS.fillStyle = "#acacac";
 		contextS.fillRect(0, 0,width*0.1, height);
 		contextS.beginPath();
-		contextS.fillStyle = "#ffffaa";
+		contextS.fillStyle ="#acacac";
 		contextS.fillRect(0, height*0.9,width, height*0.1);
 		contextS.beginPath();
-		contextS.fillStyle = "#ffffaa";
+		contextS.fillStyle = "#acacac";
 		contextS.fillRect(width*0.9, 0,width*0.1, height);
 
 //============================================================image to save canvas ==================================
@@ -118,11 +118,11 @@
 	{
 		contextS.drawImage(imageSave, 20, 20);
 	}
-	document.getElementById('saveCanvas').style.zIndex=10;
+	
 	//====================================================================================================================
-		/*canvasS.toBlob(function(blob) {
+		canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
-		});*/
+		});
 	}
 	function funcFill()
 	{
