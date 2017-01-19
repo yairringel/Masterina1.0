@@ -254,8 +254,9 @@ $('#Color').mousemove(function(e) {
     var p = c.getImageData(mouseX, mouseY, 1, 1).data; 
     var hex = "#" +("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     chooseColor=hex;
-    contextCS.fillStyle = hex;
+    contextCS.fillStyle = "hex";
 	contextCS.fillRect(0, 0,width, height);
+	console.log(hex);
    
 
 });
