@@ -96,12 +96,28 @@
 
 		
 		contextS.drawImage(canvas2,0,0,width,height,0,0,width,height);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffaa";
+		contextS.fillRect(0, 0,width, height*0.1);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffaa";
+		contextS.fillRect(0, 0,width*0.1, height);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffaa";
+		contextS.fillRect(0, height*0.9,width, height*0.1);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffaa";
+		contextS.fillRect(width*0.9, 0,width*0.1, height);
+
 //============================================================image to save canvas ==================================
 	var imageSave = new Image();
 	
 	imageSave.crossOrigin = 'anonymous'; 
-	imageSave.src = 'LOGO.png'+ '?' + new Date().getTime();;
-	contextS.drawImage(imageSave, 20, 20);
+	imageSave.src = 'LOGO.png'+ '?' + new Date().getTime();
+	imageObj.onload = function() 
+	{
+		contextS.drawImage(imageSave, 20, 20);
+	}
 	
 	//====================================================================================================================
 		canvasS.toBlob(function(blob) {
