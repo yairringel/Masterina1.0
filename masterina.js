@@ -100,10 +100,10 @@
 	var imageSave = new Image();
 	
 	imageSave.crossOrigin = 'anonymous'; 
-	imageSave.src = 'frame.jpg'+ '?' + new Date().getTime();;
+	imageSave.src = 'Logo.png'+ '?' + new Date().getTime();;
 	imageSave.onload = function() 
 	{
-		contextS.drawImage(imageSave, 0, 0);
+		contextS.drawImage(imageSave, 20, 20);
 	}
 	//====================================================================================================================
 		canvasS.toBlob(function(blob) {
