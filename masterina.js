@@ -114,7 +114,7 @@
 	
 	imageSave.crossOrigin = 'anonymous'; 
 	imageSave.src = 'LOGO.png'+ '?' + new Date().getTime();
-	imageObj.onload = function() 
+	imageSave.onload = function() 
 	{
 		contextS.drawImage(imageSave, 20, 20);
 	}
