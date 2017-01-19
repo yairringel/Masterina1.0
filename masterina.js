@@ -136,7 +136,7 @@
 	imageSave.src = 'LOGO.png'+ '?' + new Date().getTime();
 	imageSave.onload = function() 
 	{
-		contextS.drawImage(imageSave, 4, 4,162,46);
+		contextS.drawImage(imageSave, 15, 15,162,46);
 		canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
 		});
