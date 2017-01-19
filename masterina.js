@@ -70,12 +70,14 @@
 	{
 		if (bitFill){
 		funcFill();}
+		toUndo();
 		fillCir();
 	}
 	function funcCirLine()
 	{
 		if (bitFill){
 		funcFill();}
+		toUndo();
 		CirLine();
 	}
 	function funcUndo()
@@ -357,8 +359,8 @@ function fillCir()
 	context2.arc(0, 0, masterina.radius1-lineThik/2, 0, 2 * Math.PI, false);
 	context2.fillStyle = masterina.color;
 	context2.fill();
-	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
-	console.log("!!!");
+	
+	
 }
 //============================================================================= Cir Line==============================================================
 function CirLine()
@@ -368,7 +370,7 @@ function CirLine()
 	context2.arc(0, 0, masterina.radius1-masterina.line/2, 0, 2 * Math.PI, false);
 	context2.strokeStyle = masterina.color;
 	context2.stroke();
-	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
+	
 	
 }
 //============================================================================DRAW PIE==============================================================
