@@ -118,11 +118,11 @@
 	{
 		contextS.drawImage(imageSave, 20, 20);
 	}
-	
+	document.getElementById('saveCanvas').style.zIndex=10;
 	//====================================================================================================================
-		canvasS.toBlob(function(blob) {
+		/*canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
-		});
+		});*/
 	}
 	function funcFill()
 	{
