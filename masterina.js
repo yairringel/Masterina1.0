@@ -82,21 +82,14 @@
 	{
 		if (bitFill){
 		funcFill();}
-		if (firstUndo)
-		{
-			context2.putImageData(historyUndo.pop(), 0, 0);	
-			firstUndo=false;
-		}
+		
 		if (historyUndo.length > 0)
 		{
 			
-			context2.putImageData(historyUndo.pop(), 0, 0);	
+			undo();	
 			
 		}
-		if (historyUndo.length == 0)
-		{
-			undo();
-		}
+		
 	}
 	function funcSave()
 	{
@@ -329,7 +322,7 @@ function CirLine()
 	context2.strokeStyle = masterina.color;
 	context2.stroke();
 	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
-	console.log("!!!");
+	
 }
 //============================================================================DRAW PIE==============================================================
 function drawPie(drawX,drawY)

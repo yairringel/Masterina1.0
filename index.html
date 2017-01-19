@@ -225,8 +225,8 @@
 		dX:0,
 		dY:0
 	}
-  	
-	undo();
+  	//historyUndo.push(ctx2.getImageData(0, 0, canvas2.width, canvas2.height));
+	//undo();
 
 //=======================================================================================================================================================================
 //============================================================================================================FUNC ======================================================
@@ -275,13 +275,13 @@ document.addEventListener("mouseup", mouseUpFunc, true);
 
 
 function mouseDownFunc(e)
-{
+{		
 		if ((bitFill)&&((e.clientX<width*0.9)&&(e.clientY<height*0.9)&&(e.clientX>width*0.1)&&(e.clientY>height*0.1)))// check if not floodfill
 			{
 				floodFill(e.clientX,e.clientY);
 			}
 
-	  	bitTouch=true;
+	  	
 	  	if ((!(masterina.draw))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)>(masterina.radius1-masterina.line/2))
 		 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2-masterina.line/2)))
 		{
@@ -291,17 +291,25 @@ function mouseDownFunc(e)
 		 &&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius2+masterina.line/2)))
 		{
 			masterina.move=true;
+
 		}
+
+		if ((!(masterina.move))&&(lineType!=1)&&(!(bitFill))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
+	  	{
+	  		if (!(bitTouch))
+	  		{
+	  			toUndo();
+	  		}
+	  		
+	  	}
+
+		bitTouch=true;
   	
 }
 	
 function mouseMoveFunc(e)
 {	
 
-	var cp = canvas2.getContext('2d');
-    var pp = cp.getImageData(e.clientX, e.clientY, 1, 1); 
-	
-	
 	mouseX=e.clientX;mouseY=e.clientY;
 	if ((!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
   	{
@@ -313,6 +321,7 @@ function mouseMoveFunc(e)
 	if ((!(masterina.move))&&(!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
   	{
   		masterina.draw=true;
+
   	}
   	else
   	{
@@ -415,25 +424,37 @@ function mouseUpFunc(e)
 	
 	if (masterina.draw)
 	{
-		undo();
+			
 	}
 	masterina.draw=false;
 }
 
 function undo()
 {
-	if (historyUndo.length == maxHistory)
-	{
-		historyUndo.shift();
-	}
+	if (historyUndo.length > 0)
+		{
+			context2.putImageData(historyUndo.pop(), 0, 0);	
+			console.log(historyUndo.length)	;	
+
+		}
+		
+}
+function toUndo()
+{
+	//===================================================================to undo=============================
+	    	if (historyUndo.length == maxHistory)// to undo array
+					{
+						historyUndo.shift();
+					}
 					
-	historyUndo.push(context2.getImageData(0, 0, canvas2.width,canvas2.height));
-	firstUndo=true;
-	
+					historyUndo.push(context2.getImageData(0, 0, canvas2.width, canvas2.height));
+					console.log(historyUndo.length)	;	
+			//=============================================================================================================
 }
 
 function floodFill(fX,fY)
 {
+	toUndo();
 		pointsXc=piePoints(fX-masterina.posX,fY-masterina.posY)[0];
 		pointsYc=piePoints(fX-masterina.posX,fY-masterina.posY)[1];
 		pointsXmc=piePoints(fX-masterina.posX,fY-masterina.posY)[2];
@@ -446,6 +467,9 @@ function floodFill(fX,fY)
 			context2.translate(width/2,height/2);
 			
 		}
+
+		
+			
 
 }
 		
@@ -532,9 +556,9 @@ function onMouseDrag(event)
 function onMouseUp(event)
  {
 
-	if ((lineType==1)&&masterina.mouseUp)
+	if ((lineType==1)&&masterina.mouseUp&&(!(bitFill)))
  	{	
- 		console.log(pArray[0].length);
+ 		
  		if (pArray[0].length<10000)
  		{
 		   for (var iA = 0; iA <pieType; iA++)
@@ -545,6 +569,7 @@ function onMouseUp(event)
 		    }
 	    }
 	    setTimeout(function(){
+	    	toUndo();
 	   context2.drawImage(canvasP,-width/2+(width/2-masterina.posX),-height/2+(height/2-masterina.posY));
 	   for (var iA = 0; iA <pieType; iA++)
 		    {
@@ -554,10 +579,7 @@ function onMouseUp(event)
 		    }
 
 		}, 10);
-
-
-
-	
+		
 	}
 
    
