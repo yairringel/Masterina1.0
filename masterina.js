@@ -85,9 +85,7 @@
 		
 		if (historyUndo.length > 0)
 		{
-			
 			undo();	
-			
 		}
 		
 	}
@@ -95,7 +93,20 @@
 	{
 		if (bitFill){
 		funcFill();}
-		canvas2.toBlob(function(blob) {
+
+		
+		contextS.drawImage(canvas2,0,0,width,height,0,0,width,height);
+//============================================================image to save canvas ==================================
+	var imageSave = new Image();
+	
+	imageSave.crossOrigin = 'anonymous'; 
+	imageSave.src = 'frame.jpg'+ '?' + new Date().getTime();;
+	imageSave.onload = function() 
+	{
+		contextS.drawImage(imageSave, 0, 0);
+	}
+	//====================================================================================================================
+		canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
 		});
 	}

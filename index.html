@@ -57,6 +57,7 @@
 	<canvas id="myCanvas" width=2200 height=1100 style="top:0px;left:0px; z-index: 2; "></canvas> 
 	<canvas id="myCanvas2" width=2200 height=1100  style="top:0px;left:0px; z-index: 1; "></canvas> 
 	<canvas id="paperCanvas" width=2200 height=1100  style="top:0px;left:0px; z-index:3; "></canvas> 
+	<canvas id="saveCanvas" width=2200 height=1100  style="top:0px;left:0px; z-index:-5; "></canvas> 
 	<canvas id="Color" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 9; "></canvas>
 	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 8; "></canvas> 
 	
@@ -155,6 +156,8 @@
 
 	var canvasP = document.getElementById('paperCanvas');
     var contextP = canvasP.getContext('2d');
+    var canvasS = document.getElementById('saveCanvas');
+    var contextS = canvasS.getContext('2d');
     //contextP.translate(300, 300);
 
 	var centerOffsetX=width/2, centerOffsetY=height/2
@@ -170,6 +173,7 @@
     
     var canvasC = document.getElementById('Color');
 	var contextC = canvasC.getContext('2d');
+	//===========================================================image to color canvas================================
 	var imageObj = new Image();
 	
 	imageObj.crossOrigin = 'anonymous'; 
@@ -178,7 +182,7 @@
 	{
 		contextC.drawImage(imageObj, 0, 0);
 	};
-
+	
 
 	var colorShow = document.getElementById('ColorShow');
 	var contextCS = colorShow.getContext('2d');
