@@ -96,41 +96,20 @@
 		if (bitFill){
 		funcFill();}
 
-		document.getElementById("saveCanvas").width=width;
-		document.getElementById("saveCanvas").height=height;
-		contextS.drawImage(canvas2,0,0,width,height,0,0,width,height);
-		contextS.beginPath();
-		contextS.fillStyle = "#ffffee";
-		contextS.fillRect(0, 0,width, height*0.1);
-		contextS.beginPath();
-		contextS.fillStyle = "#ffffee";
-		contextS.fillRect(0, 0,width*0.1, height);
-		contextS.beginPath();
-		contextS.fillStyle ="#ffffee";
-		contextS.fillRect(0, height*0.9,width, height*0.1);
-		contextS.beginPath();
-		contextS.fillStyle = "#ffffee";
-		contextS.fillRect(width*0.9, 0,width*0.1, height);
-		contextS.beginPath();
-		contextS.fillStyle = "#ffffee";
+		document.getElementById("saveCanvas").width=width*0.92;
+		document.getElementById("saveCanvas").height=height*0.92;
+		
+		
 
 		contextS.beginPath();
 		contextS.fillStyle = "#acacac";
-		contextS.fillRect(0, 0,width, height*0.08);
-		contextS.beginPath();
-		contextS.fillStyle = "#acacac";
-		contextS.fillRect(0, 0,width*0.08, height);
-		contextS.beginPath();
-		contextS.fillStyle ="#acacac";
-		contextS.fillRect(0, height*0.92,width, height*0.08);
-		contextS.beginPath();
-		contextS.fillStyle = "#acacac";
-		contextS.fillRect(width*0.92, 0,width*0.08, height);
-
+		contextS.fillRect(0, 0,width*0.92, height*0.92);
+		
+		contextS.drawImage(canvas2,width*0.1,height*0.1,width*0.8,height*0.8,width*0.01,height*0.01,width*0.92,height*0.92);
 		contextS.beginPath();
 		contextS.fillStyle = "#000000";
 		context.lineWidth = 4;
-		contextS.strokeRect(0,0,width,height);
+		contextS.strokeRect(0,0,width*0.92,height*0.92);
 //============================================================image to save canvas ==================================
 	var imageSave = new Image();
 	
