@@ -82,29 +82,69 @@
 	{
 		if (bitFill){
 		funcFill();}
-		if (firstUndo)
-		{
-			context2.putImageData(historyUndo.pop(), 0, 0);	
-			firstUndo=false;
-		}
+		
 		if (historyUndo.length > 0)
 		{
-			
-			context2.putImageData(historyUndo.pop(), 0, 0);	
-			
+			undo();	
 		}
-		if (historyUndo.length == 0)
-		{
-			undo();
-		}
+		
 	}
 	function funcSave()
 	{
 		if (bitFill){
 		funcFill();}
-		canvas2.toBlob(function(blob) {
+
+		document.getElementById("saveCanvas").width=width;
+		document.getElementById("saveCanvas").height=height;
+		contextS.drawImage(canvas2,0,0,width,height,0,0,width,height);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffee";
+		contextS.fillRect(0, 0,width, height*0.1);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffee";
+		contextS.fillRect(0, 0,width*0.1, height);
+		contextS.beginPath();
+		contextS.fillStyle ="#ffffee";
+		contextS.fillRect(0, height*0.9,width, height*0.1);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffee";
+		contextS.fillRect(width*0.9, 0,width*0.1, height);
+		contextS.beginPath();
+		contextS.fillStyle = "#ffffee";
+
+		contextS.beginPath();
+		contextS.fillStyle = "#acacac";
+		contextS.fillRect(0, 0,width, height*0.08);
+		contextS.beginPath();
+		contextS.fillStyle = "#acacac";
+		contextS.fillRect(0, 0,width*0.08, height);
+		contextS.beginPath();
+		contextS.fillStyle ="#acacac";
+		contextS.fillRect(0, height*0.92,width, height*0.08);
+		contextS.beginPath();
+		contextS.fillStyle = "#acacac";
+		contextS.fillRect(width*0.92, 0,width*0.08, height);
+
+		contextS.beginPath();
+		contextS.fillStyle = "#000000";
+		context.lineWidth = 4;
+		contextS.strokeRect(0,0,width,height);
+//============================================================image to save canvas ==================================
+	var imageSave = new Image();
+	
+	imageSave.crossOrigin = 'anonymous'; 
+	imageSave.src = 'LOGO.png'+ '?' + new Date().getTime();
+	imageSave.onload = function() 
+	{
+		contextS.drawImage(imageSave, 4, 4);
+		canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
 		});
+	}
+	//document.getElementById("saveCanvas").style.zIndex=10;
+	
+	//====================================================================================================================
+		
 	}
 	function funcFill()
 	{
