@@ -135,9 +135,9 @@
 	imageSave.src = 'LOGO.png'+ '?' + new Date().getTime();
 	imageSave.onload = function() 
 	{
-		contextS.drawImage(imageSave, 5, 5);
+		contextS.drawImage(imageSave, 4, 4);
 	}
-	//document.getElementById("saveCanvas").style.zIndex=10;
+	document.getElementById("saveCanvas").style.zIndex=10;
 	//====================================================================================================================
 		canvasS.toBlob(function(blob) {
     	saveAs(blob, "masterina.jpg");
