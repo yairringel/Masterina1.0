@@ -1,11 +1,12 @@
 //============================================================================ btn func============================================================================
 
 	var iMirror=0;
-	var iLineThik=0;
+	var iLineThik=1;
 	var iPieType=0;
 	var iLineType=0;
 	function funcNew()
 	{
+		historyUndo = new Array()
 		context2.clearRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2);
 		context2.fillStyle ="#ffffff";
 		context2.fillRect(-canvas2.width, -canvas2.height, canvas2.width*2, canvas2.height*2); 
@@ -126,19 +127,19 @@ function piePoints(uX,uY)
 	var ppX=[],ppY=[],ppXm=[],ppYm=[];
 	for (var ui=0; ui < pieType; ui++)
 	    	 {
-	    		ppX[ui]=Math.round(uX*Math.cos(2*Math.PI/pieType*ui)+uY*Math.sin(2*Math.PI/pieType*ui))
-	    		ppY[ui]=Math.round(uY*Math.cos(2*Math.PI/pieType*ui)-uX*Math.sin(2*Math.PI/pieType*ui))
+	    		ppX[ui]=(uX*Math.cos(2*Math.PI/pieType*ui)+uY*Math.sin(2*Math.PI/pieType*ui))
+	    		ppY[ui]=(uY*Math.cos(2*Math.PI/pieType*ui)-uX*Math.sin(2*Math.PI/pieType*ui))
 				if (mirror==2)
 	    			{
 	    			if (pieType==1)
 	    				{
-	    				ppXm[ui]=Math.round(-(uX*Math.cos(2*Math.PI/pieType*ui)+uY*Math.sin(2*Math.PI/pieType*ui)))
-	    				ppYm[ui]=Math.round(uY*Math.cos(2*Math.PI/pieType*ui)-uX*Math.sin(2*Math.PI/pieType*ui))
+	    				ppXm[ui]=(-(uX*Math.cos(2*Math.PI/pieType*ui)+uY*Math.sin(2*Math.PI/pieType*ui)))
+	    				ppYm[ui]=(uY*Math.cos(2*Math.PI/pieType*ui)-uX*Math.sin(2*Math.PI/pieType*ui))
 
 	    				}
 	    			else{
-	    				ppXm[ui]=Math.round(uY*Math.cos(2*Math.PI/pieType*ui)+uX*Math.sin(2*Math.PI/pieType*ui))
-	    				ppYm[ui]=Math.round(uX*Math.cos(2*Math.PI/pieType*ui)-uY*Math.sin(2*Math.PI/pieType*ui))
+	    				ppXm[ui]=(uY*Math.cos(2*Math.PI/pieType*ui)+uX*Math.sin(2*Math.PI/pieType*ui))
+	    				ppYm[ui]=(uX*Math.cos(2*Math.PI/pieType*ui)-uY*Math.sin(2*Math.PI/pieType*ui))
 	    				}
 	    			}
 	    	}
@@ -228,14 +229,16 @@ function drawPieCir(drawX,drawY)
 	for (var li=0; li < pieType; li++) {
     	
 		context.beginPath();
+		context.lineWidth = lineThik;
 		context.arc(tX[li], tY[li], Math.sqrt(((pX[li]-tX[li])**2)+ (pY[li]-tY[li])**2), 0, 2 * Math.PI, false);
 		context.strokeStyle = masterina.color;
 		context.stroke(); 
 	    if (mirror==2){
 		    context.beginPath();
-		context.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
-		context.strokeStyle = masterina.color;
-		context.stroke();
+		    context.lineWidth = lineThik;
+			context.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
+			context.strokeStyle = masterina.color;
+			context.stroke();
 		}
 	    } 
 }
@@ -245,14 +248,16 @@ function drawPieCirTo2(drawX,drawY)
 	for (var li=0; li < pieType; li++) {
     	
 		context2.beginPath();
+		context2.lineWidth = lineThik;
 		context2.arc(tX[li], tY[li], Math.sqrt(((pX[li]-tX[li])**2)+ (pY[li]-tY[li])**2), 0, 2 * Math.PI, false);
 		context2.strokeStyle = masterina.color;
 		context2.stroke();
 	    if (mirror==2){
-		context2.beginPath();
-		context2.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
-		context2.strokeStyle = masterina.color;
-		context2.stroke();
+			context2.beginPath();
+			context2.lineWidth = lineThik;
+			context2.arc(tXm[li], tYm[li], Math.sqrt(((pXm[li]-tXm[li])**2)+ (pYm[li]-tYm[li])**2), 0, 2 * Math.PI, false);
+			context2.strokeStyle = masterina.color;
+			context2.stroke();
 		}
 	    } 
 }
@@ -415,26 +420,46 @@ function drawCross(drawX,drawY)
 	pointsYmc=piePoints(drawX,drawY)[3];
 	
  for (var iiii=0; iiii < pieType; iiii++) {
-    	
-		context.beginPath();
-	    context.lineWidth = 1;
-	    context.moveTo(pointsXc[iiii]-5,pointsYc[iiii]);
-		context.lineTo(pointsXc[iiii]+5,pointsYc[iiii]);
-		context.moveTo(pointsXc[iiii],pointsYc[iiii]-5);
-		context.lineTo(pointsXc[iiii],pointsYc[iiii]+5);
-		context.lineCap = 'round';
-	    context.strokeStyle = '#eeaaaa';
-	    context.stroke(); 
-	    if (mirror==2){
-		    context.beginPath();
+    	if (bitFill)
+		{
+			context.beginPath();
 		    context.lineWidth = 1;
-		    context.moveTo(pointsXmc[iiii]-5,pointsYmc[iiii]);
-			context.lineTo(pointsXmc[iiii]+5,pointsYmc[iiii]);
-			context.moveTo(pointsXmc[iiii],pointsYmc[iiii]-5);
-			context.lineTo(pointsXmc[iiii],pointsYmc[iiii]+5);
+		    context.moveTo(pointsXc[iiii]-5,pointsYc[iiii]);
+			context.lineTo(pointsXc[iiii]+5,pointsYc[iiii]);
+			context.moveTo(pointsXc[iiii],pointsYc[iiii]-5);
+			context.lineTo(pointsXc[iiii],pointsYc[iiii]+5);
 			context.lineCap = 'round';
-		    context.strokeStyle =  '#eebbbb';
+		    context.strokeStyle = '#eeaaaa';
 		    context.stroke(); 
+		}
+		else
+		{
+			context.beginPath();
+			context.arc(pointsXc[iiii], pointsYc[iiii], lineThik/2, 0, 2 * Math.PI, false);
+			context.fillStyle = '#eeaaaa';
+			context.fill(); 
+		}
+
+	    if (mirror==2){
+	    	if (bitFill)
+			{
+			    context.beginPath();
+			    context.lineWidth = 1;
+			    context.moveTo(pointsXmc[iiii]-5,pointsYmc[iiii]);
+				context.lineTo(pointsXmc[iiii]+5,pointsYmc[iiii]);
+				context.moveTo(pointsXmc[iiii],pointsYmc[iiii]-5);
+				context.lineTo(pointsXmc[iiii],pointsYmc[iiii]+5);
+				context.lineCap = 'round';
+			    context.strokeStyle =  '#eebbbb';
+			    context.stroke();
+			}
+			else
+			{
+				context.beginPath();
+			context.arc(pointsXmc[iiii], pointsYmc[iiii], lineThik/2, 0, 2 * Math.PI, false);
+			context.fillStyle = '#eeaaaa';
+			context.fill(); 
+			}
 		}
 	    } 
 
@@ -556,85 +581,7 @@ function hexToRgbA(hex){
 //=====================================================================================================================================================================================
 //============================================================================  ORIENTATION ===========================================================================================
 	//===================================================================================================================================== 
-document.addEventListener("touchStart", touchStartFunc, true);//?misspelled
-document.addEventListener("touchmove", touchmoveFunc, true);
-document.addEventListener("touchend", touchEndFunc, true);
 
-function positioning()
-{
-	document.getElementById("lineThik").style.left  =-x-120+"px";
-	document.getElementById("lineThik").style.top  = y+10+"px";	
-	document.getElementById("spaceImg").style.left  =-x/10-300+"px";
-	document.getElementById("spaceImg").style.top  = y/10-300+"px";	
-	document.getElementById("sideImg").style.left  =-x+ 10%+"px";
-	document.getElementById("sideImg").style.top  = y+0%+"px";
-	document.getElementById("topImg").style.left  =-x+0%+"px";
-	document.getElementById("topImg").style.top  = y+10%+"px";
-	document.getElementById("lineThik").style.left  =-x+btnLineXpos+"px";
-	document.getElementById("lineThik").style.top  =  y+btnLineYpos+"px";//same as img 1 top	
-	document.getElementById("pieType").style.left  =-x+btnPyeXpos+"px";
-	document.getElementById("pieType").style.top  =  y+btnPyeYpos+"px";//same as img 1 top	
-	document.getElementById("Mirror").style.left  =-x+btnMirXpos+"px";
-	document.getElementById("Mirror").style.top  =  y+btnMirYpos+"px";//same as img 1 top
-	document.getElementById("Color").style.left  =-x/0.7+ width/2+imgWidth/2+60+"px";
-	document.getElementById("Color").style.top  = y/0.7+height/2-imgHeight/2+"px";	
-	if (color)
-	{
-		document.getElementById("myColorCanvas").style.left  =-x+ width/2-imgWidth/2+(imgWidth*frameBorderW/100)+"px";
-		document.getElementById("myColorCanvas").style.top  = y+height/2-imgHeight/2+(imgHeight*frameBorderH/100)+"px";
-	}
-	else
-	{
-		document.getElementById("myColorCanvas").style.left  =-1000+"px";
-	}
-	document.getElementById("alpha").innerHTML=centerOffsetX;
-	document.getElementById("beta").innerHTML=startY;
-	document.getElementById("gamma").innerHTML =startZ;
-	document.getElementById("X").innerHTML =btnLineXpos;
-	document.getElementById("Y").innerHTML =btnLineYpos;
-	document.getElementById("Z").innerHTML =0;
-}
-
-if (window.DeviceOrientationEvent) 
-    {//
-    	
-    	window.addEventListener("deviceorientation", function () {//gyro
-    	if (first==0)
-    	{
-    		startZ=Math.cos(degToRad(event.beta))*L1;
-    		startY=Math.sin(degToRad(event.beta))*L1;
-    		first=1;	
-    	}	
-    	
-        processGyro(event.alpha, event.beta, event.gamma); 
-    	}, true);
-    	
-}
-
-
-
-
-function processGyro(alpha,beta,gamma)
-{ 
-	deviceOrientationData.alpha=alpha;
-	deviceOrientationData.beta=beta;
-	deviceOrientationData.gamma=gamma;
-	
-	drawMasterina();
-
-	if (bitTouch)
-	{
-		
-	}
-	else
-	{
-		rotatePointViaGyroEulars(0,startY,startZ);
-	}
-	
-	//positioning();		
-	
-
-}
 
 
 
@@ -651,211 +598,3 @@ function degToRad(deg)// Degree-to-Radian conversion
 
 
 
-function touchStartFunc(e)
-{
-	
-}
-
-function touchmoveFunc(e)
-{
-	
-		if( navigator.userAgent.match(/Android/i) ) //stupid android bug cancels touch move if it thinks there's a swipe happening
-		{   
-		  e.preventDefault();
-		}
-		touchX=e.touches[0].clientX
-		userX=e.touches[0].clientX-firstX;
-		userY=e.touches[0].clientY-firstY;
-		
-		if (!(bitTouch))
-		{
-			
-			firstX=e.touches[0].clientX;
-			firstY=e.touches[0].clientY;
-			
-		}
-		if (bitTouch){
-			drawPie(userX+x,userY-y)
-			
-		}
-		bitTouch=true;
-	 
-}
-
-function touchEndFunc(e)
-{
-	
-  
-  userX=0;
-	userY=0;
-	bitTouch=false;
-	startMove=false;
-	
-}
-
-//====================================================================FLOODFILL=====================================================================================================
-function floodFill(floodx,floody)
-{
-	
-	var tempX=(floodx-masterina.posX),tempY=(floody-masterina.posY);
-	Xco=piePoints(tempX,tempY)[0];
-	Yco=piePoints(tempX,tempY)[1];
-	Xmco=piePoints(tempX,tempY)[2];
-	Ymco=piePoints(tempX,tempY)[3];
-	var imageDataPix = context2.getImageData(floodx,floody,1,1);
-	var fillColorR=hexToRgbA(masterina.color)[0],fillColorG=hexToRgbA(masterina.color)[1],fillColorB=hexToRgbA(masterina.color)[2];
-	//var fillColorR=0,fillColorG=0,fillColorB=0;
-	var startR=imageDataPix.data[0],startG=imageDataPix.data[1],startB=imageDataPix.data[2];
-	var colorLayer=context2.getImageData(0,0,canvas2.width,canvas2.height);
-	for (var uii=0; uii < pieType; uii++)
-	{
-			
-		 	var pixelStack = [[(Xco[uii]+masterina.posX),(Yco[uii]+masterina.posY)]];
-		 	
-			 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
-			 {	
-				 	while(pixelStack.length)
-				{
-				  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
-				  newPos = pixelStack.pop();
-				  x = newPos[0];
-				  y = newPos[1];
-				  
-				  pixelPos = (y*canvasWidth + x) * 4;
-				  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
-				  {
-				    pixelPos -= canvasWidth * 4;
-				  }
-				  pixelPos += canvasWidth * 4;
-				  ++y;
-				  reachLeft = false;
-				  reachRight = false;
-				  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
-				  {
-				    colorPixel(pixelPos);
-
-				    if(x > 0)
-				    {
-				      if(matchStartColor(pixelPos - 4))
-				      {
-				        if(!reachLeft){
-				          pixelStack.push([x - 1, y]);
-				          reachLeft = true;
-				        }
-				      }
-				      else if(reachLeft)
-				      {
-				        reachLeft = false;
-				      }
-				    }
-					
-				    if(x < canvasWidth-1)
-				    {
-				      if(matchStartColor(pixelPos + 4))
-				      {
-				        if(!reachRight)
-				        {
-				          pixelStack.push([x + 1, y]);
-				          reachRight = true;
-				        }
-				      }
-				      else if(reachRight)
-				      {
-				        reachRight = false;
-				      }
-				    }
-							
-				    pixelPos += canvasWidth * 4;
-				  }
-				}
-				context2.putImageData(colorLayer, 0, 0);
-				  
-				
-			}
-      }  
-      if (mirror==2)
-      {
-      	for (var uii=0; uii < pieType; uii++)
-	{
-			
-		 	var pixelStack = [[(Xmco[uii]+masterina.posX),(Ymco[uii]+masterina.posY)]];
-		 	
-			 if  (!((startR==fillColorR)&&(startG==fillColorG)&&(startB==fillColorB)))
-			 {	
-				 	while(pixelStack.length)
-				{
-				  var drawingBoundTop=10,newPos, x, y, pixelPos, reachLeft, reachRight,canvasWidth=canvas2.width,canvasHeight=canvas2.height;
-				  newPos = pixelStack.pop();
-				  x = newPos[0];
-				  y = newPos[1];
-				  
-				  pixelPos = (y*canvasWidth + x) * 4;
-				  while(y-- >= drawingBoundTop && matchStartColor(pixelPos))
-				  {
-				    pixelPos -= canvasWidth * 4;
-				  }
-				  pixelPos += canvasWidth * 4;
-				  ++y;
-				  reachLeft = false;
-				  reachRight = false;
-				  while(y++ < canvasHeight-1 && matchStartColor(pixelPos))
-				  {
-				    colorPixel(pixelPos);
-
-				    if(x > 0)
-				    {
-				      if(matchStartColor(pixelPos - 4))
-				      {
-				        if(!reachLeft){
-				          pixelStack.push([x - 1, y]);
-				          reachLeft = true;
-				        }
-				      }
-				      else if(reachLeft)
-				      {
-				        reachLeft = false;
-				      }
-				    }
-					
-				    if(x < canvasWidth-1)
-				    {
-				      if(matchStartColor(pixelPos + 4))
-				      {
-				        if(!reachRight)
-				        {
-				          pixelStack.push([x + 1, y]);
-				          reachRight = true;
-				        }
-				      }
-				      else if(reachRight)
-				      {
-				        reachRight = false;
-				      }
-				    }
-							
-				    pixelPos += canvasWidth * 4;
-				  }
-				}
-				context2.putImageData(colorLayer, 0, 0);
-				  
-				
-			}
-      }  
-      }  
-      function matchStartColor(pixelPos)
-		{
-			var r = colorLayer.data[pixelPos];	
-			var g = colorLayer.data[pixelPos+1];	
-			var b = colorLayer.data[pixelPos+2];
-
-		 return ((r < startR+borderColor) && (r > startR-borderColor) &&(g < startG+borderColor) && (g > startG-borderColor) &&(b < startB+borderColor) && (b > startB-borderColor) );
-		}
-
-		function colorPixel(pixelPos)
-		{
-			colorLayer.data[pixelPos] = fillColorR;
-			colorLayer.data[pixelPos+1] = fillColorG;
-			colorLayer.data[pixelPos+2] = fillColorB;
-			colorLayer.data[pixelPos+3] = 255;
-		}                
-}
