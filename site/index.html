@@ -9,11 +9,13 @@
 <script type="text/javascript" src="masterina.js"></script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="fileSaver.js"></script>
+ <script type="text/javascript" src="floodfill.min.js"></script>
 
+<script type="text/javascript" src="paper-full.js"></script>
 <style>
  
 
- /body 
+ body 
   {
   	
 	margin: 0px;
@@ -24,8 +26,8 @@
   canvas
   { 
 
-    
-
+   
+  	
 	margin: 0px;
 	padding: 0px;
 	position:fixed;
@@ -35,6 +37,7 @@
   } 
  img
   { 
+
   	cursor:auto;
 	margin: 0px;
 	padding: 0px;
@@ -47,25 +50,24 @@
 	padding: 0px;
 	position:fixed;
   }
-  
+  #myCanvas
+ {
+ 	width:2200;
+ }
 </style>
  
 
-<body >
+</body >
 	
-	alpha:<span id="alpha" style="position:fixed;top:0%; left: 0%; z-index: 0;"></span><br>
-	beta:<span id="beta" style="position:fixed;top:0%; left: 0%; z-index: 0;"></span><br>
-	gamma:<span id="gamma" style="position:fixed;top:0%; left: 0%;z-index: 0;"></span><br>
-	L1:<span id="X"></span><br>
-	Y:<span id="Y" style ="position:fixed; z-index: 0;"></span><br>
-	Z:<span id="Z" style ="position:fixed; z-index:0;"></span><br>
-	<canvas id="myCanvas" style="top:0px;left:0px; z-index: 2; "></canvas> 
-	<canvas id="myCanvas2" style="top:0px;left:0px; z-index: 1; "></canvas> 
+	
+	<canvas id="myCanvas" width=2200 height=1100 style="top:0px;left:0px; z-index: 2; "></canvas> 
+	<canvas id="myCanvas2" width=2200 height=1100  style="top:0px;left:0px; z-index: 1; "></canvas> 
+	<canvas id="paperCanvas" width=2200 height=1100  style="top:0px;left:0px; z-index:3; "></canvas> 
 	<canvas id="Color" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 6; "></canvas>
 	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 8; "></canvas> 
 	
 	
-	<img id="spaceImg" src="space1.jpg" style ="top:-1px ; left:-1px ;z-index: 1;">
+	
 	<img id="sideImg" src="side.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
 	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 2;">
 	<img id="topImg" src="bottom.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
@@ -73,7 +75,7 @@
 	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 2;">
 	
 	<input id="New" type="image" src="NEW_BTN.png"  style= "top:11%; left: 1%; width:8%; height:4%; z-index: 6" onclick="funcNew()"></input>
-	<input id="lineThikBtn" type="image" src="thik1.png"  style= "top:21%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcLineThik()"></input>
+	<input id="lineThikBtn" type="image" src="thik2.png"  style= "top:21%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcLineThik()"></input>
 	<input id="pieTypeBtn" type="image" src="pie1.png"  style= "top:38%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcPieType()"></input>
 	<input id="MirrorBtn" type="image" src="mirror1.png"  style= "top:55%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcMirror()"></input>
 	<input id="lineTypeBtn" type="image" src="line1.png"  style= "top:72%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcLineType()"></input>
@@ -85,11 +87,10 @@
 	<input id="Pic" type="image" src="pic.png"  style= "top:92%; left: 80%; width:4%; height:width; z-index: 6" onclick="funcPic()"></input>
 	<input id="Camera" type="image" src="camera.png"  style= "top:92%; left: 85%; width:4%; height:width; z-index: 6" onclick="funcCamera()"></input>
 	
-	
-	
-	
+
 	
 </body>
+
 <script type="text/javascript">
 
 
@@ -98,14 +99,21 @@
 
 
     //------------------------------------------------------------------------------- STATIC ----------------------------------------------------------------------------------------------
-    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=1,pieType=1;mirror=0;lineType=1;
+    
+	
+
+ 
+
+
+
+    var sWidth,sHeight,c1Width,c1Height,imgWidth,imgHeight,c2Width,c2Height,lineThik=2.5,pieType=1;mirror=0;lineType=1;
     var crossLine=50;
     
     var lineThikArray = new Array();
     lineThikArray[0] = new Image();lineThikArray[1] = new Image();lineThikArray[2] = new Image();lineThikArray[3] = new Image();lineThikArray[4] = new Image();lineThikArray[5] = new Image();
 	lineThikArray[0].src = 'thik1.png';lineThikArray[1].src = 'thik2.png';lineThikArray[2].src = 'thik3.png';lineThikArray[3].src = 'thik4.png';lineThikArray[4].src = 'thik5.png';lineThikArray[5].src = 'thik6.png';
 	var thikRa=[]
-	thikRa[0]=1;thikRa[1]=2;thikRa[2]=4;thikRa[3]=10;thikRa[4]=17;thikRa[5]=25;
+	thikRa[0]=1;thikRa[1]=2.5;thikRa[2]=3.5;thikRa[3]=10;thikRa[4]=17;thikRa[5]=25;
 	
 	
 	var pieTypeArray = new Array();
@@ -131,8 +139,7 @@
     var staticBit=true;
     var width=window.innerWidth;
     var height=window.innerHeight;
-
-
+   
    
 
 
@@ -144,24 +151,24 @@
     var btnPyeXpos=-btnLeftSpace,btnPyeYpos=frameYpos+(btnTopSpace+btnH)*1;
     var btnMirXpos=-btnLeftSpace,btnMirYpos=frameYpos+(btnTopSpace+btnH)*2;
 
-    document.getElementById("spaceImg").width  =1.5*width;
-    document.getElementById("spaceImg").height  =1.5*height;
-    document.getElementById("spaceImg").style.top  =-300+"px";
-    document.getElementById("spaceImg").style.left  =-300+"px";
-    document.getElementById("myCanvas").width  =2000;
-    document.getElementById("myCanvas").height =1100;
-    document.getElementById("myCanvas2").width  =2000;
-    document.getElementById("myCanvas2").height =1100;
+    
     
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var canvas2 = document.getElementById('myCanvas2');
     var context2 = canvas2.getContext('2d');
 	context.translate(width/ 2, height / 2); 
+
+	var canvasP = document.getElementById('paperCanvas');
+    var contextP = canvasP.getContext('2d');
+    //contextP.translate(300, 300);
+
 	var centerOffsetX=width/2, centerOffsetY=height/2
 	context2.fillStyle ="#ffffff";
 	context2.fillRect(0, 0,width, height); 
 	context2.translate(centerOffsetX, centerOffsetY);
+	
+
    	var pointsX=[], pointsY=[], pointsXc=[], pointsYc=[],Xco=[], Yco=[],Xmco=[], Ymco=[],lastPointX=[],lastPointY=[], pointsXm=[],pointsYm=[],pointsXmc=[],pointsYmc=[],lastPointXm=[],lastPointYm=[];
     var tX=[],tY=[],tYm=[],tXm=[];
 	var pX=[],pY=[],pYm=[],pXm=[];
@@ -244,12 +251,12 @@ $('#Color').mousemove(function(e) {
     var yyy = 10 ;
     
     var c = this.getContext('2d');
-    var p = c.getImageData((mouseX-width*0.91)*300/(width*0.08), (mouseY-height*0.18)*150/(height*0.16), 1, 1).data; 
+    var p = c.getImageData(mouseX, mouseY, 1, 1).data; 
     var hex = "#" +("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     chooseColor=hex;
     contextCS.fillStyle = hex;
 	contextCS.fillRect(0, 0,width, height);
-    
+   
 
 });
 $('#Color').mouseup(function(e) {
@@ -279,9 +286,7 @@ function mouseDownFunc(e)
 {
 		if ((bitFill)&&((e.clientX<width*0.9)&&(e.clientY<height*0.9)&&(e.clientX>width*0.1)&&(e.clientY>height*0.1)))// check if not floodfill
 			{
-				
 				floodFill(e.clientX,e.clientY);
-			
 			}
 
 	  	bitTouch=true;
@@ -297,13 +302,14 @@ function mouseDownFunc(e)
 		}
   	
 }
-
+	
 function mouseMoveFunc(e)
 {	
+
+	var cp = canvas2.getContext('2d');
+    var pp = cp.getImageData(e.clientX, e.clientY, 1, 1); 
 	
-	document.getElementById("alpha").innerHTML =historyUndo.length;
-	//document.getElementById("beta").innerHTML =height;
-	//document.getElementById("gamma").innerHTML =hex;
+	
 	mouseX=e.clientX;mouseY=e.clientY;
 	if ((!(masterina.scale))&&(Math.sqrt((e.clientX-masterina.posX)**2+(e.clientY-masterina.posY)**2)<(masterina.radius1-masterina.line/2)))
   	{
@@ -330,9 +336,10 @@ function mouseMoveFunc(e)
 		if (masterina.draw)
 		{
 			if (!(bitFill))// check if not floodfill
-			{
+			{/*
 				if (lineType==1){
 				drawPie(userX-masterina.posX, userY-masterina.posY);}
+				*/
 				if (lineType==2){
 				drawPieDots(userX-masterina.posX, userY-masterina.posY);}
 				if (lineType==3){
@@ -341,7 +348,7 @@ function mouseMoveFunc(e)
 				drawPieCir(userX-masterina.posX, userY-masterina.posY);}
 				if (lineType==5){
 				drawPieCirFill(userX-masterina.posX, userY-masterina.posY);}
-
+				
 			}
 		}
 //===================================================================================================MOVE==============================================
@@ -432,6 +439,150 @@ function undo()
 	firstUndo=true;
 	
 }
+
+function floodFill(fX,fY)
+{
+		pointsXc=piePoints(fX-masterina.posX,fY-masterina.posY)[0];
+		pointsYc=piePoints(fX-masterina.posX,fY-masterina.posY)[1];
+		pointsXmc=piePoints(fX-masterina.posX,fY-masterina.posY)[2];
+		pointsYmc=piePoints(fX-masterina.posX,fY-masterina.posY)[3];
+		for (var i = 0; i < pieType; i++)
+	    {
+			context2.translate(-width/2,-height/2);
+			context2.fillStyle = masterina.color;
+	        context2.fillFlood(Math.floor(pointsXc[i]+masterina.posX), Math.floor(pointsYc[i]+masterina.posY), 190,0, 0,width, height);
+			context2.translate(width/2,height/2);
+			
+		}
+
+}
 		
  </script>
+ //=========================================================================================================================================================
+
+ <script type="text/paperscript" canvas="paperCanvas">
+       //var fs = require('fs');
+      var p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26,p27,p28,p29,p30,p31,p32;
+       var pArray=[p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26,p27,p28,p29,p30,p31,p32];
+       var pArrayLength =pArray.length;
+      var path;//,path1;
+var point;
+var textItem = new PointText({
+    //content: 'Click and drag to draw a line.',
+    point: new Point(20, 30),
+    fillColor: 'black',
+});
+
+function onMouseDown(event) {
+
+if ((lineType==1)&&(!(bitFill))&&masterina.draw)
+ 	{
+		pointsXc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[0];
+		pointsYc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[1];
+		pointsXmc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[2];
+		pointsYmc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[3];
+		
+
+	   for (var iA = 0; iA < pieType; iA++)
+	    {
+	    	
+	   		if (pArray[iA]) {
+	       	pArray[iA].selected = false;}
+
+	       	pArray[iA] = new Path({
+	        segments: [[pointsXc[iA]+masterina.posX,pointsYc[iA]+masterina.posY]],
+	        strokeColor:masterina.color,
+	        strokeCap :'round' 
+	         });
+	       	pArray[iA].strokeWidth = lineThik;
+
+	       	if (mirror==2){
+	       		if (pArray[iA+pieType]) {
+			       	pArray[iA+pieType].selected = false;}
+
+			       	pArray[iA+pieType] = new Path({
+			        segments: [[pointsXmc[iA]+masterina.posX,pointsYmc[iA]+masterina.posY]],
+			        strokeColor: masterina.color,
+			        strokeCap :'round' 
+			         });
+			       	pArray[iA+pieType].strokeWidth = lineThik;
+			     }  	
+
+	    }
+	    masterina.mouseUp=true;
+	    
+	  }
+    
+}
+
+
+function onMouseDrag(event)
+ {
+ 	if ((lineType==1)&&(!(bitFill))&&masterina.draw)
+ 	{
+			pointsXc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[0];
+			pointsYc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[1];
+			pointsXmc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[2];
+			pointsYmc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[3];
+
+			for (var iA = 0; iA <pieType; iA++)
+		    {
+		    	pArray[iA].add(pointsXc[iA]+masterina.posX,pointsYc[iA]+masterina.posY);
+		    	 if (mirror==2){
+		    	 	pArray[iA+pieType].add(pointsXmc[iA]+masterina.posX,pointsYmc[iA]+masterina.posY);}
+
+		    }
+		    
+		}
+	}
+
+// When the mouse is released, we simplify the path:
+function onMouseUp(event)
+ {
+
+	if ((lineType==1)&&masterina.mouseUp)
+ 	{	
+ 		console.log(pArray[0].length);
+ 		if (pArray[0].length<10000)
+ 		{
+		   for (var iA = 0; iA <pieType; iA++)
+		    {
+		    	pArray[iA].simplify(20);
+		    	if (mirror==2){
+		    	pArray[iA+pieType].simplify(20);}
+		    }
+	    }
+	    setTimeout(function(){
+	   context2.drawImage(canvasP,-width/2+(width/2-masterina.posX),-height/2+(height/2-masterina.posY));
+	   for (var iA = 0; iA <pieType; iA++)
+		    {
+		    	pArray[iA].remove();
+		    	if (mirror==2){
+		    	pArray[iA+pieType].remove();}
+		    }
+
+		}, 10);
+
+
+
+	
+	}
+
+   
+
+}
+
+
+
+//var context2 = myCanvas2.getContext('2d');
+
+//call its drawImage() function passing it the source canvas directly
+
+    </script>
+
 </html>
+
+
+
+	   
+		
