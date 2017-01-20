@@ -134,7 +134,11 @@
     var staticBit=true;
     var width=window.innerWidth;
     var height=window.innerHeight;
-   
+    window.onresize = function(event) 
+    {
+    	var width=window.innerWidth;
+    	var height=window.innerHeight;
+    }
    
 
 
@@ -162,7 +166,7 @@
 
 	var centerOffsetX=width/2, centerOffsetY=height/2
 	context2.fillStyle ="#ffffff";
-	context2.fillRect(0, 0,width, height); 
+	context2.fillRect(0, 0,width*3, height*3); 
 	context2.translate(centerOffsetX, centerOffsetY);
 	
 
@@ -467,7 +471,7 @@ function floodFill(fX,fY)
 	    {
 			context2.translate(-width/2,-height/2);
 			context2.fillStyle = masterina.color;
-	        context2.fillFlood(Math.floor(pointsXc[i]+masterina.posX), Math.floor(pointsYc[i]+masterina.posY), 60,0, 0,width, height);
+	        context2.fillFlood(Math.floor(pointsXc[i]+masterina.posX), Math.floor(pointsYc[i]+masterina.posY), 130,0, 0,width, height);
 			context2.translate(width/2,height/2);
 			
 		}
