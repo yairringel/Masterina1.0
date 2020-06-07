@@ -551,8 +551,8 @@ function onMouseDrag(event)
 
 			for (var iA = 0; iA <pieType; iA++)
 		    {
-		    	//pArray[iA].add(pointsXc[iA]+masterina.posX,pointsYc[iA]+masterina.posY);
-			pArray[iA].add(pointsXc[iA],pointsYc[iA]);
+		    	pArray[iA].add(pointsXc[iA]+masterina.posX,pointsYc[iA]+masterina.posY);
+			//pArray[iA].add(pointsXc[iA],pointsYc[iA]);
 		    	 if (mirror==2){
 		    	 	pArray[iA+pieType].add(pointsXmc[iA]+masterina.posX,pointsYmc[iA]+masterina.posY);}
 
@@ -579,8 +579,8 @@ function onMouseUp(event)
 	    }
 	    setTimeout(function(){
 	    	toUndo();
-	   //context2.drawImage(canvasP,-width/2+(width/2-masterina.posX),-height/2+(height/2-masterina.posY));
-	   context2.drawImage(canvasP,0,0);
+	   context2.drawImage(canvasP,-width/2+(width/2-masterina.posX),-height/2+(height/2-masterina.posY));
+	   //context2.drawImage(canvasP,0,0);
 	   for (var iA = 0; iA <pieType; iA++)
 		    {
 		    	pArray[iA].remove();
