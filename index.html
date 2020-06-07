@@ -551,7 +551,8 @@ function onMouseDrag(event)
 
 			for (var iA = 0; iA <pieType; iA++)
 		    {
-		    	pArray[iA].add(pointsXc[iA]-masterina.posX,pointsYc[iA]-masterina.posY);
+		    	//pArray[iA].add(pointsXc[iA]+masterina.posX,pointsYc[iA]+masterina.posY);
+			pArray[iA].add(pointsXc[iA],pointsYc[iA]);
 		    	 if (mirror==2){
 		    	 	pArray[iA+pieType].add(pointsXmc[iA]+masterina.posX,pointsYmc[iA]+masterina.posY);}
 
