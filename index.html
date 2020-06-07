@@ -59,15 +59,15 @@
 	<canvas id="paperCanvas" width=2200 height=1100  style="top:0px;left:0px; z-index:3; "></canvas> 
 	<canvas id="saveCanvas" width=2200 height=1100  style="top:0px;left:0px; z-index:-5; "></canvas> 
 	<canvas id="Color" type="image" style="width:8%;height:16%;left:91%;top:18%;  z-index: 9; "></canvas>
-	//<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 8; "></canvas> 
+	<canvas id="ColorShow" src="frame.jpg" style="width:8%;height:4%;left:91%;top:11%;  z-index: 8; "></canvas> 
 	
 	
 	
-	<img id="sideImg" src="side.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 2;">
-	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 2;">
-	<img id="topImg" src="bottom.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 2;">
-	<img id="masterinaLogo" src="LOGO.png" style = "top:1%;left: 1%;height:8%;z-index: 2;">
-	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 2;">
+	<img id="sideImg" src="side.png" style = "top:10%;width:10%;height:100%; left: 0%;z-index: 4;">
+	<img id="side2Img" src="side.png" style = "top:10%;width:10%;height:100%; left: 90%;z-index: 4;">
+	<img id="topImg" src="bottom.png" style = "top:0%; width:100%;height:10%;left: 0%;z-index: 4;">
+	<img id="masterinaLogo" src="LOGO.png" style = "top:1%;left: 1%;height:8%;z-index: 4;">
+	<img id="bottomImg" src="bottom.png" style = "top:90%; width:100%;height:10%;left: 0%;z-index: 4;">
 	
 	<input id="New" type="image" src="NEW_BTN.png"  style= "top:11%; left: 1%; width:8%; height:4%; z-index: 6" onclick="funcNew()"></input>
 	<input id="lineThikBtn" type="image" src="thik2.png"  style= "top:21%; left: 1%; width:8%; height:width; z-index: 6" onclick="funcLineThik()"></input>
@@ -160,9 +160,11 @@
 
 	var canvasP = document.getElementById('paperCanvas');
     var contextP = canvasP.getContext('2d');
+	canvasP.width=width	;
+	canvasP.height=height	;
     var canvasS = document.getElementById('saveCanvas');
     var contextS = canvasS.getContext('2d');
-    //contextP.translate(300, 300);
+    //contextP.translate(-100,-100);
 
 	var centerOffsetX=width/2, centerOffsetY=height/2
 	context2.fillStyle ="#ffffff";
@@ -467,11 +469,11 @@ function floodFill(fX,fY)
 		pointsYc=piePoints(fX-masterina.posX,fY-masterina.posY)[1];
 		pointsXmc=piePoints(fX-masterina.posX,fY-masterina.posY)[2];
 		pointsYmc=piePoints(fX-masterina.posX,fY-masterina.posY)[3];
-		for (var i = 0; i < pieType; i++)
+		for (var i = 0; i < 1; i++)
 	    {
 			context2.translate(-width/2,-height/2);
 			context2.fillStyle = masterina.color;
-	        context2.fillFlood(Math.floor(pointsXc[i]+masterina.posX), Math.floor(pointsYc[i]+masterina.posY), 130,0, 0,width, height);
+	        context2.fillFlood(Math.floor(pointsXc[i]+masterina.posX), Math.floor(pointsYc[i]+masterina.posY), 10,0, 0,width, height);
 			context2.translate(width/2,height/2);
 			
 		}
@@ -534,15 +536,16 @@ if ((lineType==1)&&(!(bitFill))&&masterina.draw)
 
 	    }
 	    masterina.mouseUp=true;
-	    canvasP.width=width;
-	    canvasP.height=height;
+	    canvasP.width=width	;
+		canvasP.height=height;
 	  }
-    	
+    
 }
 
 
 function onMouseDrag(event)
  {
+ 
  	if ((lineType==1)&&(!(bitFill))&&masterina.draw)
  	{
 			pointsXc=piePoints(event.point.x-masterina.posX,event.point.y-masterina.posY)[0];
@@ -553,10 +556,10 @@ function onMouseDrag(event)
 			for (var iA = 0; iA <pieType; iA++)
 		    {
 		    	pArray[iA].add(pointsXc[iA]+masterina.posX,pointsYc[iA]+masterina.posY);
-			//pArray[iA].add(pointsXc[iA],pointsYc[iA]);
 		    	 if (mirror==2){
 		    	 	pArray[iA+pieType].add(pointsXmc[iA]+masterina.posX,pointsYmc[iA]+masterina.posY);}
-
+				;
+				context2.drawImage(canvasP,-width/2+(width/2-masterina.posX),-height/2+(height/2-masterina.posY));
 		    }
 		    
 		}
@@ -580,8 +583,8 @@ function onMouseUp(event)
 	    }
 	    setTimeout(function(){
 	    	toUndo();
+			
 	   context2.drawImage(canvasP,-width/2+(width/2-masterina.posX),-height/2+(height/2-masterina.posY));
-	   //context2.drawImage(canvasP,0,0);
 	   for (var iA = 0; iA <pieType; iA++)
 		    {
 		    	pArray[iA].remove();
@@ -606,6 +609,11 @@ function onMouseUp(event)
     </script>
 
 </html>
+
+
+
+	   
+		
 
 
 
