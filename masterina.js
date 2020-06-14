@@ -1,8 +1,8 @@
 //============================================================================ btn func============================================================================
 
-	var iMirror=0;
+	var iMirror=-1;
 	var iLineThik=1;
-	var iPieType=0;
+	var iPieType=4;
 	var iLineType=0;
 	function funcNew()
 	{
